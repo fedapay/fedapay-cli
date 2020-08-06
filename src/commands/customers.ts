@@ -4,8 +4,12 @@ import Command from '../base'
 export default class Customers extends Command {
   static description = 'Manage FedaPay customers ressource'
 
+  // custom usage string for help
+  // this overrides the default usage
   static usage = 'customers <operation> [options]'
 
+  // examples to add to help
+  // each can be multiline
   static examples = [
     'customers list',
     'customers create --email=foo@bar.com',
