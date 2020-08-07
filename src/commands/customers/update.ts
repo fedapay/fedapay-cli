@@ -1,25 +1,65 @@
-import {Command, flags} from '@oclif/command'
+import {flags} from '@oclif/command'
+import {FedaPay, Customer} from 'fedapay'
+import * as colorize from 'json-colorizer'
+import Customers from '../customers'
+import cli from 'cli-ux'
 
-export default class CustomersUpdate extends Command {
-  static description = 'describe the command here'
+export default class CustomersUpdate extends Customers {
+  static description = 'List customers ressource'
 
   static flags = {
+    ...Customers.flags,
+    id: flags.integer({
+      description: 'the id of the client to update',
+      required:true
+    }),
+    data: flags.string({
+      description: 'The new data for the update',
+      required: true
+    }),
+    confirm: flags.boolean({
+      description: 'confirm the update',
+      default: false
+    }),
     help: flags.help({char: 'h'}),
-    // flag with a value (-n, --name=VALUE)
-    name: flags.string({char: 'n', description: 'name to print'}),
-    // flag with no value (-f, --force)
-    force: flags.boolean({char: 'f'}),
   }
 
-  static args = [{name: 'file'}]
+  static examples = [
+    'customers:update --id=8963 --data="{"email": "johndoe@entreprise.com", first}"',
+    'customers:list --email=',
+    'customers:list --page=2',
+  ]
 
   async run() {
-    const {args, flags} = this.parse(CustomersUpdate)
+    const {flags} = this.parse(CustomersUpdate)
+    const apiKey = flags['api-key']
+    const environment = flags.environment
+    const id = flags.id
+    const data =  JSON.parse(flags.data)
+    const confirm = flags.confirm
 
-    const name = flags.name ?? 'world'
-    this.log(`hello ${name} from D:\\Developper\\ProjetsWEB\\cliApp\\Fedapay-CLI\\cli\\src\\commands\\Customers\\update.ts`)
-    if (args.file && flags.force) {
-      this.log(`you input --force and --file: ${args.file}`)
+
+    FedaPay.setApiKey(apiKey)
+    FedaPay.setEnvironment(environment)
+
+    this.log(data)// to remove after
+    if(confirm){
+      const customers = await Customer.update(id,data)
+      this.log(colorize(JSON.stringify(customers, null, 2)))
     }
+    else{
+
+      const confirmPrompt = await cli.confirm('Would you like to continue? [Y/n]')
+      if(confirmPrompt){
+        const customers = await Customer.update(id,data)
+        this.log(colorize(JSON.stringify(customers, null, 2)))
+      }
+      else {
+        this.warn('Update canceled')
+        this.exit
+      }
+    }
+
   }
 }
+
