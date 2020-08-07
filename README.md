@@ -44,9 +44,10 @@ USAGE
 # Commands
 <!-- commands -->
 * [`fedapay customers <operation> [options]`](#fedapay-customers-operation-options)
+* [`fedapay customers:delete [FILE]`](#fedapay-customersdelete-file)
 * [`fedapay customers <operation> [options]`](#fedapay-customers-operation-options-1)
 * [`fedapay customers <operation> [options]`](#fedapay-customers-operation-options-2)
-* [`fedapay customers:update [FILE]`](#fedapay-customersupdate-file)
+* [`fedapay customers <operation> [options]`](#fedapay-customers-operation-options-3)
 * [`fedapay help [COMMAND]`](#fedapay-help-command)
 
 ## `fedapay customers <operation> [options]`
@@ -69,6 +70,22 @@ EXAMPLES
 ```
 
 _See code: [src\commands\customers.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src\commands\customers.ts)_
+
+## `fedapay customers:delete [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ fedapay customers:delete [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src\commands\customers\delete.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src\commands\customers\delete.ts)_
 
 ## `fedapay customers <operation> [options]`
 
@@ -116,18 +133,26 @@ EXAMPLES
 
 _See code: [src\commands\customers\retrieve.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src\commands\customers\retrieve.ts)_
 
-## `fedapay customers:update [FILE]`
+## `fedapay customers <operation> [options]`
 
-describe the command here
+List customers ressource
 
 ```
 USAGE
-  $ fedapay customers:update [FILE]
+  $ fedapay customers <operation> [options]
 
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -h, --help                 show CLI help
+  --api-key=api-key          Your API key to use for the command
+  --confirm                  confirm the update
+  --data=data                (required) The new data for the update
+  --environment=environment  FedaPay Api environment
+  --id=id                    (required) the id of the client to update
+
+EXAMPLES
+  customers:update --id=8963 --data="{"email": "johndoe@entreprise.com", first}"
+  customers:list --email=
+  customers:list --page=2
 ```
 
 _See code: [src\commands\customers\update.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src\commands\customers\update.ts)_
