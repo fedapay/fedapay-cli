@@ -3,6 +3,7 @@ import {FedaPay, Customer} from 'fedapay'
 import * as colorize from 'json-colorizer'
 import Customers from '../customers'
 import cli from 'cli-ux'
+import * as chalk from 'chalk'
 
 export default class CustomersDelete extends Customers {
   static description = 'delete an customer'
@@ -36,18 +37,31 @@ export default class CustomersDelete extends Customers {
     FedaPay.setEnvironment(environment)
 
     if(confirm){
-      const customers = await Customer.delete(id)
-      this.log(colorize(JSON.stringify(customers, null, 2)))
+      try {
+          const custom = await Customer.retrieve(id)
+          custom.delete()
+          this.warn(chalk.greenBright(`Customer ${id} delected successfully`))
+      } catch (error) {
+          this.log(chalk.red(`Error!:${error} Maybe customer ${id}  not found`))
+          this.exit
+      }
     }
     else{
 
       const confirmPrompt = await cli.confirm('Would you like to continue? [Y/n]')
       if(confirmPrompt){
-        const customers = await Customer.delete(id)
-        this.log(colorize(JSON.stringify(customers, null, 2)))
+        try {
+            const custom = await Customer.retrieve(id)
+            const customers = custom.delete()
+            this.warn(chalk.greenBright(`Customer ${id} delected successfully`))
+        } catch (error) {
+          this.log(chalk.red(`Error!:${error} Maybe customer ${id}  not found`))
+            this.exit
+        }
+            
       }
       else {
-        this.warn('Delete canceled')
+        this.warn(chalk.yellow('Delete canceled'))
         this.exit
       }
     }
