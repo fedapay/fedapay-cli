@@ -19,9 +19,12 @@ export default class PayoutsList extends Command {
     }),
     customer:flags.integer({
       description:'Allow the payout per customer',
-      default:1036,
+      default:100,
     }),
-    status:flags.string({}),
+    status:flags.string({
+      description:'Ckeck the payout per status',
+      default:'failed',
+    }),
     help:flags.help({char:'h'}),
 
   }
@@ -42,14 +45,18 @@ export default class PayoutsList extends Command {
    const limit = flags.limit
    const page =flags.page
    const customer= flags.customer
-   //const id = FedaPayObject. definir une methode pour afficher l'id du customer
-   //const id = Payout["customer_id"]
+   const status=flags.status
 
    FedaPay.setApiKey(apiKey)
    FedaPay.setEnvironment(environment)
-   //const cust = await Customer.retrieve(id)  
-
-    const payouts = await Payout.all({per_page: limit,page:page,customer_id:customer})
+     
+  
+    const payouts = await Payout.all({per_page: limit,page:page,
+      'filters[compare][customer_id][op]': '=',
+    'filters[compare][customer_id][value]': customer,
+    'filters[compare][status][op]': '=',
+    'filters[compare][status][value]': status,
+  })
     this.log(colorize(JSON.stringify(payouts, null, 2)))
     
   }

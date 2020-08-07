@@ -19,7 +19,7 @@ $ npm install -g fedapay-cli
 $ fedapay COMMAND
 running command...
 $ fedapay (-v|--version|version)
-fedapay-cli/0.0.0 darwin-x64 node-v12.18.3
+fedapay-cli/0.0.0 linux-x64 node-v10.21.0
 $ fedapay --help [COMMAND]
 USAGE
   $ fedapay COMMAND
@@ -28,64 +28,58 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`fedapay customers [LIST]`](#fedapay-customers-list)
-* [`fedapay customers:list [FILE]`](#fedapay-customerslist-file)
-* [`fedapay hello [FILE]`](#fedapay-hello-file)
+* [`fedapay customers <operation> [options]`](#fedapay-customers-operation-options)
+* [`fedapay customers <operation> [options]`](#fedapay-customers-operation-options-1)
 * [`fedapay help [COMMAND]`](#fedapay-help-command)
+* [`fedapay payouts <operation> [options]`](#fedapay-payouts-operation-options)
+* [`fedapay payouts:create [FILE]`](#fedapay-payoutscreate-file)
+* [`fedapay payouts:delete [FILE]`](#fedapay-payoutsdelete-file)
+* [`fedapay payouts:list`](#fedapay-payoutslist)
+* [`fedapay payouts:schedule [FILE]`](#fedapay-payoutsschedule-file)
+* [`fedapay payouts:send-now [FILE]`](#fedapay-payoutssend-now-file)
+* [`fedapay payouts:update [FILE]`](#fedapay-payoutsupdate-file)
 
-## `fedapay customers [LIST]`
+## `fedapay customers <operation> [options]`
 
-describe the command here
+Manage FedaPay customers ressource
 
 ```
 USAGE
-  $ fedapay customers [LIST]
-
-ARGUMENTS
-  LIST  List all customers
+  $ fedapay customers <operation> [options]
 
 OPTIONS
-  -h, --help         show CLI help
-  --api-key=api-key  Your API key to use for the command
+  -h, --help                 Help for customers command
+  --api-key=api-key          Your API key to use for the command
+  --environment=environment  FedaPay Api environment
+
+EXAMPLES
+  customers list
+  customers create --email=foo@bar.com
+  customers retrieve --id=ID
 ```
 
 _See code: [src/commands/customers.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/customers.ts)_
 
-## `fedapay customers:list [FILE]`
+## `fedapay customers <operation> [options]`
 
-describe the command here
+List customers ressource
 
 ```
 USAGE
-  $ fedapay customers:list [FILE]
+  $ fedapay customers <operation> [options]
 
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -h, --help                 show CLI help
+  --api-key=api-key          Your API key to use for the command
+  --environment=environment  FedaPay Api environment
+  --limit=limit              [default: 10] Limit the list of customers to display
+
+EXAMPLES
+  customers:list
+  customers:list --limit=20
 ```
 
 _See code: [src/commands/customers/list.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/customers/list.ts)_
-
-## `fedapay hello [FILE]`
-
-describe the command here
-
-```
-USAGE
-  $ fedapay hello [FILE]
-
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
-
-EXAMPLE
-  $ fedapay hello
-  hello world from ./src/hello.ts!
-```
-
-_See code: [src/commands/hello.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/hello.ts)_
 
 ## `fedapay help [COMMAND]`
 
@@ -103,4 +97,128 @@ OPTIONS
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.0/src/commands/help.ts)_
+
+## `fedapay payouts <operation> [options]`
+
+Manage FedaPay payouts ressource
+
+```
+USAGE
+  $ fedapay payouts <operation> [options]
+
+OPTIONS
+  -h, --help                 Help for payouts command
+  --api-key=api-key          Your API key to use for the command
+  --environment=environment  FedaPay Api environment
+
+EXAMPLES
+  payouts list
+  payouts create --data  --customer --schedule="date" --send-now
+  payouts update --id  --data  --customer --confirm
+  payouts delete  --id --confirm
+  payouts schedule --id --when
+  payouts send-now
+```
+
+_See code: [src/commands/payouts.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/payouts.ts)_
+
+## `fedapay payouts:create [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ fedapay payouts:create [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/payouts/create.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/payouts/create.ts)_
+
+## `fedapay payouts:delete [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ fedapay payouts:delete [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/payouts/delete.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/payouts/delete.ts)_
+
+## `fedapay payouts:list`
+
+List payouts ressource
+
+```
+USAGE
+  $ fedapay payouts:list
+
+OPTIONS
+  -h, --help                 show CLI help
+  --api-key=api-key          Your API key to use for the command
+  --customer=customer
+  --environment=environment  FedaPay Api environment
+  --limit=limit              [default: 10] Limit the list of payouts to display
+  --page=page
+  --status=status
+```
+
+_See code: [src/commands/payouts/list.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/payouts/list.ts)_
+
+## `fedapay payouts:schedule [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ fedapay payouts:schedule [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/payouts/schedule.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/payouts/schedule.ts)_
+
+## `fedapay payouts:send-now [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ fedapay payouts:send-now [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/payouts/send-now.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/payouts/send-now.ts)_
+
+## `fedapay payouts:update [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ fedapay payouts:update [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/payouts/update.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/payouts/update.ts)_
 <!-- commandsstop -->

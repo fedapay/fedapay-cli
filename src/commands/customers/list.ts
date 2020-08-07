@@ -12,6 +12,10 @@ export default class CustomersList extends Customers {
       description: 'Limit the list of customers to display',
       default: 10,
     }),
+    customer:flags.integer({
+      description:'Allow the payout per customer',
+      default:100,
+    }),
     help: flags.help({char: 'h'}),
   }
 
@@ -25,11 +29,14 @@ export default class CustomersList extends Customers {
     const apiKey = flags['api-key']
     const environment = flags.environment
     const limit = flags.limit
+    
 
     FedaPay.setApiKey(apiKey)
     FedaPay.setEnvironment(environment)
 
-    const customers = await Customer.all({per_page: limit})
+    const customers = await Customer.all({
+      per_page: limit
+    })
 
     this.log(colorize(JSON.stringify(customers, null, 2)))
   }
