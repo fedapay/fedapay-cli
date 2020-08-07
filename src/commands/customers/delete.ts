@@ -1,6 +1,5 @@
 import {flags} from '@oclif/command'
 import {FedaPay, Customer} from 'fedapay'
-import * as colorize from 'json-colorizer'
 import Customers from '../customers'
 import cli from 'cli-ux'
 import * as chalk from 'chalk'

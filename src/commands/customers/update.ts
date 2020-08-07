@@ -3,6 +3,7 @@ import {FedaPay, Customer} from 'fedapay'
 import * as colorize from 'json-colorizer'
 import Customers from '../customers'
 import cli from 'cli-ux'
+import * as chalk from 'chalk'
 
 export default class CustomersUpdate extends Customers {
   static description = 'Udapde an customer informations'
@@ -50,8 +51,15 @@ export default class CustomersUpdate extends Customers {
 
       const confirmPrompt = await cli.confirm('Would you like to continue? [Y/n]')
       if(confirmPrompt){
-        const customers = await Customer.update(id,data)
-        this.log(colorize(JSON.stringify(customers, null, 2)))
+        try {
+          const customers = await Customer.update(id,data)
+          this.warn(chalk.greenBright(`Customer ${id} updated successfully`))
+          this.log(colorize(JSON.stringify(customers, null, 2))) 
+        } catch (error) {
+          this.log(chalk.red(`Error!:${error} Maybe customer ${id}  not found`))
+          this.exit
+        }
+        
       }
       else {
         this.warn('Update canceled')
