@@ -2,6 +2,7 @@ import {flags} from '@oclif/command'
 import {FedaPay, Customer} from 'fedapay'
 import * as colorize from 'json-colorizer'
 import Customers from '../customers'
+import * as chalk from 'chalk'
 
 export default class CustomersRetrieve extends Customers {
   static description = 'get customer details'
@@ -28,8 +29,14 @@ export default class CustomersRetrieve extends Customers {
     FedaPay.setApiKey(apiKey)
     FedaPay.setEnvironment(environment)
     
+    try {
     const customers = await Customer.retrieve(id)
-
     this.log(colorize(JSON.stringify(customers, null, 2)))
+    }
+    catch(error){
+      this.log(chalk.red(`Error!:${error} Maybe customer ${id}  not found`))
+      this.exit
+    }
+   
   }
 }
