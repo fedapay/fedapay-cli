@@ -4,7 +4,9 @@ import * as colorize from 'json-colorizer'
 import Customers from '../customers'
 import cli from 'cli-ux'
 import * as chalk from 'chalk'
-
+import * as queryString from 'query-string'
+import { Console } from 'console'
+import DataParse from '../../helpers/dataparse';
 export default class CustomersCreate extends Customers {
   static description = 'Create a customer'
 
@@ -12,7 +14,10 @@ export default class CustomersCreate extends Customers {
     ...Customers.flags,
     data: flags.string({
       description: 'Json Data of the customer',
-      required: true
+      required: true,
+      char: 'd',
+      multiple: true,
+      //parse: input => DataParse.Dparse(input),      
     }),
     help: flags.help({char: 'h'}),
   }
@@ -26,28 +31,19 @@ export default class CustomersCreate extends Customers {
     const {flags} = this.parse(CustomersCreate)
     const apiKey = flags['api-key']
     const environment = flags.environment
-    const data =  JSON.parse(flags.data)
-
+    const data= DataParse.Dparse(flags.data)
+    
     FedaPay.setApiKey(apiKey)
     FedaPay.setEnvironment(environment)
 
-    this.log(data)// to remove after
-
-      const confirmPrompt = await cli.confirm('Would you like to continue? [Y/n]')
-      if(confirmPrompt){
         try {
           const customers = await Customer.create(data)
           this.warn(chalk.greenBright(`Customer created successfully`))
           this.log(colorize(JSON.stringify(customers, null, 2))) 
-        } catch (error) {
-          this.log(chalk.red(`Error!:${error}`))
+        } catch (error ) {
+          this.warn(chalk.red(`${error.name} : ${error.message}`)) // Good way to catch errors
           this.exit
         }
-      }
-      else {
-        this.warn('Create canceled')
-        this.exit
-      }
     
 
   }
