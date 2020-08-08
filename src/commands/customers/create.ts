@@ -6,7 +6,7 @@ import cli from 'cli-ux'
 import * as chalk from 'chalk'
 import * as queryString from 'query-string'
 import { Console } from 'console'
-import DataParse from '../../helpers/dataparse';
+import DataFlagtransformer from '../../helpers/dataparse';
 export default class CustomersCreate extends Customers {
   static description = 'Create a customer'
 
@@ -31,7 +31,7 @@ export default class CustomersCreate extends Customers {
     const {flags} = this.parse(CustomersCreate)
     const apiKey = flags['api-key']
     const environment = flags.environment
-    const data= DataParse.Dparse(flags.data)
+    const data= DataFlagtransformer.Transform(flags.data)
     
     FedaPay.setApiKey(apiKey)
     FedaPay.setEnvironment(environment)

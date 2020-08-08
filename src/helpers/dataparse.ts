@@ -1,13 +1,11 @@
 import * as queryString from 'query-string'
-import { greenBright } from 'chalk'
 
-
-export default class DataParse {
+export default class DataFlagTransformer {
     
 
-    static Dparse(params: string[]): Object{
+    static Transform(input: string[]): Object{
 
-        const data = params.join('&')
+        const data = input.join('&')
         const obj = queryString.parse(data)
         if (obj.phone_number) {
             const d = obj.phone_number.split(",")
