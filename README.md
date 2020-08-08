@@ -33,9 +33,10 @@ USAGE
 * [`fedapay help [COMMAND]`](#fedapay-help-command)
 * [`fedapay transactions <operation> [options]`](#fedapay-transactions-operation-options)
 * [`fedapay transactions <operation> [options]`](#fedapay-transactions-operation-options-1)
+* [`fedapay transactions:delete [FILE]`](#fedapay-transactionsdelete-file)
 * [`fedapay transactions <operation> [options]`](#fedapay-transactions-operation-options-2)
-* [`fedapay transactions:retrieve [FILE]`](#fedapay-transactionsretrieve-file)
 * [`fedapay transactions <operation> [options]`](#fedapay-transactions-operation-options-3)
+* [`fedapay transactions <operation> [options]`](#fedapay-transactions-operation-options-4)
 
 ## `fedapay customers <operation> [options]`
 
@@ -164,6 +165,22 @@ EXAMPLES
 
 _See code: [src/commands/transactions/create.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/transactions/create.ts)_
 
+## `fedapay transactions:delete [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ fedapay transactions:delete [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/transactions/delete.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/transactions/delete.ts)_
+
 ## `fedapay transactions <operation> [options]`
 
 List of the transactions ressources
@@ -186,18 +203,23 @@ EXAMPLES
 
 _See code: [src/commands/transactions/list.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/transactions/list.ts)_
 
-## `fedapay transactions:retrieve [FILE]`
+## `fedapay transactions <operation> [options]`
 
-describe the command here
+retrieve the id of a transaction
 
 ```
 USAGE
-  $ fedapay transactions:retrieve [FILE]
+  $ fedapay transactions <operation> [options]
 
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -h, --help                       show CLI help
+  --api-key=api-key                Your API key to use for the command
+  --environment=environment        FedaPay Api environment
+  --transaction_id=transaction_id  (required) Provide the id of the transaction you want to retrieve
+
+EXAMPLES
+  transactions:list
+  transactions:create
 ```
 
 _See code: [src/commands/transactions/retrieve.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/transactions/retrieve.ts)_
@@ -211,11 +233,12 @@ USAGE
   $ fedapay transactions <operation> [options]
 
 OPTIONS
-  -f, --force
-  -h, --help                 show CLI help
-  -n, --name=name            name to print
-  --api-key=api-key          Your API key to use for the command
-  --environment=environment  FedaPay Api environment
+  -h, --help                       show CLI help
+  --api-key=api-key                Your API key to use for the command
+  --confirm                        Update your data
+  --data=data                      (required) Provide the data you want to update
+  --environment=environment        FedaPay Api environment
+  --transaction_id=transaction_id  (required) Provide the id of the transaction you want to update
 
 EXAMPLES
   transactions:list

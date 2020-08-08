@@ -40,25 +40,36 @@ export default class TransactionsUpdate extends Transactions {
     try {
       const transaction_id = flags.transaction_id
       const data = JSON.parse(flags.data)
+
       if (flags.confirm) {
+
         try {
-          const transaction = await Transaction.update(data)
-          this.log(colorize(JSON.stringify(transaction, null, 2)))   
+          const transaction = await Transaction.retrieve(transaction_id)
+
+          const transaction_update = await Transaction.update(transaction_id, data)
+          this.log(colorize(JSON.stringify(transaction_update, null, 2)))
+
         } catch (error) {
           this.log(error)
         }
-       
+
       } else {
-        const confirm = await cli.confirm("Sure to continue?")
-        if (confirm) { 
-          const transaction = await Transaction.update(data)
-          this.log(colorize(JSON.stringify(transaction, null, 2)))
-        
+        try {
+          const confirm = await cli.confirm("Sure to continue?")
+          if (confirm) {
+            const transaction = await Transaction.update(data)
+            this.log(colorize(JSON.stringify(transaction, null, 2)))
+
+          }
+          else { this.log('Update dropped') }
         }
-        else { this.log('Update dropped') }
+        catch (error) {
+          this.log(error)
+        }
+
       }
     } catch (error) {
-
+      this.log(error)
     }
 
   }
