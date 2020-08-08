@@ -1,7 +1,6 @@
-import {Command, flags} from '@oclif/command'
+import { Command, flags } from '@oclif/command'
 import { FedaPay, Payout, Transaction } from 'fedapay'
 import Payouts from '../payouts'
-import chalk from 'chalk'
 //class for programming a payout 
 export default class PayoutsSchedule extends Command {
   static description = 'Program the payout for later'
@@ -13,12 +12,7 @@ export default class PayoutsSchedule extends Command {
     }),
     when: flags.string({
       description: 'Program with date',
-      default: "01/02/2000 01:02:34",
-      required: true
-    }),
-    data: flags.string({
-      description: 'Program with data',
-      required: true
+      required: true,
     }),
     help: flags.help({ char: 'h' }),
   }
@@ -32,7 +26,7 @@ export default class PayoutsSchedule extends Command {
 
 
 
- 
+
 
   async run() {
     const { flags } = this.parse(PayoutsSchedule)
@@ -40,19 +34,31 @@ export default class PayoutsSchedule extends Command {
     const environment = flags.environment
     const id = flags.id
     const when = flags.when
-    let d = new Date()
-    let a = d.toString()
-    console.log(a)
+    const data = {
+      "amount": 1000,
+      "currency": { "iso": "XOF" },
+      "mode": "mtn",
+      "customer": {
+        "email": "johny.doe@example.com",
+      },
+      "scheduled_at": "2020-08-12T16:59:39.168Z"
+    }
+
     FedaPay.setApiKey(apiKey)
     FedaPay.setEnvironment(environment)
     try {
       //get details of payout
-      const payout = Payout.retrieve(id)
-       ;(await payout).schedule(when)
-      this.log(chalk.green("Succesfully sent")) 
+      const payout = Payout.create(data)
+        ; (await payout).schedule(when)
+      /*{
+     "id": id,
+     "scheduled_at":when
+    }*/
+
+      this.log("Succesfully sent")
     } catch (error) {
       this.error("date not match")
     }
-    
+
   }
 }

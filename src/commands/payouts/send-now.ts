@@ -1,25 +1,47 @@
-import {Command, flags} from '@oclif/command'
+import { Command, flags } from '@oclif/command'
+import { FedaPay, Payout, Transaction } from 'fedapay'
+import Payouts from '../payouts'
+import chalk from 'chalk'
 
 export default class PayoutsSendNow extends Command {
-  static description = 'describe the command here'
+  static description = 'Send a payout now'
 
   static flags = {
-    help: flags.help({char: 'h'}),
-    // flag with a value (-n, --name=VALUE)
-    name: flags.string({char: 'n', description: 'name to print'}),
-    // flag with no value (-f, --force)
-    force: flags.boolean({char: 'f'}),
+    ...Payouts.flags,
+    //produce data passing flags
+    ids: flags.integer({
+      description: 'Send all payouts by id',
+      default:66|70,
+    }),
+    data: flags.string({
+      description: 'Send a payout by id',
+      required: false,
+
+    }),
+
+    help: flags.help({ char: 'h' }),
+
   }
 
-  static args = [{name: 'file'}]
-
   async run() {
-    const {args, flags} = this.parse(PayoutsSendNow)
+    const { args, flags } = this.parse(PayoutsSendNow)
+    const apiKey = flags['api-key']
+    const environment = flags.environment
+    const ids = flags.ids
+    const data = flags.data
 
-    const name = flags.name ?? 'world'
-    this.log(`hello ${name} from /home/saadath1/Documents/cli/src/commands/payouts/send-now.ts`)
-    if (args.file && flags.force) {
-      this.log(`you input --force and --file: ${args.file}`)
+    FedaPay.setApiKey(apiKey)
+    FedaPay.setEnvironment(environment)
+    try {
+      const payout = await Payout.create(data)
+      await payout.sendNow()
+      
+      //if id is required send all payout 
+      await Payout.sendAllNow([ids])
+    } catch (error) {
+      this.log('Undefined')
+
     }
+
   }
 }

@@ -1,25 +1,53 @@
-import {Command, flags} from '@oclif/command'
+import { Command, flags } from '@oclif/command'
+import { FedaPay, Payout, Transaction } from 'fedapay'
+import * as colorize from 'json-colorizer'
+import Payouts from '../payouts'
 
 export default class PayoutsDelete extends Command {
-  static description = 'describe the command here'
+  static description = 'Delete payout ressource'
 
   static flags = {
-    help: flags.help({char: 'h'}),
-    // flag with a value (-n, --name=VALUE)
-    name: flags.string({char: 'n', description: 'name to print'}),
-    // flag with no value (-f, --force)
-    force: flags.boolean({char: 'f'}),
+    ...Payouts.flags,
+    id: flags.integer({
+      description: 'Delete a payout',
+      required: true,
+    }),
+    confirm: flags.boolean({
+      description: 'Confirm the delete',
+      default: false,
+      required: true
+    }),
+    help: flags.help({ char: 'h' }),
   }
+  static examples = [
+    'payouts:delete',
+    'payouts:delete --id',
+    'payouts:delete --confirm',
 
-  static args = [{name: 'file'}]
+  ]
 
   async run() {
-    const {args, flags} = this.parse(PayoutsDelete)
+    const { flags } = this.parse(PayoutsDelete)
+    const apiKey = flags['api-key']
+    const environment = flags.environment
+    const id = flags.id
+    const confirm = flags.confirm
+    FedaPay.setApiKey(apiKey)
+    FedaPay.setEnvironment(environment)
+    try {
+      const payout = Payout.retrieve(id)
+      if (!payout) {
+        this.log('Don\'t match')
+      }
+      else {
+        confirm ? Payout.delete() :
+          this.log('Êtes-vous sûr de vouloir supprimer ?')
+          
+        }
+    } catch (error) {
 
-    const name = flags.name ?? 'world'
-    this.log(`hello ${name} from /home/saadath1/Documents/cli/src/commands/payouts/delete.ts`)
-    if (args.file && flags.force) {
-      this.log(`you input --force and --file: ${args.file}`)
     }
+
   }
 }
+

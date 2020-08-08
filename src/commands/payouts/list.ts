@@ -19,7 +19,7 @@ export default class PayoutsList extends Command {
     }),
     customer:flags.integer({
       description:'Allow the payout per customer',
-      default:100,
+      default:2055,
     }),
     status:flags.string({
       description:'Ckeck the payout per status',
