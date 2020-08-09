@@ -5,7 +5,7 @@ import Transactions from '../transactions'
 import { string } from '@oclif/command/lib/flags'
 
 export default class TransactionsCreate extends Transactions {
-  static description = 'Create a Customer'
+  static description = 'Create a Transaction'
 
   static flags = {
     ...Transactions.flags,
@@ -48,7 +48,7 @@ export default class TransactionsCreate extends Transactions {
     try {
       const data = JSON.parse(flags.data)
       const transaction = await Transaction.create({
-        description: data.description ? data.description : 'Description',
+        description: data.description ? data.description : 'I do this for no particular reason',
         amount: data.amount ? data.amount : 25000,
         callback_url: data.callback_url ? data.callback_url : 'https://maplateforme.com/callback',
         currency: data.currency ? data.currency : { iso: 'XOF' },
@@ -62,7 +62,7 @@ export default class TransactionsCreate extends Transactions {
           },
         },
       })
-      this.log('transaction created successfully')
+      this.log(chalk.green('transaction created successfully'))
       this.log(colorize(JSON.stringify(transaction, null, 2)))
       if (flags.with_token) {
         const token = await transaction.generateToken();

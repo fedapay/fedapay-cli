@@ -5,6 +5,7 @@ import Transactions from '../transactions'
 import { string } from '@oclif/command/lib/flags'
 import cli from 'cli-ux'
 
+
 export default class TransactionsUpdate extends Transactions {
   static description = 'Update some transactions'
 
