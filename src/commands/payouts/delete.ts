@@ -2,6 +2,9 @@ import { Command, flags } from '@oclif/command'
 import { FedaPay, Payout, Transaction } from 'fedapay'
 import * as colorize from 'json-colorizer'
 import Payouts from '../payouts'
+import { type } from 'os'
+import cli from 'cli-ux'
+import { abort } from 'process'
 
 export default class PayoutsDelete extends Command {
   static description = 'Delete payout ressource'
@@ -14,8 +17,7 @@ export default class PayoutsDelete extends Command {
     }),
     confirm: flags.boolean({
       description: 'Confirm the delete',
-      default: false,
-      required: true
+      required: false
     }),
     help: flags.help({ char: 'h' }),
   }
@@ -35,19 +37,29 @@ export default class PayoutsDelete extends Command {
     FedaPay.setApiKey(apiKey)
     FedaPay.setEnvironment(environment)
     try {
-      const payout = Payout.retrieve(id)
+      const payout = await Payout.retrieve(id)
       if (!payout) {
         this.log('Don\'t match')
       }
       else {
-        confirm ? Payout.delete() :
-          this.log('Êtes-vous sûr de vouloir supprimer ?')
-          
+        //delete if payout is pending
+        if (payout.status !== 'pending') {
+          this.error('Not authorized')
         }
-    } catch (error) {
+        else
+          if (await cli.confirm('Êtes-vous sûr de vouloir supprimer ?')){
+            payout.delete()
+            this.log("Succesfully deleted")
+          }
+          else () =>
+            this.error("ABORT")
 
+
+      }
+    }
+    catch (error) {
+      this.error("Bad request")
     }
 
   }
 }
-
