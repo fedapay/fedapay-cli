@@ -3,6 +3,7 @@ import { FedaPay, Transaction } from 'fedapay'
 import * as colorize from 'json-colorizer'
 import Transactions from '../transactions'
 import { string } from '@oclif/command/lib/flags'
+import chalk = require('chalk')
 
 export default class TransactionsCreate extends Transactions {
   static description = 'Create a Transaction'

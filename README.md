@@ -33,10 +33,11 @@ USAGE
 * [`fedapay help [COMMAND]`](#fedapay-help-command)
 * [`fedapay transactions <operation> [options]`](#fedapay-transactions-operation-options)
 * [`fedapay transactions <operation> [options]`](#fedapay-transactions-operation-options-1)
-* [`fedapay transactions:delete [FILE]`](#fedapay-transactionsdelete-file)
 * [`fedapay transactions <operation> [options]`](#fedapay-transactions-operation-options-2)
 * [`fedapay transactions <operation> [options]`](#fedapay-transactions-operation-options-3)
 * [`fedapay transactions <operation> [options]`](#fedapay-transactions-operation-options-4)
+* [`fedapay transactions:token [FILE]`](#fedapay-transactionstoken-file)
+* [`fedapay transactions <operation> [options]`](#fedapay-transactions-operation-options-5)
 
 ## `fedapay customers <operation> [options]`
 
@@ -119,7 +120,7 @@ _See code: [src/commands/transactions.ts](https://github.com/brexis/fedapay-cli/
 
 ## `fedapay transactions <operation> [options]`
 
-Create a Customer
+Create a Transaction
 
 ```
 USAGE
@@ -165,18 +166,24 @@ EXAMPLES
 
 _See code: [src/commands/transactions/create.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/transactions/create.ts)_
 
-## `fedapay transactions:delete [FILE]`
+## `fedapay transactions <operation> [options]`
 
-describe the command here
+Delete a transaction
 
 ```
 USAGE
-  $ fedapay transactions:delete [FILE]
+  $ fedapay transactions <operation> [options]
 
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -h, --help                       show CLI help
+  --api-key=api-key                Your API key to use for the command
+  --confirm                        Bypass the confirmation
+  --environment=environment        FedaPay Api environment
+  --transaction_id=transaction_id  (required) Provide the id of the transaction you want to delete
+
+EXAMPLES
+  transactions:list
+  transactions:create
 ```
 
 _See code: [src/commands/transactions/delete.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/transactions/delete.ts)_
@@ -223,6 +230,22 @@ EXAMPLES
 ```
 
 _See code: [src/commands/transactions/retrieve.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/transactions/retrieve.ts)_
+
+## `fedapay transactions:token [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ fedapay transactions:token [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/transactions/token.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/transactions/token.ts)_
 
 ## `fedapay transactions <operation> [options]`
 

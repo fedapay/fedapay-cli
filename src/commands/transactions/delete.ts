@@ -50,7 +50,8 @@ export default class TransactionsDelete extends Transactions {
               await transaction.delete()
               this.log(chalk.blue('transaction deleted'))
             } else {
-              const confirm = cli.confirm('Sure to continue?')
+              const confirm = await cli.confirm('Sure to continue? Yes or No')
+              
               if (confirm) {
                 await transaction.delete()
                 this.log(chalk.yellow('transaction deleted'))
@@ -59,9 +60,9 @@ export default class TransactionsDelete extends Transactions {
               }
 
             }
-           )
+           
           } else {
-            this.log('can\'t be deleted')
+            this.log(chalk.red('the transaction can\'t be deleted'))
           }
 
         } catch (error) {
