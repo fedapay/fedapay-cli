@@ -2,49 +2,76 @@ import {flags} from '@oclif/command'
 import {FedaPay, Customer} from 'fedapay'
 import * as colorize from 'json-colorizer'
 import Customers from '../customers'
-import cli from 'cli-ux'
 import * as chalk from 'chalk'
-import * as queryString from 'query-string'
-import { Console } from 'console'
-import DataFlagtransformer from '../../helpers/dataparse';
+import DataFlagtransformer from '../../helpers/dataparse'
+/**
+ * CustomersCreate class extending the superClass Customers
+ */
 export default class CustomersCreate extends Customers {
-  static description = 'Create a customer'
-
+  /**
+   * @param string
+   * Description of the command Customer:create
+  */
+  static description = 'Create a new customer'
+  /**
+   * @param object
+   * Declaration of the command flags
+  */ 
   static flags = {
     ...Customers.flags,
     data: flags.string({
       description: 'Json Data of the customer',
       required: true,
       char: 'd',
-      multiple: true,
-      //parse: input => DataParse.Dparse(input),      
+      multiple: true,    
     }),
     help: flags.help({char: 'h'}),
   }
-
+  /**
+   * @param string
+   * Set the command usage for help 
+   */
+  static usage = '$ fedapay customers:create [options]'
+  /**
+   * @param string[]
+   * some examples of the custommers create use for help
+   */
   static examples = [
-    'customers:create --data={\"firstname\":\"GOUSSANOU\",\"lastname\":\"Pethuel\",\"email\":\"pethou@gmail.com\"}',
-    'customers:create --api-key=sk_sandbox_6mHuOmKl5H9gbapBFdscGbpI --environment=sandbox --data={\"firstname\":\"GNANSOU\",\"lastname\":\"Adon\",\"email\":\"gnanadon@gmail.com\",\"phone_number\":{\"number\":\"98784598\",\"country\":\"BJ\"}}'
+    'fedapay customers:create --api-key=[api_key] --environment=sandbox -d firstname=DOS -d lastname=Yovo -d email=customertest1@tom.com -d phone_number[number]=68452896 -d phone_number[country]=BJ'
   ]
-
   async run() {
+    /**
+     * @param object
+     * get flags value 
+     */
     const {flags} = this.parse(CustomersCreate)
+    /**
+     * @param string
+     * api key value
+     */
     const apiKey = flags['api-key']
+    /**
+     * @param string
+     * environment type
+     */
     const environment = flags.environment
+    /**
+     * @param object
+     * result of transforming flags.data into Typescript Object
+     */
     const data= DataFlagtransformer.Transform(flags.data)
-    
+    /**
+     * Set Apikey and environment to connect to fedapay
+     */
     FedaPay.setApiKey(apiKey)
     FedaPay.setEnvironment(environment)
-
-        try {
-          const customers = await Customer.create(data)
-          this.warn(chalk.greenBright(`Customer created successfully`))
-          this.log(colorize(JSON.stringify(customers, null, 2))) 
-        } catch (error ) {
-          this.warn(chalk.red(`${error.name} : ${error.message}`)) // Good way to catch errors
-          this.exit
-        }
-    
-
+    try {
+      const customers = await Customer.create(data)
+      this.warn(chalk.greenBright(`Customer created successfully`))
+      this.log(colorize(JSON.stringify(customers, null, 2))) 
+    } catch (error ) {
+      this.warn(chalk.red(`${error.name} : ${error.message}`))
+      this.exit
+    }
   }
 }

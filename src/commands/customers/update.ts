@@ -4,69 +4,106 @@ import * as colorize from 'json-colorizer'
 import Customers from '../customers'
 import cli from 'cli-ux'
 import * as chalk from 'chalk'
-
+import DataFlagtransformer from '../../helpers/dataparse'
+/**
+ * CustomersUpdate class extending the superClass Customers
+ */
 export default class CustomersUpdate extends Customers {
+  /** 
+   * @param string
+   * Description of the command Custommers:update description
+   */
   static description = 'Udapde an customer informations'
-
+  /**
+   * @param object
+   * Declaration of the command flags
+  */ 
   static flags = {
     ...Customers.flags,
     id: flags.integer({
-      description: 'the id of the customer to update',
-      required:true
+      description: 'The id of the customer to update',
+      required:true,
     }),
     data: flags.string({
       description: 'The new data for the update',
-      required: true
+      required: true,
+      char: 'd',
+      multiple: true, 
     }),
     confirm: flags.boolean({
-      description: 'confirm the update',
+      description: 'Confirm the update',
       default: false
     }),
     help: flags.help({char: 'h'}),
   }
-
+  /**
+   * @param string[]
+   * some examples of the custommers update use for help
+   */
   static examples = [
-    'customers:update --id=2047 --data={\"email\":\"johndo@gmail.com\"}',
-    'customers:update --id=2047 --data={\"email\":\"johndo@gmail.com\"} --confirm',
+    'customers:update --api-key=[API_KEY] --environment=sandbox --id=2047 -d email=johndoe@zot.com',
+    'customers:update --api-key=[API_KEY] --environment=sandbox --id=2047 -d email=johndoe@zot.com -d lastname=Doe --confirm',
   ]
-
   async run() {
+
+    /**
+      *  Get flags object from CustommersUpdate 
+      *  and use them to update the custommer 
+      */
+    /**
+     * @param object
+     * get flags value 
+     */
     const {flags} = this.parse(CustomersUpdate)
+    /**
+     * @param string
+     * api key value
+     */
     const apiKey = flags['api-key']
+    /**
+     * @param string
+     * environment type
+     */
     const environment = flags.environment
+    /**
+     * @param number
+     * store the customer id
+     */
     const id = flags.id
-    const data =  JSON.parse(flags.data)
+    /**
+     * @param object
+     * result of transforming flags.data into Typescript Object
+     */ 
+    const data= DataFlagtransformer.Transform(flags.data)
+    /**
+     * @param boolean
+     * true if the user set the --confirm flag
+     */
     const confirm = flags.confirm
-
-
+    /**
+     * Set Apikey and environment to connect to fedapay
+     */
     FedaPay.setApiKey(apiKey)
     FedaPay.setEnvironment(environment)
-
-    this.log(data)// to remove after
-    if(confirm){
-      const customers = await Customer.update(id,data)
-      this.log(colorize(JSON.stringify(customers, null, 2)))
-    }
-    else{
-
-      const confirmPrompt = await cli.confirm('Would you like to continue? [Y/n]')
-      if(confirmPrompt){
+    /**
+     * @param boolean
+     * true if the user set the --confirm flag or input yes in the terminal
+     */
+    const confirmed = confirm || await cli.confirm('Would you like to continue? [Y/n]')    
+    if(confirmed){
         try {
           const customers = await Customer.update(id,data)
           this.warn(chalk.greenBright(`Customer ${id} updated successfully`))
           this.log(colorize(JSON.stringify(customers, null, 2))) 
         } catch (error) {
-          this.log(chalk.red(`Error!:${error} Maybe customer ${id}  not found`))
+          this.warn(chalk.red(`${error.name} : ${error.message}`))
           this.exit
         }
-        
       }
       else {
         this.warn('Update canceled')
         this.exit
       }
-    }
-
   }
 }
 

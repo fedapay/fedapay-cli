@@ -87,13 +87,13 @@ EXAMPLES
 
 _See code: [src\commands\customers.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src\commands\customers.ts)_
 
-## `fedapay customers:create [FILE]`
+## `fedapay customers:create [options]`
 
 describe the command here
 
 ```
 USAGE
-  $ fedapay customers:create [FILE]
+  $ fedapay customers:create [options]
 
 OPTIONS
   -f, --force
@@ -103,13 +103,13 @@ OPTIONS
 
 _See code: [src\commands\customers\create.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src\commands\customers\create.ts)_
 
-## `fedapay customers <operation> [options]`
+## `fedapay customers delete [options]`
 
 delete an customer
 
 ```
 USAGE
-  $ fedapay customers <operation> [options]
+  $ fedapay customers delete [options]
 
 OPTIONS
   -h, --help                 show CLI help
@@ -125,13 +125,13 @@ EXAMPLES
 
 _See code: [src\commands\customers\delete.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src\commands\customers\delete.ts)_
 
-## `fedapay customers <operation> [options]`
+## `fedapay customers list [options]`
 
 List customers ressource
 
 ```
 USAGE
-  $ fedapay customers <operation> [options]
+  $ fedapay customers list [options]
 
 OPTIONS
   -h, --help                 show CLI help
@@ -150,13 +150,13 @@ EXAMPLES
 
 _See code: [src\commands\customers\list.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src\commands\customers\list.ts)_
 
-## `fedapay customers <operation> [options]`
+## `fedapay customers retrieve [options]`
 
 get customer details
 
 ```
 USAGE
-  $ fedapay customers <operation> [options]
+  $ fedapay customers retrieve [options]
 
 OPTIONS
   -h, --help                 show CLI help
@@ -171,13 +171,13 @@ EXAMPLES
 
 _See code: [src\commands\customers\retrieve.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src\commands\customers\retrieve.ts)_
 
-## `fedapay customers <operation> [options]`
+## `fedapay customers update [options]`
 
 Udapde an customer informations
 
 ```
 USAGE
-  $ fedapay customers <operation> [options]
+  $ fedapay customers update [options]
 
 OPTIONS
   -h, --help                 show CLI help
@@ -188,7 +188,7 @@ OPTIONS
   --id=id                    (required) the id of the customer to update
 
 EXAMPLES
-  customers:update --id=2047 --data={"email":"johndo@gmail.com"}
+  customers:update --id=2047 -d= email
   customers:update --id=2047 --data={"email":"johndo@gmail.com"} --confirm
 ```
 
@@ -239,13 +239,13 @@ EXAMPLES
 
 _See code: [src\commands\customers.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src\commands\customers.ts)_
 
-## `fedapay customers:delete [FILE]`
+## `fedapay customers:delete [options]`
 
 describe the command here
 
 ```
 USAGE
-  $ fedapay customers:delete [FILE]
+  $ fedapay customers:delete [options]
 
 OPTIONS
   -f, --force
@@ -255,13 +255,13 @@ OPTIONS
 
 _See code: [src\commands\customers\delete.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src\commands\customers\delete.ts)_
 
-## `fedapay customers <operation> [options]`
+## `fedapay customers list [options]`
 
 List customers ressource
 
 ```
 USAGE
-  $ fedapay customers <operation> [options]
+  $ fedapay customers list [options]
 
 OPTIONS
   -h, --help                 show CLI help
@@ -280,13 +280,13 @@ EXAMPLES
 
 _See code: [src\commands\customers\list.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src\commands\customers\list.ts)_
 
-## `fedapay customers <operation> [options]`
+## `fedapay customers retrieve [options]`
 
 get customer details
 
 ```
 USAGE
-  $ fedapay customers <operation> [options]
+  $ fedapay customers retrieve [options]
 
 OPTIONS
   -h, --help                 show CLI help
@@ -365,13 +365,13 @@ OPTIONS
 
 _See code: [src/commands/customers.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/customers.ts)_
 
-## `fedapay customers:list [FILE]`
+## `fedapay customers:list [Options]`
 
 describe the command here
 
 ```
 USAGE
-  $ fedapay customers:list [FILE]
+  $ fedapay customers:list [Options]
 
 OPTIONS
   -f, --force
@@ -381,13 +381,13 @@ OPTIONS
 
 _See code: [src/commands/customers/list.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/customers/list.ts)_
 
-## `fedapay hello [FILE]`
+## `fedapay hello [Options]`
 
 describe the command here
 
 ```
 USAGE
-  $ fedapay hello [FILE]
+  $ fedapay hello [Options]
 
 OPTIONS
   -f, --force
