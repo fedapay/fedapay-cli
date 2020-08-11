@@ -1,16 +1,27 @@
 import { flags } from '@oclif/command'
 import { FedaPay, Transaction } from 'fedapay'
 import * as colorize from 'json-colorizer'
-import Transactions from '../transactions'
 import { string } from '@oclif/command/lib/flags'
 import cli from 'cli-ux'
 import chalk = require('chalk')
+import Transactions from '../transactions'
+/**
+ * TransactionDelete class extending super class Transactions
+ */
 export default class TransactionsDelete extends Transactions {
+   /** 
+   * @params String 
+   * Description of the command transactions:delete
+   */
   static description = 'Delete a transaction'
-  //First thing we create the flags we want to use
+  
+   /**
+   * @param object
+   * Declaration of the command flags
+  */ 
   static flags = {
     ...Transactions.flags,
-    transaction_id: flags.integer({
+    id: flags.integer({
       description: 'Provide the id of the transaction you want to delete',
       required: true,
     }),
@@ -18,68 +29,65 @@ export default class TransactionsDelete extends Transactions {
       description: 'Bypass the confirmation',
       default: false,
     }),
-
     help: flags.help({ char: 'h' }),
-    // flag with a value (-n, --name=VALUE)
-
   }
-
-
-
+/**
+ * @param String[]
+ * Some example of use of the delete command 
+ */
+static examples = [
+  'transactions:delete --api-key=[api_key] --environment=sandbox --id=12321',
+  'transactions:delete --api-key=[api_key] --environment=sandbox --id=12321 --confirm',
+]
   async run() {
-
+        /**
+     * @param object
+     * get flags value 
+     */
     const { flags } = this.parse(TransactionsDelete)
-
-    //for setting the secret api-key and the environment 'live' or 'sandbox'
-    const apiKey = flags['api-key']
-    const environment = flags.environment
+     /** 
+    * @param String 
+    * your api's key  
+    */
+   const apiKey = flags['api-key']
+   /**
+    * @param String
+    * sandbox or live
+    */
+   const environment = flags.environment
+   /**
+     * Set Apikey and environment to connect to fedapay
+     */
     FedaPay.setApiKey(apiKey)
     FedaPay.setEnvironment(environment)
-
-    //Get the transaction's id thanks to the flag
-
-    const transaction_id = flags.transaction_id
+    /**
+     * @param integer
+     * get the id of the transaction
+     */    
+    const id = flags.id
     try {
-      //Retrieve the transaction you want to delete
-      const transaction = await Transaction.retrieve(transaction_id)
+      /**
+       * @param Transaction
+       * result of the retrieve
+       */
+      const transaction = await Transaction.retrieve(id)
       if (transaction) {
-        try {
-          //Only pending or canceled transaction can't be delete so first check the status of the transaction 
-          if (transaction.status == 'pending' || transaction.status == 'canceled') {
-            if (flags.confirm) {
-              await transaction.delete()
-              this.log(chalk.blue('transaction deleted'))
-            } else {
-              const confirm = await cli.confirm('Sure to continue? Yes or No')
-              
-              if (confirm) {
-                await transaction.delete()
-                this.log(chalk.yellow('transaction deleted'))
-              } else {
-                this.log(chalk.red('deletion canceled'))
-              }
-
-            }
-           
-          } else {
-            this.log(chalk.red('the transaction can\'t be deleted'))
-          }
-
-        } catch (error) {
-          this.log(error)
-
+         /**
+       * @param Boolean
+       * true if either the confirm flag or the confirm dialog is setted
+       */
+        const confirm = flags.confirm || await cli.confirm('Sure to continue? Yes or No')
+        if (confirm) {
+          await transaction.delete()
+          this.log(chalk.blue('transaction deleted'))
+        } else {
+          this.log(chalk.red('deletion canceled'))
         }
-
-
       }
     } catch (error) {
-      this.log(error)
-
+      this.error(error)
     }
-
   }
-
-
 }
 
 

@@ -1,42 +1,72 @@
 import { flags } from '@oclif/command'
 import { FedaPay, Transaction } from 'fedapay'
 import * as colorize from 'json-colorizer'
-import Transactions from '../transactions'
-import { string } from '@oclif/command/lib/flags'
 import chalk = require('chalk')
-
+import Transactions from '../transactions'
+/**
+ * TransactionToken class extending super class Transactions
+ */
 export default class TransactionsToken extends Transactions {
+   /** 
+   * @params String 
+   * Description of the command transactions:token
+   */
   static description = 'Add a token to a transaction'
-
+   /**
+   * @param object
+   * Declaration of the command flags
+  */ 
   static flags = {
     ...Transactions.flags,
-    transaction_id: flags.integer({
+    id: flags.integer({
       required: true,
       description: 'Provide the id of the transaction you want to tokenize'
     }),
-
     help: flags.help({ char: 'h' }),
-    // flag with a value (-n, --name=VALUE)
-    name: flags.string({ char: 'n', description: 'name to print' }),
-    // flag with no value (-f, --force)
-    force: flags.boolean({ char: 'f' }),
   }
-
-  static args = [{ name: 'file' }]
-
-  async run() {
+  /**
+   * @param String[]
+   * Some example with the token command
+   */
+  static examples =[
+    'transactions:token --api-key=[api_key] --environment=sandbox --id=12321',
+  ]
+    async run() {
+     /**
+     * @param object
+     * get flags value 
+     */
     const { flags } = this.parse(TransactionsToken)
-    //for setting the secret api-key and the environment 'live' or 'sandbox'
-    const apiKey = flags['api-key']
-    const environment = flags.environment
+    /** 
+    * @param String 
+    * your api's key  
+    */
+   const apiKey = flags['api-key']
+   /**
+    * @param String
+    * sandbox or live
+    */
+   const environment = flags.environment
+   /**
+     * Set Apikey and environment to connect to fedapay
+     */
     FedaPay.setApiKey(apiKey)
     FedaPay.setEnvironment(environment)
-
-    //Get the transaction's id thanks to the flag
-
-    const transaction_id = flags.transaction_id
+    /**
+     * @param integer
+     * get the id of the transaction
+     */
+    const id = flags.id
     try {
-      const transaction = await Transaction.retrieve(transaction_id)
+       /**
+         * @param Transaction
+         * When we got a match the variable is filled up with a transaction object
+         */
+      const transaction = await Transaction.retrieve(id)
+      /**
+         * @param Object
+         * Your token
+         */
       const token = await transaction.generateToken();
       this.log(chalk.green('Your url token is :') + chalk.underline(token.url))
     } catch (error) {
