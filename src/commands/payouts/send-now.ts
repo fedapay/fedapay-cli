@@ -7,23 +7,19 @@ import DataFlagtransformer from '../../helpers/dataparse'
  */
 export default class PayoutsSendNow extends Command {
   static description = 'Send a payout now'
-
+  static usage = 'fedapay payouts:send-now [options]'
   static flags = {
     ...Payouts.flags,
     /**
      *@param object
      *  provide data passing flags
      */
-    id: flags.integer({
+    id: flags.string({
       description: 'The payout id',
-    }),
-    ids: flags.string({
-      description: 'The IDs of the payouts. Eg. 1,2,3',
-
     }),
     help: flags.help({
       char: 'h',
-      description: 'Would you want to see others commands?'
+      description: 'Help you to see others commands'
     }),
   }
   /**
@@ -31,8 +27,7 @@ export default class PayoutsSendNow extends Command {
    * examples of send-now command for the help
    */
   static examples = [
-    'payouts:send-now',
-    'payouts:send-now --id',
+    'payouts:send-now --id=105',
     'payouts:send-now --ids=1,2...',
   ]
 
@@ -40,40 +35,38 @@ export default class PayoutsSendNow extends Command {
     const { args, flags } = this.parse(PayoutsSendNow)
     const apiKey = flags['api-key']
     const environment = flags.environment
-    const ids = flags.ids
     const id = flags.id
+    //const test = [id]
 
     FedaPay.setApiKey(apiKey)
     FedaPay.setEnvironment(environment)
+    //const input_id = flags.id || flags.ids
     try {
       /**
-       * @param integer
-       * get details of the payout
+       * @param string
+       * the input data sent is a string
+       * transform data in array of object  
+       * @param {Object}
        */
-      const payout = await Payout.retrieve(id)
-      if (!payout) {
-        this.log('Don\'t match')
-      }
-      else {
-        /**
-         * @param string
-         * send only payout wich is pending
-         */
-        if (payout.status == 'pending') {
-          payout.sendNow()
+      if (id) {
+        let obj = {}
+        let raw_input = []
+        let input_id = id.split(",")
+        for (var i = 0; i < input_id.length; i++) {
+          const array_input = [input_id[i]]
+          /**
+           * serialize input ids to an array of object
+           */
+          obj = DataFlagtransformer.Transform(array_input)
+          raw_input.push(obj)
         }
-        /**
-         * @param string[]
-         * @param {object}
-         */
-          if(ids){
-            const val =ids.split(",")
-            await Payout.sendAllNow(val.map(id=>+id)
-            )
-          }
+        console.log(raw_input)
+        await Payout.sendAllNow(raw_input)
       }
-    } catch (error) {
-      this.log('Undefined')
+    }
+
+    catch (error) {
+      this.error(`${error.name} ${error.message}`)
 
     }
 

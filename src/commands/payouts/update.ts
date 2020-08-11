@@ -1,20 +1,29 @@
 import { Command, flags } from '@oclif/command'
 import { FedaPay, Payout, Transaction } from 'fedapay'
+import DataFlagtransformer from '../../helpers/dataparse'
+import cli from 'cli-ux'
 import Payouts from '../payouts'
 /**
  * PayoutsUpdate class
  */
 export default class PayoutsUpdate extends Command {
   static description = 'Update payouts ressource'
+  static usage = 'fedapay payouts:update [options]'
   static flags = {
     ...Payouts.flags,
     data: flags.string({
+      char: 'd',
       description: 'Data for the API request',
       required: true,
+      multiple: true
     }),
     id: flags.integer({
       description: 'The payout id',
       required: true,
+    }),
+    customer: flags.boolean({
+      description: 'The customer id for the payout to change',
+      default: false,
     }),
     confirm: flags.boolean({
       description: 'Skip the warning prompt and automatically confirm the command being entered',
@@ -31,11 +40,10 @@ export default class PayoutsUpdate extends Command {
    * examples command for the help
    */
   static examples = [
-    'payouts:update',
-    'payouts:update --id',
-    'payouts:update --data',
-    'payouts:update --confirm',
-
+    'payouts:update --api-key=[api_key] --environment=sandbox --id=57',
+    'payouts:update --api-key=[api_key] --environment=sandbox --id=90 -d amount=550 -d currency[iso]=XOF -d mode=moov -d customer[firstname]=Yu customer[lastname]=Ma customer[email]=vul@exemple.com customer[phone_number][number]=65423158 customer[phone_number][country]=bj',
+    'payouts:update --api-key=[api_key] --environment=sandbox  --id=109 --confirm',
+    'payouts:update --api-key=[api_key] --environment=sandbox  --id=109 --customer=2055',
   ]
 
   async run() {
@@ -48,33 +56,43 @@ export default class PayoutsUpdate extends Command {
      * confirm flag
      */
     const confirm = flags.confirm
-    const data = flags.data
+    const data = DataFlagtransformer.Transform(flags.data)
 
     FedaPay.setApiKey(apiKey)
     FedaPay.setEnvironment(environment)
-    /**
+
+    const confirmed = flags.confirm || await cli.confirm("Sure to continue?")
+    if (confirmed) {
+      try {
+        /**
      * @param object
      */
-    const payout = await Payout.retrieve(id)
-    if (payout.status == 'pending') {
-      /**
+        const payout = await Payout.retrieve(id)
+        if (payout.status == 'pending') {
+          /**
        * @param integer
        * amount must be positive
        */
-      if (payout.amount <= 0) {
-        payout.update(id,data)
-        this.log('Succesfully updated!!')
+          if (payout.amount <= 0) {
+            payout.update(id, data)
+            this.log('Succesfully updated!!')
+          }
+          else {
+            this.log('Failed Update,amount must be great than 0')
+          }
+        }
+      } catch (error) {
+        this.error('This payout is either sent or started ')
+
       }
-      else {
-        this.log('Failed Update,amount must be great than 0')
-      }
-      if (confirm) { payout.update(id,data) }
     }
     else{
-      this.log('This payout is either sent or started ')
+      this.log('Updated canceled')
+      this.exit
     }
-
   }
+
 }
+
 
 

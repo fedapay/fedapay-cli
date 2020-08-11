@@ -9,6 +9,7 @@ export default class PayoutsSchedule extends Command {
    * @param string 
    * Description of the payouts:schedule command
    */
+  static usage = 'fedapay payouts:schedule [options]'
   static description = 'Program the payout for later'
   static flags = {
     ...Payouts.flags,
@@ -22,10 +23,13 @@ export default class PayoutsSchedule extends Command {
     }),
     help: flags.help({ char: 'h' }),
   }
+  /**
+   * @param string[]
+   * schedule payouts command
+   */
   static examples = [
-    'payouts:schedule',
-    'payouts:schedule --id',
-    'payouts:schedule --when',
+    'payouts:schedule' ,
+    'payouts:schedule --api-key=[api_key] --environment=sandbox --id=102 --when="2020-8-12 11:41:51"',
 
   ]
 

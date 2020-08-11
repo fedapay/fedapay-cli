@@ -5,12 +5,13 @@ import Payouts from '../payouts'
 //Class PayoutsList 
 export default class PayoutsList extends Command {
   static description = 'List payouts ressource'
-
+  static usage = 'fedapay payouts:list [options]' 
   static flags = {
     ...Payouts.flags,
     limit: flags.integer({
+      char: 'l',
       description: 'Limit the list of payouts to display',
-      default: 10,
+      default: 25,
 
     }),
     page: flags.integer({
@@ -27,16 +28,15 @@ export default class PayoutsList extends Command {
     }),
     help: flags.help({
       char: 'h',
-      description: '',
+      description: 'Help for founding payouts list command ',
     }),
 
   }
   static examples = [
-    'payouts:list',
-    'payouts:list --limit=20',
-    'payouts:list --page',
-    'payouts:list --customer',
-    'payouts:list --status',
+    'payouts:list --api-key=[api_key] --environment=sandbox --limit=20',
+    'payouts:list --api-key=[api_key] --environment=sandbox --page=2',
+    'payouts:list --api-key=[api_key] --environment=sandbox--customer=2055',
+    'payouts:list --api-key=[api_key] --environment=sandbox --status=failed',
   ]
 
 

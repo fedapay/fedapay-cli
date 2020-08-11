@@ -12,6 +12,7 @@ export default class PayoutsDelete extends Command {
    * @param string
    * Description of payouts:delete command
    */
+  static usage = 'fedapay payouts:delete [options]'
   static description = 'Delete payout ressource'
 
   static flags = {
@@ -34,9 +35,8 @@ export default class PayoutsDelete extends Command {
    * examples for the help
    */
   static examples = [
-    'payouts:delete',
-    'payouts:delete --id',
-    'payouts:delete --confirm',
+    'payouts:delete --api-key=[api_key] --environment=sandbox --id=90',
+    'payouts:delete --api-key=[api_key] --environment=sandbox --id=108 --confirm',
 
   ]
 
@@ -48,37 +48,33 @@ export default class PayoutsDelete extends Command {
     const confirm = flags.confirm
     FedaPay.setApiKey(apiKey)
     FedaPay.setEnvironment(environment)
-    try {
-      const payout = await Payout.retrieve(id)
-      if (!payout) {
-        this.log('Don\'t match')
-      }
-      else {
-        /**
-         * delete only if payout is pending
-         */
-        if (payout.status == 'pending') {
-
-          if (await cli.confirm('Are you sure you want to delete?')) {
+    /**
+          * @param boolean
+          * Skip to confirm automatically or after yes
+          */
+    const confirmed = confirm || await cli.confirm('Are you sure you want to delete?')
+    if (confirmed) {
+      try {
+        const payout = await Payout.retrieve(id)
+        if (!payout) {
+          this.log('Don\'t match')
+        }
+        else {
+          /**
+           * delete only if payout is pending
+           */
+          if (payout.status == 'pending') {
             payout.delete()
             this.log("Succesfully deleted")
           }
-          /**
-           * @param boolean
-           * confirm automatically
-           */
-          if (confirm) { payout.delete() }
-          else{
-            this.error("ABORT")
-            this.exit(1)
-          }
-            
         }
       }
+      catch (error) {
+        this.error(`${error.name} : ${error.message}`)
+      }
     }
-    catch (error) {
-      this.error(`${error.name} : ${error.message}`)
+    else {
+      this.exit
     }
-
   }
 }
