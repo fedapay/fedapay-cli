@@ -4,23 +4,35 @@ import * as colorize from 'json-colorizer'
 import Payouts from '../payouts'
 import { type } from 'os'
 import cli from 'cli-ux'
-import { abort } from 'process'
-
+/**
+ * PayoutsDelete class
+ */
 export default class PayoutsDelete extends Command {
+  /**
+   * @param string
+   * Description of payouts:delete command
+   */
   static description = 'Delete payout ressource'
 
   static flags = {
     ...Payouts.flags,
     id: flags.integer({
-      description: 'Delete a payout',
+      description: 'The id of a payout to delete',
       required: true,
     }),
     confirm: flags.boolean({
       description: 'Confirm the delete',
-      required: false
+      default: false
     }),
-    help: flags.help({ char: 'h' }),
+    help: flags.help({
+      char: 'h',
+      description: 'Help for founding others delete commands'
+    }),
   }
+  /**
+   * @param string[]
+   * examples for the help
+   */
   static examples = [
     'payouts:delete',
     'payouts:delete --id',
@@ -42,23 +54,30 @@ export default class PayoutsDelete extends Command {
         this.log('Don\'t match')
       }
       else {
-        //delete if payout is pending
-        if (payout.status !== 'pending') {
-          this.error('Not authorized')
-        }
-        else
-          if (await cli.confirm('Êtes-vous sûr de vouloir supprimer ?')){
+        /**
+         * delete only if payout is pending
+         */
+        if (payout.status == 'pending') {
+
+          if (await cli.confirm('Are you sure you want to delete?')) {
             payout.delete()
             this.log("Succesfully deleted")
           }
-          else () =>
+          /**
+           * @param boolean
+           * confirm automatically
+           */
+          if (confirm) { payout.delete() }
+          else{
             this.error("ABORT")
-
-
+            this.exit(1)
+          }
+            
+        }
       }
     }
     catch (error) {
-      this.error("Bad request")
+      this.error(`${error.name} : ${error.message}`)
     }
 
   }

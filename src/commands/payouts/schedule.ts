@@ -1,17 +1,23 @@
 import { Command, flags } from '@oclif/command'
 import { FedaPay, Payout, Transaction } from 'fedapay'
 import Payouts from '../payouts'
-//class for programming a payout 
+/**
+ * PayoutsSchedule class
+ */  
 export default class PayoutsSchedule extends Command {
+  /**
+   * @param string 
+   * Description of the payouts:schedule command
+   */
   static description = 'Program the payout for later'
   static flags = {
     ...Payouts.flags,
     id: flags.integer({
-      description: 'Program a payout',
+      description: 'The id of the payout to schedule',
       required: true,
     }),
     when: flags.string({
-      description: 'Program with date',
+      description: 'The DateTime of the schedule in the format YYYY-MM-DD HH:mm:ss',
       required: true,
     }),
     help: flags.help({ char: 'h' }),
@@ -24,40 +30,36 @@ export default class PayoutsSchedule extends Command {
   ]
 
 
-
-
-
-
   async run() {
     const { flags } = this.parse(PayoutsSchedule)
     const apiKey = flags['api-key']
     const environment = flags.environment
     const id = flags.id
     const when = flags.when
-    const data = {
-      "amount": 1000,
-      "currency": { "iso": "XOF" },
-      "mode": "mtn",
-      "customer": {
-        "email": "johny.doe@example.com",
-      },
-      "scheduled_at": "2020-08-12T16:59:39.168Z"
-    }
 
     FedaPay.setApiKey(apiKey)
     FedaPay.setEnvironment(environment)
     try {
-      //get details of payout
-      const payout = Payout.create(data)
-        ; (await payout).schedule(when)
-      /*{
-     "id": id,
-     "scheduled_at":when
-    }*/
-
-      this.log("Succesfully sent")
+      /**
+       * @param object
+       *get details of payout 
+       */
+      const payout = await Payout.retrieve(id)
+      if (!payout) {
+        this.log('Don\'t match')
+      }
+      else {
+        /**
+         * @param string
+         *schedule only payout wich is pending 
+         */
+        if (payout.status == 'pending') {
+          payout.schedule(when)
+          this.log("Succesfully sent")
+        }
+      }
     } catch (error) {
-      this.error("date not match")
+      this.error(`${error.name} : ${error.message}`)
     }
 
   }
