@@ -25,7 +25,10 @@ export default class CustomersCreate extends Customers {
       char: 'd',
       multiple: true,    
     }),
-    help: flags.help({char: 'h'}),
+    help: flags.help({
+      char: 'h',
+      description: 'show the help about the command customers:create'
+    }),
   }
   /**
    * @param string
@@ -59,16 +62,16 @@ export default class CustomersCreate extends Customers {
      * @param object
      * result of transforming flags.data into Typescript Object
      */
-    const data= DataFlagtransformer.Transform(flags.data)
+    const data= DataFlagtransformer.transform(flags.data)
     /**
      * Set Apikey and environment to connect to fedapay
      */
     FedaPay.setApiKey(apiKey)
     FedaPay.setEnvironment(environment)
     try {
-      const customers = await Customer.create(data)
-      this.warn(chalk.greenBright(`Customer created successfully`))
-      this.log(colorize(JSON.stringify(customers, null, 2))) 
+      const customer = await Customer.create(data)
+      this.log(chalk.greenBright(`Customer created successfully`))
+      this.log(colorize(JSON.stringify(customer, null, 2))) 
     } catch (error ) {
       this.warn(chalk.red(`${error.name} : ${error.message}`))
       this.exit

@@ -31,7 +31,10 @@ export default class CustomersList extends Customers {
         description: 'Specify the page to show',
         default: 1
       }),
-      help: flags.help({char: 'h'}),
+      help: flags.help({
+        char: 'h',
+        description: 'show help about the command customers:list'
+      }),
     }
     /**
      * @param string[]

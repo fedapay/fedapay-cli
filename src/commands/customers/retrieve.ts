@@ -22,7 +22,10 @@ export default class CustomersRetrieve extends Customers {
       description: 'Retrieve details of the customer with this id',
       required: true,
     }),
-    help: flags.help({char: 'h'}),
+    help: flags.help({
+      char: 'h',
+      description: 'show the help about the command customers:retrieve'
+    }),
   }
  /**
    * @param string[]
@@ -62,8 +65,8 @@ export default class CustomersRetrieve extends Customers {
     FedaPay.setApiKey(apiKey)
     FedaPay.setEnvironment(environment)
     try {
-    const customers = await Customer.retrieve(id)
-    this.log(colorize(JSON.stringify(customers, null, 2)))
+    const customer = await Customer.retrieve(id)
+    this.log(colorize(JSON.stringify(customer, null, 2)))
     }
     catch(error){
       this.warn(chalk.red(`${error.name} : ${error.message}`))

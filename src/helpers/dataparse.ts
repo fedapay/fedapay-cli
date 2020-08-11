@@ -10,7 +10,7 @@ export default class DataFlagTransformer {
      * @param {string[]} input The string array to transform
      * @returns {Object}
      */
-    static Transform(input: string[]): Object{
+    static transform(input: string[]): Object{
         
         const data = input.join('&')
         const obj = deparam(data)

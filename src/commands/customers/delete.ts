@@ -26,7 +26,10 @@ export default class CustomersDelete extends Customers {
         description: 'Confirm the delete',
         default: false
       }),
-      help: flags.help({char: 'h'}),
+      help: flags.help({
+        char: 'h',
+        description: 'show the help about the command customers:delete'
+      }),
     }
     /**
      * @param string[]
@@ -78,9 +81,9 @@ export default class CustomersDelete extends Customers {
       const confirmed = confirm || await cli.confirm('Would you like to continue? [Y/n]')
       if(confirmed){
         try {
-            const custom = await Customer.retrieve(id)
-            const customers = custom.delete()
-            this.warn(chalk.greenBright(`Customer ${id} delected successfully`))
+            const customer = await Customer.retrieve(id)
+            const customers = customer.delete()
+            this.log(chalk.greenBright(`Customer ${id} delected successfully`))
         } catch (error) {
             this.warn(chalk.red(`${error.name} : ${error.message}`))
             this.exit

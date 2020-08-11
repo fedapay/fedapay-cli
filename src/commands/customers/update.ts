@@ -34,7 +34,11 @@ export default class CustomersUpdate extends Customers {
       description: 'Confirm the update',
       default: false
     }),
-    help: flags.help({char: 'h'}),
+    help: flags.help({
+      char: 'h',
+      description: 'show help about the command customers:update'
+      
+  }),
   }
   /**
    * @param string[]
@@ -74,7 +78,7 @@ export default class CustomersUpdate extends Customers {
      * @param object
      * result of transforming flags.data into Typescript Object
      */ 
-    const data= DataFlagtransformer.Transform(flags.data)
+    const data= DataFlagtransformer.transform(flags.data)
     /**
      * @param boolean
      * true if the user set the --confirm flag
@@ -92,12 +96,11 @@ export default class CustomersUpdate extends Customers {
     const confirmed = confirm || await cli.confirm('Would you like to continue? [Y/n]')    
     if(confirmed){
         try {
-          const customers = await Customer.update(id,data)
-          this.warn(chalk.greenBright(`Customer ${id} updated successfully`))
-          this.log(colorize(JSON.stringify(customers, null, 2))) 
+          const customer = await Customer.update(id,data)
+          this.log(chalk.greenBright(`Customer ${id} updated successfully`))
+          this.log(colorize(JSON.stringify(customer, null, 2))) 
         } catch (error) {
-          this.warn(chalk.red(`${error.name} : ${error.message}`))
-          this.exit
+          this.error(chalk.red(`${error.name} : ${error.message}`))
         }
       }
       else {
