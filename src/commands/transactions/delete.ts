@@ -36,8 +36,8 @@ export default class TransactionsDelete extends Transactions {
  * Some example of use of the delete command 
  */
 static examples = [
-  'transactions:delete --api-key=[api_key] --environment=sandbox --id=12321',
-  'transactions:delete --api-key=[api_key] --environment=sandbox --id=12321 --confirm',
+  'transactions:delete --api-key=[api_key] --environment=environment --id=12321',
+  'transactions:delete --api-key=[api_key] --environment=environment --id=12321 --confirm',
 ]
   async run() {
         /**
@@ -87,7 +87,5 @@ static examples = [
     } catch (error) {
       this.error(error)
     }
-  }
-}
-
+  }'transactions:token'
 

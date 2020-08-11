@@ -40,8 +40,8 @@ export default class TransactionsUpdate extends Transactions {
  * Some example of use of the transaction:update command
  */
   static examples = [
-    'transactions:update --api-key=[api_key] --environment=sandbox --id=12321 -d amount=2500, -d description=Sending money to mum -d currency[iso]=XOF',
-    'transactions:update --api-key=[api_key] --environment=sandbox --id=52123 -d amount=1780, -d customer[email]=geronimo@apache.com --confirm'
+    'transactions:update --api-key=[api_key] --environment=environment --id=12321 -d amount=2500, -d description=Sending money to mum -d currency[iso]=XOF',
+    'transactions:update --api-key=[api_key] --environment=environment --id=52123 -d amount=1780, -d customer[email]=geronimo@apache.com --confirm'
   ]
   async run() {
     /**
@@ -56,7 +56,7 @@ export default class TransactionsUpdate extends Transactions {
     const apiKey = flags['api-key']
     /**
      * @param String
-     * sandbox or live
+     * environment or live
      */
     const environment = flags.environment
     /**

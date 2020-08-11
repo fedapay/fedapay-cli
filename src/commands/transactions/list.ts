@@ -31,7 +31,7 @@ export default class TransactionsList extends Transactions {
    * Some example of use of the transaction:list command
    */
   static examples = [
-    'transactions:list --api-key=[api_key] --environment=sandbox --limit=15'
+    'transactions:list --api-key=[api_key] --environment=environment --limit=15'
   ]
   async run() {
         /**
@@ -46,7 +46,7 @@ export default class TransactionsList extends Transactions {
    const apiKey = flags['api-key']
    /**
     * @param String
-    * sandbox or live
+    * environment or live
     */
    const environment = flags.environment
 /**

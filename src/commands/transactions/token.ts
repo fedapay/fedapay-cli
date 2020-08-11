@@ -29,7 +29,7 @@ export default class TransactionsToken extends Transactions {
    * Some example with the token command
    */
   static examples =[
-    'transactions:token --api-key=[api_key] --environment=sandbox --id=12321',
+    'transactions:token --api-key=[api_key] --environment=environment --id=12321',
   ]
     async run() {
      /**

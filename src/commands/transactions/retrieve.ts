@@ -30,7 +30,7 @@ export default class TransactionsRetrieve extends Transactions {
    * Some example with the retrieve command
    */
   static examples = [
-    'transactions:retrieve --api-key=[api_key] --environment=sandbox --id=12321',
+    'transactions:retrieve --api-key=[api_key] --environment=environment --id=12321',
   ]
   async run() {
     /**
@@ -62,10 +62,7 @@ export default class TransactionsRetrieve extends Transactions {
       /**
       * @param Transaction
       * When we got a match the variable is filled up with a transaction object
-      */
-      const transaction = await Transaction.retrieve(transaction_id)
-      this.log(chalk.red('We got a match!'))
-      this.log(colorize(JSON.stringify(transaction, null, 2)))
+      */sandboxg(colorize(JSON.stringify(transaction, null, 2)))
     } catch (error) {
       this.error(error)
     }

@@ -37,8 +37,8 @@ export default class TransactionsCreate extends Transactions {
    * Some example of use of the transaction:create command
    */
   static examples = [
-    'transactions:create --api-key=[api_key] --environment=sandbox -d amount=2500, -d description=Sending money to mum -d currency[iso]=XOF, -d customer[email]=geronimo@apache.com',
-    'transactions:create --api-key=[api_key] --environment=sandbox --with_token -d amount=2500, -d description=Sending money to mum -d currency[iso]=XOF, -d customer[email]=geronimo@apache.com'
+    'transactions:create --api-key=[api_key] --environment=environment -d amount=2500, -d description=Sending money to mum -d currency[iso]=XOF, -d customer[email]=geronimo@apache.com',
+    'transactions:create --api-key=[api_key] --environment=environment --with_token -d amount=2500, -d description=Sending money to mum -d currency[iso]=XOF, -d customer[email]=geronimo@apache.com'
   ]
   async run() {
     /**
