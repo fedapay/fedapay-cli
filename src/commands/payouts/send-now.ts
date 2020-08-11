@@ -27,8 +27,9 @@ export default class PayoutsSendNow extends Command {
    * examples of send-now command for the help
    */
   static examples = [
-    'payouts:send-now --id=105',
-    'payouts:send-now --ids=1,2...',
+    'payouts:send-now --id="id=105"',
+    'payouts:send-now --id="id=105,id=108"',
+
   ]
 
   async run() {
@@ -59,6 +60,7 @@ export default class PayoutsSendNow extends Command {
            */
           obj = DataFlagtransformer.Transform(array_input)
           raw_input.push(obj)
+
         }
         console.log(raw_input)
         await Payout.sendAllNow(raw_input)
