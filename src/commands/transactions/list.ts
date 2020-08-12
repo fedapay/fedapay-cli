@@ -3,7 +3,7 @@ import cli from 'cli-ux';
 import { FedaPay, Transaction } from 'fedapay';
 import colorize from 'json-colorizer';
 import Transactions from '../transactions';
-import DataFlagtransformer from '../../helpers/dataparse';
+// import DataFlagtransformer from '../../helpers/dataparse';
 
 /**
  * TransactionList class extending superClass Transactions
@@ -80,7 +80,7 @@ export default class TransactionsList extends Transactions {
      * The filter flag
      * TODO: Use filter for the list
      */
-    const filters = DataFlagtransformer.transformFilters(flags.filters);
+    // const filters = DataFlagtransformer.transformFilters(flags.filters);
 
     /**
      * Set Apikey and environment to connect to fedapay
