@@ -1,70 +1,74 @@
-import { flags } from '@oclif/command'
-import { FedaPay, Transaction } from 'fedapay'
-import * as colorize from 'json-colorizer'
-import { string } from '@oclif/command/lib/flags'
-import chalk = require('chalk')
-import Transactions from '../transactions'
+import { flags } from '@oclif/command';
+import { FedaPay, Transaction } from 'fedapay';
+import colorize from 'json-colorizer';
+import Transactions from '../transactions';
+
 /**
  * TransactionRetrieve class extending super Class Transactions
  */
 export default class TransactionsRetrieve extends Transactions {
-  /** 
-  * @params String 
+  /**
+  * @params String
   * Description of the command transactions:retrieve
   */
-  static description = 'retrieve the id of a transaction'
+  static description = 'Retrieve a transaction'
+
   /**
-  * @param object
-  * Declaration of the command flags
- */
+   * @param object
+   * Declaration of the command flags
+   */
   static flags = {
     ...Transactions.flags,
     id: flags.integer({
       required: true,
-      description: 'Provide the id of the transaction you want to retrieve'
+      description: 'ID of the transaction.'
     }),
-    help: flags.help({ char: 'h' }),
-  }
+    help: flags.help({ char: 'h', description: 'Help for transactions:retrieve command.' }),
+  };
+
   /**
-   * @param String 
+   * @param String
    * Some example with the retrieve command
    */
   static examples = [
-    'transactions:retrieve --api-key=[api_key] --environment=environment --id=12321',
-  ]
+    'transactions:retrieve --api-key=[API-KEY] --environment=[env] --id=[ID]'
+  ];
+
   async run() {
     /**
       * @param object
-      * get flags value 
+      * get flags value
       */
-    const { flags } = this.parse(TransactionsRetrieve)
-    /** 
-    * @param String 
-    * your api's key  
+    const { flags } = this.parse(TransactionsRetrieve);
+
+    /**
+    * @param String
+    * your api's key
     */
-    const apiKey = flags['api-key']
+    const apiKey = flags['api-key'];
+
     /**
      * @param String
      * sandbox or live
      */
-    const environment = flags.environment
+    const environment = flags.environment;
+
     /**
-      * Set Apikey and environment to connect to fedapay
-      */
-    FedaPay.setApiKey(apiKey)
-    FedaPay.setEnvironment(environment)
+     * Set Apikey and environment to connect to fedapay
+     */
+    FedaPay.setApiKey(apiKey);
+    FedaPay.setEnvironment(environment);
     /**
      * @param integer
      * get the id of the transaction
      */
-    const transaction_id = flags.id
+    const id = flags.id;
+
     try {
-      /**
-      * @param Transaction
-      * When we got a match the variable is filled up with a transaction object
-      */sandboxg(colorize(JSON.stringify(transaction, null, 2)))
+      const transaction = await Transaction.retrieve(id);
+      this.log(colorize(JSON.stringify(transaction, null, 2)));
     } catch (error) {
-      this.error(error)
+      this.error(error.message);
     }
   }
 }
