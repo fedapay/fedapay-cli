@@ -88,5 +88,7 @@ export default class CustomersUpdate extends Customers {
     } catch (error) {
       this.error(error.message);
     }
+
+    cli.action.stop();
   }
 }

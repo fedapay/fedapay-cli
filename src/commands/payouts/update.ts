@@ -1,103 +1,96 @@
 import { flags } from '@oclif/command';
-import { FedaPay, Payout, Transaction } from 'fedapay';
-import DataFlagtransformer from '../../helpers/dataparse';
+import { FedaPay, Payout } from 'fedapay';
 import cli from 'cli-ux';
-import chalk from 'chalk';
+import colorize from 'json-colorizer';
 import Payouts from '../payouts';
+import DataFlagtransformer from '../../helpers/dataparse';
+
 /**
  * PayoutsUpdate class
  */
 export default class PayoutsUpdate extends Payouts {
-  static description = 'Update payouts ressource'
-  static usage = 'fedapay payouts:update [options]'
+  /**
+   * @param string
+   * Description of the command Custommers:update description
+   */
+  static description = 'Update a payout.';
+
+  /**
+   * @param object
+   * Declaration of the command flags
+  */
   static flags = {
     ...Payouts.flags,
-    data: flags.string({
-      char: 'd',
-      description: 'Data for the API request',
-      required: true,
-      multiple: true
-    }),
     id: flags.integer({
-      description: 'The payout id',
-      required: true,
-    }),
-    customer: flags.boolean({
-      description: 'The customer id for the payout to change',
-      default: false,
-    }),
-    confirm: flags.boolean({
-      description: 'Skip the warning prompt and automatically confirm the command being entered',
-      default: false,
+      description: 'The pauyout ID.',
       required: true
     }),
-    help: flags.help({
-      char: 'h',
-      description: 'Help you to found out the payouts\'command'
+    data: flags.string({
+      description: 'Data for the API request.',
+      required: true,
+      char: 'd',
+      multiple: true,
     }),
-  }
+    help: flags.help({ char: 'h', description: 'Help for payouts:update command.' }),
+  };
+
   /**
    * @param string[]
    * examples command for the help
    */
   static examples = [
-    'payouts:update --api-key=[api_key] --environment=sandbox --id=57',
-    'payouts:update --api-key=[api_key] --environment=sandbox --id=90 -d amount=550 -d currency[iso]=XOF -d mode=moov -d customer[firstname]=Yu customer[lastname]=Ma customer[email]=vul@exemple.com customer[phone_number][number]=65423158 customer[phone_number][country]=bj',
-    'payouts:update --api-key=[api_key] --environment=sandbox  --id=109 --confirm',
-    'payouts:update --api-key=[api_key] --environment=sandbox  --id=109 --customer=2055',
-  ]
+    'payouts:update --api-key=[API-KEY] --environment=[env] --id=90 -d amount=550 -d currency[iso]=XOF -d mode=moov -d customer[firstname]=Yu customer[lastname]=Ma customer[email]=vul@exemple.com customer[phone_number][number]=65423158 customer[phone_number][country]=bj',
+    'payouts:update --api-key=[API-KEY] --environment=[env] --id=109 -d customer[id]=2055',
+  ];
 
   async run() {
-    const { flags } = this.parse(PayoutsUpdate)
-    const apiKey = flags['api-key']
-    const environment = flags.environment
-    const id = flags.id
-    /**
-     * @param boolean
-     * confirm flag
-     */
-    const confirm = flags.confirm
     /**
      * @param object
-     * parsing data flag input to object
+     * get flags value
      */
-    const data = DataFlagtransformer.Transform(flags.data)
+    const { flags } = this.parse(PayoutsUpdate);
 
-    FedaPay.setApiKey(apiKey)
-    FedaPay.setEnvironment(environment)
+    /**
+     * @param string
+     * api key value
+     */
+    const apiKey = flags['api-key'];
 
-    const confirmed = confirm|| await cli.confirm("Sure to continue?")
-    if (confirmed) {
-      try {
-        /**
+    /**
+     * @param string
+     * environment type
+     */
+    const environment = flags.environment;
+
+    /**
+     * @param number
+     * store the customer id
+     */
+    const id = flags.id;
+
+    /**
      * @param object
-        */
-        cli.action.start('Retrieving payout');
-        const payout = await Payout.retrieve(id);
-        if (payout.status == 'pending') {
-          /**
-       * @param integer
-       * amount must be positive
+     * result of transforming flags.data into Typescript Object
+     */
+    const data = DataFlagtransformer.transform(flags.data);
+
+    /**
+     * Set Apikey and environment to connect to fedapay
+     */
+    FedaPay.setApiKey(apiKey);
+    FedaPay.setEnvironment(environment);
+
+    try {
+      /**
+       * @param object
        */
-          if (payout.amount <= 0) {
-            this.log(chalk.red('Failed Update,amount must be great than 0'));
-          }
-          else {
-            payout.update(id,data)
-            this.log(chalk.green('Succesfully updated!!'));
-          }
-        }
-      } catch(error) {
-        this.log(chalk.red('This payout is either sent or started '));
-      }
+      cli.action.start('Updating payout');
+      const payout = Payout.update(id, data)
+      this.log(colorize(JSON.stringify(payout, null, 2)));
+    } catch (error) {
+      this.error(error.message);
     }
-    else {
-      this.log('Updated canceled')
 
-    }
     cli.action.stop();
   }
 }
-
-
-
