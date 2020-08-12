@@ -23,10 +23,13 @@ export default class TransactionsList extends Transactions {
     ...Transactions.flags,
     limit: flags.integer({
       description: 'Limit of records to display.',
+      char: 'l',
       default: 10,
     }),
     page: flags.integer({
       description: 'The page of the records to display.',
+      char: 'p',
+      default: 1
     }),
     filters: flags.string({
       char: 'f',
