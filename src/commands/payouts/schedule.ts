@@ -59,7 +59,7 @@ export default class PayoutsSchedule extends Command {
          */
         if (payout.status == 'pending') {
           payout.schedule(when)
-          this.log("Succesfully sent")
+          this.log("Payout started")
         }
       }
     } catch (error) {

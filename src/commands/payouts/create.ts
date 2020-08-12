@@ -49,7 +49,7 @@ export default class PayoutsCreate extends Command {
     'payouts:create --api-key=[api_key] --environment=sandbox -d amount=5000 -d currency[iso]=XOF -d mode=mtn -d customer[firstname]=Qan customer[lastname]=Sally customer[email]=nal@exemple.com customer[phone_number][number]=65423158 customer[phone_number][country]=bj',
     'payouts:create --api-key=[api_key] --environment=sandbox amount=5000 -d currency[iso]=XOF -d mode=mtn -d customer[firstname]=Chad customer[lastname]=Ly  customer[phone_number][number]=65423158 customer[phone_number][country]=bj --customer=1025',
     'payouts:create --api-key=[api_key] --environment=sandbox--schedule="2020-8-12 11:41:51"',
-    'payouts:create --api-key=[api_key] --environment=sandbox --send-now',
+    'payouts:create --api-key=[api_key] --environment=sandbox --sendnow',
   ]
 
 

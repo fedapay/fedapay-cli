@@ -61,7 +61,7 @@ export default class PayoutsUpdate extends Command {
     FedaPay.setApiKey(apiKey)
     FedaPay.setEnvironment(environment)
 
-    const confirmed = flags.confirm || await cli.confirm("Sure to continue?")
+    const confirmed = confirm|| await cli.confirm("Sure to continue?")
     if (confirmed) {
       try {
         /**
@@ -74,24 +74,22 @@ export default class PayoutsUpdate extends Command {
        * amount must be positive
        */
           if (payout.amount <= 0) {
-            payout.update(id, data)
-            this.log('Succesfully updated!!')
+            this.log('Failed Update,amount must be great than 0')           
           }
           else {
-            this.log('Failed Update,amount must be great than 0')
+            payout.update(id,data)
+            this.log('Succesfully updated!!')
           }
         }
-      } catch (error) {
+      } catch(error) {
         this.error('This payout is either sent or started ')
-
       }
     }
-    else{
+    else {
       this.log('Updated canceled')
       this.exit
     }
   }
-
 }
 
 

@@ -37,11 +37,8 @@ export default class PayoutsSendNow extends Command {
     const apiKey = flags['api-key']
     const environment = flags.environment
     const id = flags.id
-    //const test = [id]
-
     FedaPay.setApiKey(apiKey)
     FedaPay.setEnvironment(environment)
-    //const input_id = flags.id || flags.ids
     try {
       /**
        * @param string
@@ -60,13 +57,11 @@ export default class PayoutsSendNow extends Command {
            */
           obj = DataFlagtransformer.Transform(array_input)
           raw_input.push(obj)
-
         }
         console.log(raw_input)
         await Payout.sendAllNow(raw_input)
       }
     }
-
     catch (error) {
       this.error(`${error.name} ${error.message}`)
 

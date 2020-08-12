@@ -1,5 +1,5 @@
 import { Command, flags } from '@oclif/command'
-import { FedaPay, Payout, Customer, FedaPayObject } from 'fedapay'
+import { FedaPay, Payout} from 'fedapay'
 import * as colorize from 'json-colorizer'
 import Payouts from '../payouts'
 //Class PayoutsList 
