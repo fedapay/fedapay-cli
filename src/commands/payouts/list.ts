@@ -1,26 +1,26 @@
 import { flags } from '@oclif/command';
-import { FedaPay, Customer } from 'fedapay';
+import { FedaPay, Payout } from 'fedapay';
 import colorize from 'json-colorizer';
-import { cli } from 'cli-ux';
-import Customers from '../customers';
+import cli from 'cli-ux';
+import Payouts from '../payouts';
 import DataFlagTransformer from '../../helpers/dataparse';
 
 /**
- * CustomersList class extending the superClass Customers
+ * PayoutsList commnd class
  */
-export default class CustomersList extends Customers {
+export default class PayoutsList extends Payouts {
   /**
    * @param string
-   * Description of the command Custommers:list description
+   * Description of payouts:delete command
    */
-  static description = 'List of the customer records.';
+  static description = 'List of the payout records.';
 
   /**
    * @param object
    * Declaration of the command flags
   */
   static flags = {
-    ...Customers.flags,
+    ...Payouts.flags,
     limit: flags.integer({
       char: 'l',
       description: 'Limit of records to display.',
@@ -28,7 +28,7 @@ export default class CustomersList extends Customers {
     }),
     filters: flags.string({
       char: 'f',
-      description: 'Filter the list of customers.',
+      description: 'Filter the list of payouts.',
       multiple: true,
     }),
     page: flags.integer({
@@ -36,17 +36,12 @@ export default class CustomersList extends Customers {
       char: 'p',
       default: 1
     }),
-    help: flags.help({ char: 'h', description: 'Help for customers:list' })
+    help: flags.help({ char: 'h', description: 'Help for payouts:list' })
   };
 
-  /**
-   * @param string[]
-   * some examples of the custommers list use for help
-   */
   static examples = [
-    'customers:list',
-    'customers:list --api-key=[API-KEY] --environment=[env] --limit=20',
-    'customers:list --api-key=[API-KEY] --environment=[env] -p=2',
+    'payouts:list --api-key=[API-KEY] --environment=[env] --limit=20',
+    'payouts:list --api-key=[API-KEY] --environment=[env] --page=2',
   ];
 
   async run() {
@@ -58,7 +53,7 @@ export default class CustomersList extends Customers {
      * @param object
      * get flags value
      */
-    const { flags } = this.parse(CustomersList);
+    const { flags } = this.parse(PayoutsList);
 
     /**
      * @param string
@@ -97,15 +92,13 @@ export default class CustomersList extends Customers {
     FedaPay.setApiKey(apiKey);
     FedaPay.setEnvironment(environment);
 
-    try {
-      cli.action.start('Getting the customers list');
+    cli.action.start('Getting the payouts list');
 
-      const customers = await Customer.all({ per_page: limit, page, ...filters });
-      this.log(colorize(JSON.stringify(customers, null, 2)));
-    } catch (error) {
-      this.error(error.message);
-    }
-
+    const payouts = await Payout.all({
+      per_page: limit, page: page,
+      ...filters
+    });
+    this.log(colorize(JSON.stringify(payouts, null, 2)));
     cli.action.stop();
   }
 }

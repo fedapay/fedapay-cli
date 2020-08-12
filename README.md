@@ -67,7 +67,29 @@ EXAMPLES
   customers retrieve --id=ID
 ```
 
-_See code: [src/commands/customers.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/customers.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.0/src/commands/help.ts)_
+
+## `fedapay payouts <operation> [options]`
+
+Manage FedaPay payouts ressource
+
+```
+USAGE
+  $ fedapay payouts <operation> [options]
+
+OPTIONS
+  -h, --help                 Help for payouts command
+  --api-key=api-key          Your API key to use for the command
+  --environment=environment  FedaPay Api environment
+
+EXAMPLES
+  payouts list
+  payouts create --data  --customer --schedule="date" --send-now
+  payouts update --id  --data  --customer --confirm
+  payouts delete  --id --confirm
+  payouts schedule --id --when
+  payouts send-now
+```
 
 ## `fedapay customers <operation> [options]`
 
@@ -154,19 +176,36 @@ OPTIONS
 
 _See code: [src/commands/events/tail.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/events/tail.ts)_
 
-## `fedapay help [COMMAND]`
+_See code: [src/commands/payouts/list.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/payouts/list.ts)_
 
-display help for fedapay
+## `fedapay payouts:schedule [FILE]`
+
+describe the command here
 
 ```
 USAGE
-  $ fedapay help [COMMAND]
-
-ARGUMENTS
-  COMMAND  command to show help for
+  $ fedapay payouts:schedule [FILE]
 
 OPTIONS
-  --all  see all commands in CLI
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/payouts/schedule.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/payouts/schedule.ts)_
+
+## `fedapay payouts:send-now [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ fedapay payouts:send-now [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.0/src/commands/help.ts)_

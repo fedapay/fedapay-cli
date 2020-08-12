@@ -25,7 +25,7 @@ export default class CustomersDelete extends Customers {
       required: true
     }),
     confirm: flags.boolean({
-      description: 'Confirm the delete',
+      description: 'Skip the warning prompt and automatically confirm the command being entered.',
       char: 'c',
       default: false
     }),

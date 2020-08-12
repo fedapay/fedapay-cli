@@ -9,7 +9,7 @@ export default class Customers extends Command {
    * @param string
    * Description of the command Customer
    */
-  static description = 'Manage FedaPay customers ressource';
+  static description = 'Manage FedaPay customer ressources';
 
   /**
     * @param string

@@ -1,28 +1,28 @@
 import { flags } from '@oclif/command';
-import { FedaPay, Customer } from 'fedapay';
-import colorize from 'json-colorizer';
+import { FedaPay, Payout } from 'fedapay';
 import cli from 'cli-ux';
-import Customers from '../customers';
+import colorize from 'json-colorizer';
+import Payouts from '../payouts';
 import DataFlagtransformer from '../../helpers/dataparse';
 
 /**
- * CustomersUpdate class extending the superClass Customers
+ * PayoutsUpdate class
  */
-export default class CustomersUpdate extends Customers {
+export default class PayoutsUpdate extends Payouts {
   /**
    * @param string
    * Description of the command Custommers:update description
    */
-  static description = 'Update a customer.';
+  static description = 'Update a payout.';
 
   /**
    * @param object
    * Declaration of the command flags
   */
   static flags = {
-    ...Customers.flags,
+    ...Payouts.flags,
     id: flags.integer({
-      description: 'The customer ID.',
+      description: 'The pauyout ID.',
       required: true
     }),
     data: flags.string({
@@ -31,16 +31,16 @@ export default class CustomersUpdate extends Customers {
       char: 'd',
       multiple: true,
     }),
-    help: flags.help({ char: 'h', description: 'Help for customers:update command.' }),
+    help: flags.help({ char: 'h', description: 'Help for payouts:update command.' }),
   };
 
   /**
    * @param string[]
-   * some examples of the custommers update use for help
+   * examples command for the help
    */
   static examples = [
-    'customers:update --api-key=[API-KEY] --environment=[env] --id=[ID] -d email=johndoe@zot.com',
-    'customers:update --api-key=[API-KEY] --environment=[env] --id=[ID] -d email=johndoe@zot.com -d lastname=Doe',
+    'payouts:update --api-key=[API-KEY] --environment=[env] --id=90 -d amount=550 -d currency[iso]=XOF -d mode=moov -d customer[firstname]=Yu customer[lastname]=Ma customer[email]=vul@exemple.com customer[phone_number][number]=65423158 customer[phone_number][country]=bj',
+    'payouts:update --api-key=[API-KEY] --environment=[env] --id=109 -d customer[id]=2055',
   ];
 
   async run() {
@@ -48,7 +48,7 @@ export default class CustomersUpdate extends Customers {
      * @param object
      * get flags value
      */
-    const { flags } = this.parse(CustomersUpdate);
+    const { flags } = this.parse(PayoutsUpdate);
 
     /**
      * @param string
@@ -81,10 +81,12 @@ export default class CustomersUpdate extends Customers {
     FedaPay.setEnvironment(environment);
 
     try {
-      cli.action.start('Updating transaction');
-
-      const customer = await Customer.update(id, data);
-      this.log(colorize(JSON.stringify(customer, null, 2)));
+      /**
+       * @param object
+       */
+      cli.action.start('Updating payout');
+      const payout = Payout.update(id, data);
+      this.log(colorize(JSON.stringify(payout, null, 2)));
     } catch (error) {
       this.error(error.message);
     }

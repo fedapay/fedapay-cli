@@ -10,7 +10,7 @@ export default class Transactions extends Command {
    * The command descrition
    * @var string
    */
-  static description = 'Here you can manage your transaction';
+  static description = 'Manage FedaPay transaction ressources';
 
   /**
    * The commande usage
