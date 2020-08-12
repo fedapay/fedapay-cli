@@ -1,9 +1,10 @@
-import {flags} from '@oclif/command'
-import {FedaPay, Customer} from 'fedapay'
-import * as colorize from 'json-colorizer'
-import Customers from '../customers'
-import * as chalk from 'chalk'
-import DataFlagtransformer from '../../helpers/dataparse'
+import {flags} from '@oclif/command';
+import {FedaPay, Customer} from 'fedapay';
+import colorize from 'json-colorizer';
+import { cli } from 'cli-ux';
+import Customers from '../customers';
+import DataFlagtransformer from '../../helpers/dataparse';
+
 /**
  * CustomersCreate class extending the superClass Customers
  */
@@ -12,7 +13,8 @@ export default class CustomersCreate extends Customers {
    * @param string
    * Description of the command Customer:create
   */
-  static description = 'Create a new customer'
+  static description = 'Create a new customer';
+
   /**
    * @param object
    * Declaration of the command flags
@@ -20,61 +22,68 @@ export default class CustomersCreate extends Customers {
   static flags = {
     ...Customers.flags,
     data: flags.string({
-      description: 'Json Data of the customer',
+      description: 'Data for the API request.',
       required: true,
       char: 'd',
-      multiple: true,
+      multiple: true
     }),
-    help: flags.help({
-      char: 'h',
-      description: 'show the help about the command customers:create'
-    }),
-  }
+    help: flags.help({ char: 'h', description: 'Help for customers:create.' })
+  };
+
   /**
    * @param string
    * Set the command usage for help
    */
-  static usage = '$ fedapay customers:create [options]'
+  static usage = '$ fedapay customers:create [options]';
+
   /**
    * @param string[]
    * some examples of the custommers create use for help
    */
   static examples = [
-    'fedapay customers:create --api-key=[api_key] --environment=sandbox -d firstname=DOS -d lastname=Yovo -d email=customertest1@tom.com -d phone_number[number]=68452896 -d phone_number[country]=BJ'
-  ]
+    'customers:create --api-key=[API-KEY] --environment=[env] -d firstname=John -d lastname=Doe -d email=customertest1@tom.com -d phone_number[number]=68452896 -d phone_number[country]=BJ'
+  ];
+
   async run() {
     /**
      * @param object
      * get flags value
      */
-    const {flags} = this.parse(CustomersCreate)
+    const {flags} = this.parse(CustomersCreate);
+
     /**
      * @param string
      * api key value
      */
-    const apiKey = flags['api-key']
+    const apiKey = flags['api-key'];
+
     /**
      * @param string
      * environment type
      */
-    const environment = flags.environment
+    const environment = flags.environment;
+
     /**
      * @param object
      * result of transforming flags.data into Typescript Object
      */
-    const data= DataFlagtransformer.transform(flags.data)
+    const data = DataFlagtransformer.transform(flags.data);
+
     /**
      * Set Apikey and environment to connect to fedapay
      */
-    FedaPay.setApiKey(apiKey)
-    FedaPay.setEnvironment(environment)
+    FedaPay.setApiKey(apiKey);
+    FedaPay.setEnvironment(environment);
+
     try {
-      const customer = await Customer.create(data)
-      this.log(chalk.greenBright(`Customer created successfully`))
-      this.log(colorize(JSON.stringify(customer, null, 2)))
-    } catch (error ) {
-      this.warn(chalk.red(`${error.name} : ${error.message}`))
-      this.exit
+      cli.action.start('Creating customer');
+
+      const customer = await Customer.create(data);
+      this.log(colorize(JSON.stringify(customer, null, 2)));
+    } catch (error) {
+      this.error(error.message);
     }
+
+    cli.action.stop();
   }
 }
