@@ -13,7 +13,7 @@ export default class TransactionsToken extends Transactions {
   * @params String
   * Description of the command transactions:token
   */
-  static description = 'Add a token to a transaction';
+  static description = 'Generate a payment token for a transaction.';
 
   /**
   * @param object

@@ -12,7 +12,7 @@ export default class TransactionsRetrieve extends Transactions {
   * @params String
   * Description of the command transactions:retrieve
   */
-  static description = 'Retrieve a transaction'
+  static description = 'Retrieve a transaction.'
 
   /**
    * @param object

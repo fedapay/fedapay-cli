@@ -13,7 +13,7 @@ export default class CustomersCreate extends Customers {
    * @param string
    * Description of the command Customer:create
   */
-  static description = 'Create a new customer';
+  static description = 'Create a new customer.';
 
   /**
    * @param object

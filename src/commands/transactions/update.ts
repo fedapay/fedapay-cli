@@ -13,7 +13,7 @@ export default class TransactionsUpdate extends Transactions {
   * @params String
   * Description of the command transactions:update
   */
-  static description = 'Update some transactions';
+  static description = 'Update a transaction.';
 
   /**
    * @param object

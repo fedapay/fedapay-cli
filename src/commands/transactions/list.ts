@@ -13,7 +13,7 @@ export default class TransactionsList extends Transactions {
   * @params String
   * Description of the command transactions:list
   */
-  static description = 'List of the transactions ressources';
+  static description = 'List of the transaction records.';
 
   /**
    * @param object
