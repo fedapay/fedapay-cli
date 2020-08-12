@@ -18,9 +18,8 @@ EXAMPLES
   payouts:update --api-key=api-key --environment=environment -d id=105
   payouts:delete --api-key=api-key --environment=environment --id=85 
   payouts:delete --api-key=api-key --environment=environment --id--confirm
-  payouts:schedule --api-key=api-key --environment=environment -d id=101
-  payouts:send-now --api-key=api-key --environment=environment --id=105
-  payouts:send-now --api-key=api-key --environment=environment --ids=102,103
+  payouts:schedule --api-key=api-key --environment=environment -d id='id=101'
+  payouts:send-now --api-key=api-key --environment=environment --id='id=105,id=103'
 ```
 
 _See code: [src\commands\payouts.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src\commands\payouts.ts)_
