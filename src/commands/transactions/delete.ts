@@ -21,11 +21,11 @@ export default class TransactionsDelete extends Transactions {
   static flags = {
     ...Transactions.flags,
     id: flags.integer({
-      description: 'Provide the id of the transaction you want to delete.',
+      description: 'The transaction ID.',
       required: true,
     }),
     confirm: flags.boolean({
-      description: 'Bypass the confirmation',
+      description: 'Skip the warning prompt and automatically confirm the command being entered.',
       default: false,
       char: 'c'
     }),

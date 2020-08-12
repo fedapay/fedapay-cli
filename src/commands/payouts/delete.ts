@@ -12,8 +12,8 @@ export default class PayoutsDelete extends Payouts {
    * @param string
    * Description of payouts:delete command
    */
+  static description = 'Delete payout ressource';
 
-  static description = 'Delete payout ressource'
   /**
    * @param Object
    * delete command flags
@@ -21,29 +21,24 @@ export default class PayoutsDelete extends Payouts {
   static flags = {
     ...Payouts.flags,
     id: flags.integer({
-      description: 'The id of a payout to delete',
+      description: 'The payout ID.',
       required: true,
     }),
     confirm: flags.boolean({
-      description: 'Confirm the delete',
+      description: 'Skip the warning prompt and automatically confirm the command being entered.',
       default: false,
       char: 'c',
     }),
-    help: flags.help({
-      char: 'h',
-      description: 'Help for founding others delete commands'
-    }),
-  }
+    help: flags.help({ char: 'h', description: 'Help for payouts:delete.' }),
+  };
 
   /**
    * @param string[]
    * examples for the delete commands
    */
-
   static examples = [
-    'payouts:delete --api-key=[api_key] --environment=sandbox --id=90',
-    'payouts:delete --api-key=[api_key] --environment=sandbox --id=108 --confirm',
-
+    'payouts:delete --api-key=[API-KEY] --environment=[env] --id=[ID]',
+    'payouts:delete --api-key=[API-KEY] --environment=[env] --id=[ID] -c'
   ]
 
   async run() {
@@ -51,18 +46,20 @@ export default class PayoutsDelete extends Payouts {
      * @param Object
      * get the delete flags
     */
-
     const { flags } = this.parse(PayoutsDelete);
+
     /**
      * @param string
      * the api-key
      */
     const apiKey = flags['api-key'];
+
     /**
      * @param string
      * the environment
      */
     const environment = flags.environment;
+
     /**
      * @param integer
      * id of the payout
@@ -72,44 +69,32 @@ export default class PayoutsDelete extends Payouts {
     /**
      * connect to Fedapay with config set up
      */
-    FedaPay.setApiKey(apiKey)
-    FedaPay.setEnvironment(environment)
+    FedaPay.setApiKey(apiKey);
+    FedaPay.setEnvironment(environment);
 
-    try {
-      cli.action.start('Retrieving payout');
-      const payout = await Payout.retrieve(id);
-      /**
-   * @param boolean
-   * confirm flag
-   */
-      const confirm = flags.confirm
-      /**
-        * @param boolean
-        * Skip to confirm automatically or after yes
-        */
+    /**
+     * @param boolean
+     * true if the user set the --confirm flag or input yes in the terminal
+     */
+    const confirm = flags.confirm || await cli.confirm(
+      'Are you sure to continue? [Y/n]'
+    );
 
-      const confirmed = confirm || await cli.confirm('Are you sure you want to delete?');
-      if (confirmed) {
-        if (!payout) {
-          this.log('Don\'t match')
-        }
-        else {
-          /**
-           * delete only if payout is pending
-           */
-          if (payout.status == 'pending') {
-            cli.action.start('Deleting payout');
-            await payout.delete();
-            this.log(chalk.blue("Payout deleted"));
-          }
-        }
+    if (confirm) {
+      try {
+        cli.action.start('Retrieving payout');
+        const payout = await Payout.retrieve(id);
+
+        cli.action.start('Deleting payout');
+        await payout.delete();
+        this.log(chalk.green('Payout delected successfully.'));
+      } catch (error) {
+        this.error(error.message);
       }
-      else {
-        this.log(chalk.red('Deletion canceled'));
-      }
-    } catch (error) {
-      this.error(error.message);
+    } else {
+      this.log(chalk.yellow('Deletion canceled.'));
     }
+
     cli.action.stop();
   }
 }

@@ -29,10 +29,10 @@ export default class PayoutsCreate extends Payouts {
       multiple: true
     }),
     schedule: flags.string({
-      description: 'The DateTime of the schedule in the format YYYY-MM-DD HH:mm:ss',
+      description: 'The DateTime of the schedule in the format YYYY-MM-DD HH:mm:ss GMT',
     }),
     'send-now': flags.boolean({
-      description: 'Send automatically the payout',
+      description: 'Send automatically the payout.',
       default: false
     }),
     help: flags.help({ char: 'h', description: 'Help for payouts:create.' })
