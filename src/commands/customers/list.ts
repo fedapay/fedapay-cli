@@ -3,6 +3,7 @@ import { FedaPay, Customer } from 'fedapay';
 import colorize from 'json-colorizer';
 import { cli } from 'cli-ux';
 import Customers from '../customers';
+import DataFlagTransformer from '../../helpers/dataparse';
 
 /**
  * CustomersList class extending the superClass Customers
@@ -84,6 +85,13 @@ export default class CustomersList extends Customers {
     const page = flags.page;
 
     /**
+     * @param Object
+     * The filter flag
+     * TODO: Use filter for the list
+     */
+    const filters = DataFlagTransformer.transformFilters(flags.filters);
+
+    /**
      * Set Apikey and environment to connect to fedapay
      */
     FedaPay.setApiKey(apiKey);
@@ -92,7 +100,7 @@ export default class CustomersList extends Customers {
     try {
       cli.action.start('Getting the customers list');
 
-      const customers = await Customer.all({ per_page: limit, page: page });
+      const customers = await Customer.all({ per_page: limit, page, ...filters });
       this.log(colorize(JSON.stringify(customers, null, 2)));
     } catch (error) {
       this.error(error.message);
