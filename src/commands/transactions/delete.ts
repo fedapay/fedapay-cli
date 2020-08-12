@@ -1,10 +1,9 @@
 import { flags } from '@oclif/command'
 import { FedaPay, Transaction } from 'fedapay'
-import * as colorize from 'json-colorizer'
-import { string } from '@oclif/command/lib/flags'
 import cli from 'cli-ux'
 import chalk = require('chalk')
 import Transactions from '../transactions'
+
 /**
  * TransactionDelete class extending super class Transactions
  */
@@ -28,8 +27,9 @@ export default class TransactionsDelete extends Transactions {
     confirm: flags.boolean({
       description: 'Bypass the confirmation',
       default: false,
+      char: 'c'
     }),
-    help: flags.help({ char: 'h' }),
+    help: flags.help({ char: 'h', description: 'Help for transaction:delete' }),
   }
 
   /**
@@ -37,8 +37,8 @@ export default class TransactionsDelete extends Transactions {
    * Some example of use of the delete command
    */
   static examples = [
-    'transactions:delete --api-key=[api_key] --environment=environment --id=12321',
-    'transactions:delete --api-key=[api_key] --environment=environment --id=12321 --confirm',
+    'transactions:delete --api-key=[api_key] --environment=environment --id=[ID]',
+    'transactions:delete --api-key=[api_key] --environment=environment --id=[ID] -c',
   ]
 
   async run() {
@@ -48,9 +48,9 @@ export default class TransactionsDelete extends Transactions {
      */
     const { flags } = this.parse(TransactionsDelete)
     /**
-   * @param String
-   * your api's key
-   */
+     * @param String
+     * your api's key
+     */
     const apiKey = flags['api-key']
     /**
      * @param String
@@ -67,27 +67,25 @@ export default class TransactionsDelete extends Transactions {
      * get the id of the transaction
      */
     const id = flags.id
+
     try {
       /**
        * @param Transaction
        * result of the retrieve
        */
       const transaction = await Transaction.retrieve(id)
-      if (transaction) {
-        /**
-      * @param Boolean
-      * true if either the confirm flag or the confirm dialog is setted
-      */
-        const confirm = flags.confirm || await cli.confirm('Sure to continue? Yes or No')
-        if (confirm) {
-          await transaction.delete()
-          this.log(chalk.blue('transaction deleted'))
-        } else {
-          this.log(chalk.red('deletion canceled'))
-        }
+      const confirm = flags.confirm || await cli.confirm(
+        'Are you sure to continue? [Y/n]'
+      )
+
+      if (confirm) {
+        await transaction.delete()
+        this.log(chalk.blue('Transaction deleted'))
+      } else {
+        this.log(chalk.red('Deletion canceled'))
       }
     } catch (error) {
-      this.error(error)
+      this.error(error.message)
     }
   }
 }
