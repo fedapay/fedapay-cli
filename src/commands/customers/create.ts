@@ -16,14 +16,14 @@ export default class CustomersCreate extends Customers {
   /**
    * @param object
    * Declaration of the command flags
-  */ 
+  */
   static flags = {
     ...Customers.flags,
     data: flags.string({
       description: 'Json Data of the customer',
       required: true,
       char: 'd',
-      multiple: true,    
+      multiple: true,
     }),
     help: flags.help({
       char: 'h',
@@ -32,7 +32,7 @@ export default class CustomersCreate extends Customers {
   }
   /**
    * @param string
-   * Set the command usage for help 
+   * Set the command usage for help
    */
   static usage = '$ fedapay customers:create [options]'
   /**
@@ -45,7 +45,7 @@ export default class CustomersCreate extends Customers {
   async run() {
     /**
      * @param object
-     * get flags value 
+     * get flags value
      */
     const {flags} = this.parse(CustomersCreate)
     /**
@@ -71,7 +71,7 @@ export default class CustomersCreate extends Customers {
     try {
       const customer = await Customer.create(data)
       this.log(chalk.greenBright(`Customer created successfully`))
-      this.log(colorize(JSON.stringify(customer, null, 2))) 
+      this.log(colorize(JSON.stringify(customer, null, 2)))
     } catch (error ) {
       this.warn(chalk.red(`${error.name} : ${error.message}`))
       this.exit
