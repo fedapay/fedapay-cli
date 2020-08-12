@@ -1,112 +1,93 @@
-import {flags} from '@oclif/command'
-import {FedaPay, Customer} from 'fedapay'
-import * as colorize from 'json-colorizer'
-import Customers from '../customers'
-import cli from 'cli-ux'
-import * as chalk from 'chalk'
-import DataFlagtransformer from '../../helpers/dataparse'
+import { flags } from '@oclif/command';
+import { FedaPay, Customer } from 'fedapay';
+import colorize from 'json-colorizer';
+import cli from 'cli-ux';
+import Customers from '../customers';
+import DataFlagtransformer from '../../helpers/dataparse';
+
 /**
  * CustomersUpdate class extending the superClass Customers
  */
 export default class CustomersUpdate extends Customers {
-  /** 
+  /**
    * @param string
    * Description of the command Custommers:update description
    */
-  static description = 'Udapde an customer informations'
+  static description = 'Update a customer.';
+
   /**
    * @param object
    * Declaration of the command flags
-  */ 
+  */
   static flags = {
     ...Customers.flags,
     id: flags.integer({
-      description: 'The id of the customer to update',
-      required:true,
+      description: 'The customer ID.',
+      required: true
     }),
     data: flags.string({
-      description: 'The new data for the update',
+      description: 'Data for the API request.',
       required: true,
       char: 'd',
-      multiple: true, 
+      multiple: true,
     }),
-    confirm: flags.boolean({
-      description: 'Confirm the update',
-      default: false
-    }),
-    help: flags.help({
-      char: 'h',
-      description: 'show help about the command customers:update'
-      
-  }),
-  }
+    help: flags.help({ char: 'h', description: 'Help for customers:update command.' }),
+  };
+
   /**
    * @param string[]
    * some examples of the custommers update use for help
    */
   static examples = [
-    'customers:update --api-key=[API_KEY] --environment=sandbox --id=2047 -d email=johndoe@zot.com',
-    'customers:update --api-key=[API_KEY] --environment=sandbox --id=2047 -d email=johndoe@zot.com -d lastname=Doe --confirm',
-  ]
-  async run() {
+    'customers:update --api-key=[API-KEY] --environment=[env] --id=[ID] -d email=johndoe@zot.com',
+    'customers:update --api-key=[API-KEY] --environment=[env] --id=[ID] -d email=johndoe@zot.com -d lastname=Doe',
+  ];
 
-    /**
-      *  Get flags object from CustommersUpdate 
-      *  and use them to update the custommer 
-      */
+  async run() {
     /**
      * @param object
-     * get flags value 
+     * get flags value
      */
-    const {flags} = this.parse(CustomersUpdate)
+    const { flags } = this.parse(CustomersUpdate);
+
     /**
      * @param string
      * api key value
      */
-    const apiKey = flags['api-key']
+    const apiKey = flags['api-key'];
+
     /**
      * @param string
      * environment type
      */
-    const environment = flags.environment
+    const environment = flags.environment;
+
     /**
      * @param number
      * store the customer id
      */
-    const id = flags.id
+    const id = flags.id;
+
     /**
      * @param object
      * result of transforming flags.data into Typescript Object
-     */ 
-    const data= DataFlagtransformer.transform(flags.data)
-    /**
-     * @param boolean
-     * true if the user set the --confirm flag
      */
-    const confirm = flags.confirm
+    const data = DataFlagtransformer.transform(flags.data);
+
     /**
      * Set Apikey and environment to connect to fedapay
      */
-    FedaPay.setApiKey(apiKey)
-    FedaPay.setEnvironment(environment)
-    /**
-     * @param boolean
-     * true if the user set the --confirm flag or input yes in the terminal
-     */
-    const confirmed = confirm || await cli.confirm('Would you like to continue? [Y/n]')    
-    if(confirmed){
-        try {
-          const customer = await Customer.update(id,data)
-          this.log(chalk.greenBright(`Customer ${id} updated successfully`))
-          this.log(colorize(JSON.stringify(customer, null, 2))) 
-        } catch (error) {
-          this.error(chalk.red(`${error.name} : ${error.message}`))
-        }
-      }
-      else {
-        this.warn('Update canceled')
-        this.exit
-      }
+    FedaPay.setApiKey(apiKey);
+    FedaPay.setEnvironment(environment);
+
+    try {
+      cli.action.start('Updating transaction');
+
+      const customer = await Customer.update(id, data);
+      this.log(colorize(JSON.stringify(customer, null, 2)));
+    } catch (error) {
+      this.error(error.message);
+    }
   }
 }
 
