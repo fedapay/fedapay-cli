@@ -12,6 +12,12 @@ fedapay-cli
 * [Usage](#usage)
 * [Commands](#commands)
 <!-- tocstop -->
+* [Usage](#usage)
+* [Commands](#commands)
+<!-- tocstop -->
+* [Usage](#usage)
+* [Commands](#commands)
+<!-- tocstop -->
 # Usage
 <!-- usage -->
 ```sh-session
@@ -207,9 +213,9 @@ OPTIONS
   --with_token               add the token to your transactions
 
 EXAMPLES
-  transactions:create --api-key=[api_key] --environment=environment -d amount=2500, -d description=Sending money to mum 
+  transactions:create --api-key=[api_key] --environment=environment -d amount=2500, -d description=Sending money to mum
   -d currency[iso]=XOF, -d customer[email]=geronimo@apache.com
-  transactions:create --api-key=[api_key] --environment=environment --with_token -d amount=2500, -d description=Sending 
+  transactions:create --api-key=[api_key] --environment=environment --with_token -d amount=2500, -d description=Sending
   money to mum -d currency[iso]=XOF, -d customer[email]=geronimo@apache.com
 ```
 
@@ -293,9 +299,9 @@ OPTIONS
   --id=id                    (required) Provide the id of the transaction you want to update
 
 EXAMPLES
-  transactions:update --api-key=[api_key] --environment=environment --id=12321 -d amount=2500, -d description=Sending 
+  transactions:update --api-key=[api_key] --environment=environment --id=12321 -d amount=2500, -d description=Sending
   money to mum -d currency[iso]=XOF
-  transactions:update --api-key=[api_key] --environment=environment --id=52123 -d amount=1780, -d 
+  transactions:update --api-key=[api_key] --environment=environment --id=52123 -d amount=1780, -d
   customer[email]=geronimo@apache.com --confirm
 ```
 

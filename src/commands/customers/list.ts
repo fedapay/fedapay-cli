@@ -1,36 +1,103 @@
-import {flags} from '@oclif/command'
-import {FedaPay, Customer} from 'fedapay'
-import * as colorize from 'json-colorizer'
-import Customers from '../customers'
+import { flags } from '@oclif/command';
+import { FedaPay, Customer } from 'fedapay';
+import colorize from 'json-colorizer';
+import { cli } from 'cli-ux';
+import Customers from '../customers';
 
+/**
+ * CustomersList class extending the superClass Customers
+ */
 export default class CustomersList extends Customers {
-  static description = 'List customers ressource'
+  /**
+   * @param string
+   * Description of the command Custommers:list description
+   */
+  static description = 'List of the customer records.';
 
+  /**
+   * @param object
+   * Declaration of the command flags
+  */
   static flags = {
     ...Customers.flags,
     limit: flags.integer({
-      description: 'Limit the list of customers to display',
+      char: 'l',
+      description: 'Limit of records to display.',
       default: 10,
     }),
-    help: flags.help({char: 'h'}),
-  }
+    filters: flags.string({
+      char: 'f',
+      description: 'Filter the list of customers.',
+      multiple: true,
+    }),
+    page: flags.integer({
+      description: 'The page of the records to display.',
+      char: 'p',
+      default: 1
+    }),
+    help: flags.help({ char: 'h', description: 'Help for customers:list' })
+  };
 
+  /**
+   * @param string[]
+   * some examples of the custommers list use for help
+   */
   static examples = [
     'customers:list',
-    'customers:list --limit=20',
-  ]
+    'customers:list --api-key=[API-KEY] --environment=[env] --limit=20',
+    'customers:list --api-key=[API-KEY] --environment=[env] -p=2',
+  ];
 
   async run() {
-    const {flags} = this.parse(CustomersList)
-    const apiKey = flags['api-key']
-    const environment = flags.environment
-    const limit = flags.limit
+    /**
+      *  Get flags object from CustommersList
+      *  and use them to retrieve and list the custommers
+      */
+    /**
+     * @param object
+     * get flags value
+     */
+    const { flags } = this.parse(CustomersList);
 
-    FedaPay.setApiKey(apiKey)
-    FedaPay.setEnvironment(environment)
+    /**
+     * @param string
+     * api key value
+     */
+    const apiKey = flags['api-key'];
 
-    const customers = await Customer.all({per_page: limit})
+    /**
+     * @param string
+     * environment type
+     */
+    const environment = flags.environment;
 
-    this.log(colorize(JSON.stringify(customers, null, 2)))
+    /**
+     * @param number
+     * store the number of customers to display
+     */
+    const limit = flags.limit;
+
+    /**
+     * @param number
+     * store the number of the page to display
+     */
+    const page = flags.page;
+
+    /**
+     * Set Apikey and environment to connect to fedapay
+     */
+    FedaPay.setApiKey(apiKey);
+    FedaPay.setEnvironment(environment);
+
+    try {
+      cli.action.start('Getting the customers list');
+
+      const customers = await Customer.all({ per_page: limit, page: page });
+      this.log(colorize(JSON.stringify(customers, null, 2)));
+    } catch (error) {
+      this.error(error.message);
+    }
+
+    cli.action.stop();
   }
 }

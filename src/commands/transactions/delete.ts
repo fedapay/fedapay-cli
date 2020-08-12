@@ -12,7 +12,7 @@ export default class TransactionsDelete extends Transactions {
   * @params String
   * Description of the command transactions:delete
   */
-  static description = 'Delete a transaction'
+  static description = 'Delete a transaction.'
 
   /**
   * @param object
@@ -82,9 +82,9 @@ export default class TransactionsDelete extends Transactions {
       if (confirm) {
         cli.action.start('Deleting transaction');
         await transaction.delete();
-        this.log(chalk.blue('Transaction deleted'));
+        this.log(chalk.green('Transaction deleted successfully.'));
       } else {
-        this.log(chalk.red('Deletion canceled'));
+        this.log(chalk.yellow('Deletion canceled.'));
       }
     } catch (error) {
       this.error(error.message);

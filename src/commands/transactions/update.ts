@@ -13,7 +13,7 @@ export default class TransactionsUpdate extends Transactions {
   * @params String
   * Description of the command transactions:update
   */
-  static description = 'Update some transactions';
+  static description = 'Update a transaction.';
 
   /**
    * @param object
@@ -23,7 +23,7 @@ export default class TransactionsUpdate extends Transactions {
     ...Transactions.flags,
     id: flags.integer({
       required: true,
-      description: 'The transaction ID'
+      description: 'The transaction ID.'
     }),
     data: flags.string({
       description: 'Data for the API request.',
@@ -39,8 +39,8 @@ export default class TransactionsUpdate extends Transactions {
    * Some example of use of the transaction:update command
    */
   static examples = [
-    'transactions:update --api-key=[API-KEY] --environment=[env] --id=[ID] -d amount=2500, -d description="Sending money to mum" -d currency[iso]=XOF',
-    'transactions:update --api-key=[API-KEY] --environment=[env] --id=[ID] -d amount=1780, -d customer[email]=geronimo@apache.com -c'
+    'transactions:update --api-key=[API-KEY] --environment=[env] --id=[ID] -d amount=2500',
+    'transactions:update --api-key=[API-KEY] --environment=[env] --id=[ID] -d amount=1780 -d customer[email]=geronimo@apache.com'
   ];
 
   async run() {

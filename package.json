@@ -17,6 +17,7 @@
     "fedapay": "^1.1.3",
     "jquery-deparam": "^0.5.3",
     "json-colorizer": "^2.2.2",
+    "query-string": "^6.13.1",
     "tslib": "^1.13.0"
   },
   "devDependencies": {

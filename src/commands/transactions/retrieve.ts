@@ -12,7 +12,7 @@ export default class TransactionsRetrieve extends Transactions {
   * @params String
   * Description of the command transactions:retrieve
   */
-  static description = 'Retrieve a transaction'
+  static description = 'Retrieve a transaction.'
 
   /**
    * @param object
@@ -66,7 +66,7 @@ export default class TransactionsRetrieve extends Transactions {
     const id = flags.id;
 
     try {
-      cli.action.start('Retrieve Transaction');
+      cli.action.start('Retrieve transaction');
 
       const transaction = await Transaction.retrieve(id);
       this.log(colorize(JSON.stringify(transaction, null, 2)));
