@@ -1,15 +1,17 @@
-import { Command, flags } from '@oclif/command'
+import { flags } from '@oclif/command'
 import { FedaPay, Payout, Transaction } from 'fedapay'
 import Payouts from '../payouts'
+import { cli } from 'cli-ux'
+import chalk = require('chalk')
 /**
  * PayoutsSchedule class
- */  
-export default class PayoutsSchedule extends Command {
+ */
+export default class PayoutsSchedule extends Payouts {
   /**
-   * @param string 
+   * @param string
    * Description of the payouts:schedule command
    */
-  static usage = 'fedapay payouts:schedule [options]'
+
   static description = 'Program the payout for later'
   static flags = {
     ...Payouts.flags,
@@ -46,8 +48,9 @@ export default class PayoutsSchedule extends Command {
     try {
       /**
        * @param object
-       *get details of payout 
-       */
+       *get details of payout
+      */
+      cli.action.start('Scheduling payout');
       const payout = await Payout.retrieve(id)
       if (!payout) {
         this.log('Don\'t match')
@@ -55,16 +58,16 @@ export default class PayoutsSchedule extends Command {
       else {
         /**
          * @param string
-         *schedule only payout wich is pending 
+         *schedule only payout wich is pending
          */
         if (payout.status == 'pending') {
           payout.schedule(when)
-          this.log("Payout started")
+          this.log(chalk.green("Payout started"));
         }
       }
     } catch (error) {
       this.error(`${error.name} : ${error.message}`)
     }
-
+    cli.action.stop();
   }
 }

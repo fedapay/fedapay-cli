@@ -1,13 +1,15 @@
-import { Command, flags } from '@oclif/command'
-import { FedaPay, Payout, Transaction } from 'fedapay'
-import Payouts from '../payouts'
-import DataFlagtransformer from '../../helpers/dataparse'
+import { flags } from '@oclif/command';
+import { FedaPay, Payout, Transaction } from 'fedapay';
+import Payouts from '../payouts';
+import cli from 'cli-ux';
+import chalk from 'chalk';
+import DataFlagtransformer from '../../helpers/dataparse';
 /**
  *  PayoutsSendNow class
  */
-export default class PayoutsSendNow extends Command {
+export default class PayoutsSendNow extends Payouts {
   static description = 'Send a payout now'
-  static usage = 'fedapay payouts:send-now [options]'
+
   static flags = {
     ...Payouts.flags,
     /**
@@ -43,29 +45,29 @@ export default class PayoutsSendNow extends Command {
       /**
        * @param string
        * the input data sent is a string
-       * transform data in array of object  
+       * transform data in array of object
        * @param {Object}
        */
+      cli.action.start('Sending the payouts');
       if (id) {
-        let obj = {}
-        let raw_input = []
-        let input_id = id.split(",")
+        let obj = {};
+        let raw_input = [];
+        let input_id = id.split(",");
         for (var i = 0; i < input_id.length; i++) {
-          const array_input = [input_id[i]]
+          const array_input = [input_id[i]];
           /**
            * serialize input ids to an array of object
            */
-          obj = DataFlagtransformer.Transform(array_input)
-          raw_input.push(obj)
+          obj = DataFlagtransformer.Transform(array_input);
+          raw_input.push(obj);
         }
-        console.log(raw_input)
-        await Payout.sendAllNow(raw_input)
+        await Payout.sendAllNow(raw_input);
       }
     }
     catch (error) {
-      this.error(`${error.name} ${error.message}`)
+      this.error(`${error.name} ${error.message}`);
 
     }
-
+    cli.action.stop();
   }
 }

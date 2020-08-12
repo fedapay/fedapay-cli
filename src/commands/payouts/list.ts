@@ -1,11 +1,12 @@
-import { Command, flags } from '@oclif/command'
-import { FedaPay, Payout} from 'fedapay'
-import * as colorize from 'json-colorizer'
-import Payouts from '../payouts'
-//Class PayoutsList 
-export default class PayoutsList extends Command {
+import { flags } from '@oclif/command';
+import { FedaPay, Payout } from 'fedapay';
+import * as colorize from 'json-colorizer';
+import cli from 'cli-ux';
+import Payouts from '../payouts';
+//Class PayoutsList
+export default class PayoutsList extends Payouts {
   static description = 'List payouts ressource'
-  static usage = 'fedapay payouts:list [options]' 
+
   static flags = {
     ...Payouts.flags,
     limit: flags.integer({
@@ -54,9 +55,10 @@ export default class PayoutsList extends Command {
     FedaPay.setEnvironment(environment)
 
      /**
-      * @param {object} 
-      * 
+      * @param {object}
+      *
       */
+    cli.action.start('Getting the payouts list');
     const payouts = await Payout.all({
       per_page: limit, page: page,
       /**
@@ -67,6 +69,7 @@ export default class PayoutsList extends Command {
       'filters[compare][status][op]': '=',
       'filters[compare][status][value]': status,
     })
-    this.log(colorize(JSON.stringify(payouts, null, 2)))
+    this.log(colorize(JSON.stringify(payouts, null, 2)));
+    cli.action.stop();
   }
 }

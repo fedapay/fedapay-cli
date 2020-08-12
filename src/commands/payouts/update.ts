@@ -1,12 +1,13 @@
-import { Command, flags } from '@oclif/command'
-import { FedaPay, Payout, Transaction } from 'fedapay'
-import DataFlagtransformer from '../../helpers/dataparse'
-import cli from 'cli-ux'
-import Payouts from '../payouts'
+import { flags } from '@oclif/command';
+import { FedaPay, Payout, Transaction } from 'fedapay';
+import DataFlagtransformer from '../../helpers/dataparse';
+import cli from 'cli-ux';
+import chalk from 'chalk';
+import Payouts from '../payouts';
 /**
  * PayoutsUpdate class
  */
-export default class PayoutsUpdate extends Command {
+export default class PayoutsUpdate extends Payouts {
   static description = 'Update payouts ressource'
   static usage = 'fedapay payouts:update [options]'
   static flags = {
@@ -56,6 +57,10 @@ export default class PayoutsUpdate extends Command {
      * confirm flag
      */
     const confirm = flags.confirm
+    /**
+     * @param object
+     * parsing data flag input to object
+     */
     const data = DataFlagtransformer.Transform(flags.data)
 
     FedaPay.setApiKey(apiKey)
@@ -66,29 +71,31 @@ export default class PayoutsUpdate extends Command {
       try {
         /**
      * @param object
-     */
-        const payout = await Payout.retrieve(id)
+        */
+        cli.action.start('Retrieving payout');
+        const payout = await Payout.retrieve(id);
         if (payout.status == 'pending') {
           /**
        * @param integer
        * amount must be positive
        */
           if (payout.amount <= 0) {
-            this.log('Failed Update,amount must be great than 0')           
+            this.log(chalk.red('Failed Update,amount must be great than 0'));
           }
           else {
             payout.update(id,data)
-            this.log('Succesfully updated!!')
+            this.log(chalk.green('Succesfully updated!!'));
           }
         }
       } catch(error) {
-        this.error('This payout is either sent or started ')
+        this.log(chalk.red('This payout is either sent or started '));
       }
     }
     else {
       this.log('Updated canceled')
-      this.exit
+
     }
+    cli.action.stop();
   }
 }
 

@@ -1,20 +1,26 @@
-import { Command, flags } from '@oclif/command'
-import { FedaPay, Payout } from 'fedapay'
-import * as colorize from 'json-colorizer'
+import { flags } from '@oclif/command';
+import { FedaPay, Payout } from 'fedapay';
+import * as colorize from 'json-colorizer';
 import Payouts from '../payouts'
 import { resolve } from 'dns';
-import DataFlagtransformer from '../../helpers/dataparse'
-/**PayoutsCreate class*/
-export default class PayoutsCreate extends Command {
+import cli from 'cli-ux';
+import chalk from 'chalk';
+import DataFlagtransformer from '../../helpers/dataparse';
+/*
+*PayoutsCreate Class extending the superClass Payouts
+*/
+export default class PayoutsCreate extends Payouts {
   /**
    * @param string
-   * Description of the payouts:create command  */
+   * Description of the command payouts:create
+  */
   static description = 'Create payout ressources'
+
   /**
-   * @param object
-   * Declaration of the command flags
+   * @param Object
+   * Insertion of the different commands flags
    */
-  static usage = 'fedapay payouts:create [options]'
+
   static flags = {
     ...Payouts.flags,
     data: flags.string({
@@ -42,7 +48,7 @@ export default class PayoutsCreate extends Command {
   }
   /**
    * @param string[]
-   * examples
+   * examples of payouts:create command
    */
   static examples = [
     'payouts:create --api-key=[api_key] --environment=sandbox',
@@ -65,7 +71,7 @@ export default class PayoutsCreate extends Command {
      * environnement sandbox or live
      */
     const environment = flags.environment
-    /** 
+    /**
      * @param object
      * parsing data flag input to object
      */
@@ -83,25 +89,42 @@ export default class PayoutsCreate extends Command {
     /**
      * @param string
      * set the environment tor authenticating
-     * 
+     *
      */
     FedaPay.setEnvironment(environment)
 
     try {
-      const payout = await Payout.create(data)
-      this.log('Succesfully payout created')
+      /**
+       * @param Payout
+       * created payout
+      */
+      cli.action.start('Retrieve payout');
+      const payout = await Payout.create(data);
+      this.log(chalk.green('Payout created succesfully!'));
+      this.log(colorize(JSON.stringify(payout, null, 2)));
       if (flags.sendnow) {
-        await payout.sendNow()
-        this.log('Payout sent')
+        /**
+         * @param boolean
+         * send after create payout
+        */
+        cli.action.start('Sending payout');
+        await payout.sendNow();
+        this.log(chalk.green('sent'));
       }
       if (flags.schedule) {
-        await payout.schedule(date)
-        this.log('Payout started ')
+        /**
+         * @param string
+         * schedule to a date
+         */
+        cli.action.start('Schedule the payout');
+        await payout.schedule(date);
+        this.log(chalk.green('started'));
       }
     } catch (error) {
-      this.error(`${error.name} : ${error.message}`)
+      this.log('Oups something occured');
+      this.error(error.message);
     }
-
+    cli.action.stop();
   }
 }
 

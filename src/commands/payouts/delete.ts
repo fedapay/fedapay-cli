@@ -1,20 +1,23 @@
-import { Command, flags } from '@oclif/command'
-import { FedaPay, Payout, Transaction } from 'fedapay'
-import * as colorize from 'json-colorizer'
-import Payouts from '../payouts'
-import { type } from 'os'
-import cli from 'cli-ux'
+import { flags } from '@oclif/command';
+import { FedaPay, Payout } from 'fedapay';
+import cli from 'cli-ux';
+import chalk from 'chalk';
+import Payouts from '../payouts';
+
 /**
- * PayoutsDelete class
+ * PayoutsDelete Class
  */
-export default class PayoutsDelete extends Command {
+export default class PayoutsDelete extends Payouts {
   /**
    * @param string
    * Description of payouts:delete command
    */
-  static usage = 'fedapay payouts:delete [options]'
-  static description = 'Delete payout ressource'
 
+  static description = 'Delete payout ressource'
+  /**
+   * @param Object
+   * delete command flags
+   */
   static flags = {
     ...Payouts.flags,
     id: flags.integer({
@@ -23,17 +26,20 @@ export default class PayoutsDelete extends Command {
     }),
     confirm: flags.boolean({
       description: 'Confirm the delete',
-      default: false
+      default: false,
+      char: 'c',
     }),
     help: flags.help({
       char: 'h',
       description: 'Help for founding others delete commands'
     }),
   }
+
   /**
    * @param string[]
-   * examples for the help
+   * examples for the delete commands
    */
+
   static examples = [
     'payouts:delete --api-key=[api_key] --environment=sandbox --id=90',
     'payouts:delete --api-key=[api_key] --environment=sandbox --id=108 --confirm',
@@ -41,21 +47,49 @@ export default class PayoutsDelete extends Command {
   ]
 
   async run() {
-    const { flags } = this.parse(PayoutsDelete)
-    const apiKey = flags['api-key']
-    const environment = flags.environment
-    const id = flags.id
-    const confirm = flags.confirm
+    /**
+     * @param Object
+     * get the delete flags
+    */
+
+    const { flags } = this.parse(PayoutsDelete);
+    /**
+     * @param string
+     * the api-key
+     */
+    const apiKey = flags['api-key'];
+    /**
+     * @param string
+     * the environment
+     */
+    const environment = flags.environment;
+    /**
+     * @param integer
+     * id of the payout
+     */
+    const id = flags.id;
+
+    /**
+     * connect to Fedapay with config set up
+     */
     FedaPay.setApiKey(apiKey)
     FedaPay.setEnvironment(environment)
-    /**
-          * @param boolean
-          * Skip to confirm automatically or after yes
-          */
-    const confirmed = confirm || await cli.confirm('Are you sure you want to delete?')
-    if (confirmed) {
-      try {
-        const payout = await Payout.retrieve(id)
+
+    try {
+      cli.action.start('Retrieving payout');
+      const payout = await Payout.retrieve(id);
+      /**
+   * @param boolean
+   * confirm flag
+   */
+      const confirm = flags.confirm
+      /**
+        * @param boolean
+        * Skip to confirm automatically or after yes
+        */
+
+      const confirmed = confirm || await cli.confirm('Are you sure you want to delete?');
+      if (confirmed) {
         if (!payout) {
           this.log('Don\'t match')
         }
@@ -64,17 +98,18 @@ export default class PayoutsDelete extends Command {
            * delete only if payout is pending
            */
           if (payout.status == 'pending') {
-            payout.delete()
-            this.log("Succesfully deleted")
+            cli.action.start('Deleting payout');
+            await payout.delete();
+            this.log(chalk.blue("Payout deleted"));
           }
         }
       }
-      catch (error) {
-        this.error(`${error.name} : ${error.message}`)
+      else {
+        this.log(chalk.red('Deletion canceled'));
       }
+    } catch (error) {
+      this.error(error.message);
     }
-    else {
-      this.exit
-    }
+    cli.action.stop();
   }
 }
