@@ -1,76 +1,88 @@
-import { flags } from '@oclif/command'
-import { FedaPay, Transaction } from 'fedapay'
-import * as colorize from 'json-colorizer'
-import chalk = require('chalk')
-import Transactions from '../transactions'
+import { flags } from '@oclif/command';
+import { FedaPay, Transaction } from 'fedapay';
+import colorize from 'json-colorizer';
+import { cli } from 'cli-ux';
+import chalk from 'chalk';
+import Transactions from '../transactions';
+
 /**
  * TransactionToken class extending super class Transactions
  */
 export default class TransactionsToken extends Transactions {
-   /** 
-   * @params String 
-   * Description of the command transactions:token
-   */
-  static description = 'Add a token to a transaction'
-   /**
-   * @param object
-   * Declaration of the command flags
-  */ 
+  /**
+  * @params String
+  * Description of the command transactions:token
+  */
+  static description = 'Add a token to a transaction';
+
+  /**
+  * @param object
+  * Declaration of the command flags
+ */
   static flags = {
     ...Transactions.flags,
     id: flags.integer({
       required: true,
-      description: 'Provide the id of the transaction you want to tokenize'
+      description: 'The transaction ID'
     }),
-    help: flags.help({ char: 'h' }),
-  }
+    help: flags.help({ char: 'h', description: 'Help for transactions:token command.' }),
+  };
+
   /**
    * @param String[]
    * Some example with the token command
    */
-  static examples =[
-    'transactions:token --api-key=[api_key] --environment=environment --id=12321',
-  ]
-    async run() {
-     /**
-     * @param object
-     * get flags value 
-     */
-    const { flags } = this.parse(TransactionsToken)
-    /** 
-    * @param String 
-    * your api's key  
+  static examples = [
+    'transactions:token --api-key=[API-KEY] --environment=[env] --id=[ID]',
+  ];
+
+  async run() {
+    /**
+    * @param object
+    * get flags value
     */
-   const apiKey = flags['api-key']
-   /**
+    const { flags } = this.parse(TransactionsToken);
+
+    /**
     * @param String
-    * sandbox or live
+    * your api's key
     */
-   const environment = flags.environment
-   /**
-     * Set Apikey and environment to connect to fedapay
+    const apiKey = flags['api-key'];
+
+    /**
+     * @param String
+     * sandbox or live
      */
-    FedaPay.setApiKey(apiKey)
-    FedaPay.setEnvironment(environment)
+    const environment = flags.environment;
+
+    /**
+      * Set Apikey and environment to connect to fedapay
+      */
+    FedaPay.setApiKey(apiKey);
+    FedaPay.setEnvironment(environment);
+
     /**
      * @param integer
      * get the id of the transaction
      */
-    const id = flags.id
+    const id = flags.id;
+
     try {
-       /**
-         * @param Transaction
-         * When we got a match the variable is filled up with a transaction object
-         */
-      const transaction = await Transaction.retrieve(id)
+      cli.action.start('Retrieve Transaction');
+
       /**
-         * @param Object
-         * Your token
-         */
+        * @param Transaction
+        * When we got a match the variable is filled up with a transaction object
+        */
+      const transaction = await Transaction.retrieve(id);
+
+      cli.action.start('Generating transaction token');
+
       const token = await transaction.generateToken();
-      this.log(chalk.green('Your url token is :') + chalk.underline(token.url))
+      this.log(chalk.bold.italic('Your token is : '));
+      this.log(colorize(JSON.stringify(token, null, 2)));
     } catch (error) {
-      this.log(chalk.red(error))
+      this.log(error.message);
     }
   }
 }

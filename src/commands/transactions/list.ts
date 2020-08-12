@@ -88,7 +88,7 @@ export default class TransactionsList extends Transactions {
     FedaPay.setApiKey(apiKey);
     FedaPay.setEnvironment(environment);
 
-    cli.action.start('Getting the transactions list...');
+    cli.action.start('Getting the transactions list');
     const transactions = await Transaction.all({
       per_page: limit, page
     });

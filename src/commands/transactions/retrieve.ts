@@ -1,6 +1,7 @@
 import { flags } from '@oclif/command';
 import { FedaPay, Transaction } from 'fedapay';
 import colorize from 'json-colorizer';
+import { cli } from 'cli-ux';
 import Transactions from '../transactions';
 
 /**
@@ -65,6 +66,8 @@ export default class TransactionsRetrieve extends Transactions {
     const id = flags.id;
 
     try {
+      cli.action.start('Retrieve Transaction');
+
       const transaction = await Transaction.retrieve(id);
       this.log(colorize(JSON.stringify(transaction, null, 2)));
     } catch (error) {

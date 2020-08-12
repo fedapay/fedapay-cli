@@ -2,7 +2,7 @@ import { flags } from '@oclif/command';
 import cli from 'cli-ux';
 import { FedaPay, Transaction } from 'fedapay';
 import colorize  from 'json-colorizer';
-import chalk = require('chalk');
+import chalk from 'chalk';
 import Transactions from '../transactions';
 import DataFlagtransformer from '../../helpers/dataparse';
 
@@ -76,7 +76,7 @@ export default class TransactionsCreate extends Transactions {
        * @param Transaction
        * Created transaction
        */
-      cli.action.start('Retrive transaction...');
+      cli.action.start('Retrive transaction');
       const transaction = await Transaction.create(data);
       this.log(chalk.green('Transaction created successfully!'));
       this.log(colorize(JSON.stringify(transaction, null, 2)));
@@ -86,7 +86,7 @@ export default class TransactionsCreate extends Transactions {
          * @param Object
          * Your token
          */
-        cli.action.start('Generating transaction token...');
+        cli.action.start('Generating transaction token');
         const token = await transaction.generateToken();
         this.log(chalk.bold.italic('Your token is : '));
         this.log(colorize(JSON.stringify(token, null, 2)));

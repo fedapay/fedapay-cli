@@ -1,7 +1,7 @@
 import { flags } from '@oclif/command';
 import { FedaPay, Transaction } from 'fedapay';
 import cli from 'cli-ux';
-import chalk = require('chalk');
+import chalk from 'chalk';
 import Transactions from '../transactions';
 
 /**
@@ -73,14 +73,14 @@ export default class TransactionsDelete extends Transactions {
        * @param Transaction
        * result of the retrieve
        */
-      cli.action.start('Retrieving transaction...');
+      cli.action.start('Retrieving transaction');
       const transaction = await Transaction.retrieve(id);
       const confirm = flags.confirm || await cli.confirm(
         'Are you sure to continue? [Y/n]'
       );
 
       if (confirm) {
-        cli.action.start('Deleting transaction...');
+        cli.action.start('Deleting transaction');
         await transaction.delete();
         this.log(chalk.blue('Transaction deleted'));
       } else {
