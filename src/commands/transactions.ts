@@ -17,12 +17,10 @@ export default class Transactions extends Command {
      'transactions:delete --transaction_id=2520 --api-key=apiKey --environment=environment',
 
    ]
-
  static flags = {
    ...Command.flags,
    help: flags.help({char: 'h', description: 'Help for transactions command'}),
  }
-
  async run() {
    this._help()
  }
