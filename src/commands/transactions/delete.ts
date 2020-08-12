@@ -1,8 +1,8 @@
-import { flags } from '@oclif/command'
-import { FedaPay, Transaction } from 'fedapay'
-import cli from 'cli-ux'
-import chalk = require('chalk')
-import Transactions from '../transactions'
+import { flags } from '@oclif/command';
+import { FedaPay, Transaction } from 'fedapay';
+import cli from 'cli-ux';
+import chalk = require('chalk');
+import Transactions from '../transactions';
 
 /**
  * TransactionDelete class extending super class Transactions
@@ -37,8 +37,8 @@ export default class TransactionsDelete extends Transactions {
    * Some example of use of the delete command
    */
   static examples = [
-    'transactions:delete --api-key=[api_key] --environment=environment --id=[ID]',
-    'transactions:delete --api-key=[api_key] --environment=environment --id=[ID] -c',
+    'transactions:delete --api-key=[api_key] --environment=[env] --id=[ID]',
+    'transactions:delete --api-key=[api_key] --environment=[env] --id=[ID] -c',
   ]
 
   async run() {
@@ -46,46 +46,50 @@ export default class TransactionsDelete extends Transactions {
      * @param object
      * get flags value
      */
-    const { flags } = this.parse(TransactionsDelete)
+    const { flags } = this.parse(TransactionsDelete);
     /**
      * @param String
      * your api's key
      */
-    const apiKey = flags['api-key']
+    const apiKey = flags['api-key'];
     /**
      * @param String
      * sandbox or live
      */
-    const environment = flags.environment
+    const environment = flags.environment;
     /**
       * Set Apikey and environment to connect to fedapay
       */
-    FedaPay.setApiKey(apiKey)
-    FedaPay.setEnvironment(environment)
+    FedaPay.setApiKey(apiKey);
+    FedaPay.setEnvironment(environment);
     /**
      * @param integer
      * get the id of the transaction
      */
-    const id = flags.id
+    const id = flags.id;
 
     try {
       /**
        * @param Transaction
        * result of the retrieve
        */
-      const transaction = await Transaction.retrieve(id)
+      cli.action.start('Retrieving transaction...');
+      const transaction = await Transaction.retrieve(id);
       const confirm = flags.confirm || await cli.confirm(
         'Are you sure to continue? [Y/n]'
-      )
+      );
 
       if (confirm) {
-        await transaction.delete()
-        this.log(chalk.blue('Transaction deleted'))
+        cli.action.start('Deleting transaction...');
+        await transaction.delete();
+        this.log(chalk.blue('Transaction deleted'));
       } else {
-        this.log(chalk.red('Deletion canceled'))
+        this.log(chalk.red('Deletion canceled'));
       }
     } catch (error) {
-      this.error(error.message)
+      this.error(error.message);
     }
+
+    cli.action.stop();
   }
 }
