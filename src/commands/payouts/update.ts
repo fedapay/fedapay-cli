@@ -85,7 +85,7 @@ export default class PayoutsUpdate extends Payouts {
        * @param object
        */
       cli.action.start('Updating payout');
-      const payout = Payout.update(id, data)
+      const payout = Payout.update(id, data);
       this.log(colorize(JSON.stringify(payout, null, 2)));
     } catch (error) {
       this.error(error.message);
