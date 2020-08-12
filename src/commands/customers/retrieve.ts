@@ -1,8 +1,9 @@
-import {flags} from '@oclif/command'
-import {FedaPay, Customer} from 'fedapay'
-import * as colorize from 'json-colorizer'
-import Customers from '../customers'
-import * as chalk from 'chalk'
+import { flags } from '@oclif/command';
+import { FedaPay, Customer } from 'fedapay';
+import colorize from 'json-colorizer';
+import { cli } from 'cli-ux';
+import Customers from '../customers';
+
 /**
  * CustomersRetrieve class extending the superClass Customers
  */
@@ -11,66 +12,72 @@ export default class CustomersRetrieve extends Customers {
    * @param string
    * Description of the command Customer:retrieve
   */
-  static description = 'Get customer details'
+  static description = 'Retrieve a customer.'
+
   /**
    * @param object
    * Declaration of the command flags
-  */ 
+  */
   static flags = {
     ...Customers.flags,
     id: flags.integer({
-      description: 'Retrieve details of the customer with this id',
+      description: 'ID of the customer.',
       required: true,
     }),
-    help: flags.help({
-      char: 'h',
-      description: 'show the help about the command customers:retrieve'
-    }),
-  }
- /**
+    help: flags.help({ char: 'h', description: 'Help for customers:retrieve command.' })
+  };
+
+  /**
    * @param string[]
    * some examples of the custommers retrieve use for help
    */
   static examples = [
-    'customers:retrieve --api-key=[API_KEY] --environment=sandbox --id=5',
-    'customers:retrieve --api-key=[API_KEY] --environment=sandbox --id=1',
-  ]
+    'customers:retrieve --api-key=[API-KEY] --environment=[env] --id=5'
+  ];
+
   async run() {
     /**
       *  Get flags object from CustommersRetrieve
       *  and use them to retrieve an custommer
     /**
      * @param object
-     * get flags value 
+     * get flags value
      */
-    const {flags} = this.parse(CustomersRetrieve)
+    const { flags } = this.parse(CustomersRetrieve);
+
     /**
      * @param string
      * api key value
      */
-    const apiKey = flags['api-key']
+    const apiKey = flags['api-key'];
+
     /**
      * @param string
      * environment type
      */
-    const environment = flags.environment
+    const environment = flags.environment;
+
     /**
      * @param number
-     * store the customer id 
+     * store the customer id
      */
-    const id = flags.id
+    const id = flags.id;
+
     /**
      * Set Apikey and environment to connect to fedapay
      */
-    FedaPay.setApiKey(apiKey)
-    FedaPay.setEnvironment(environment)
+    FedaPay.setApiKey(apiKey);
+    FedaPay.setEnvironment(environment);
+
     try {
-    const customer = await Customer.retrieve(id)
-    this.log(colorize(JSON.stringify(customer, null, 2)))
+      cli.action.start('Retrieve customer');
+
+      const customer = await Customer.retrieve(id);
+      this.log(colorize(JSON.stringify(customer, null, 2)));
+    } catch (error) {
+      this.error(error.message);
     }
-    catch(error){
-      this.warn(chalk.red(`${error.name} : ${error.message}`))
-      this.exit
-    }
+
+    cli.action.stop();
   }
 }

@@ -1,8 +1,8 @@
 import { flags } from '@oclif/command';
 import { FedaPay, Customer } from 'fedapay';
 import colorize from 'json-colorizer';
-import Customers from '../customers';
 import { cli } from 'cli-ux';
+import Customers from '../customers';
 
 /**
  * CustomersList class extending the superClass Customers
@@ -97,5 +97,7 @@ export default class CustomersList extends Customers {
     } catch (error) {
       this.error(error.message);
     }
+
+    cli.action.stop();
   }
 }

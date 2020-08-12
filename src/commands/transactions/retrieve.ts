@@ -66,7 +66,7 @@ export default class TransactionsRetrieve extends Transactions {
     const id = flags.id;
 
     try {
-      cli.action.start('Retrieve Transaction');
+      cli.action.start('Retrieve transaction');
 
       const transaction = await Transaction.retrieve(id);
       this.log(colorize(JSON.stringify(transaction, null, 2)));
