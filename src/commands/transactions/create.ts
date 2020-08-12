@@ -24,15 +24,15 @@ export default class TransactionsCreate extends Transactions {
     ...Transactions.flags,
     data: flags.string({
       char: 'd',
-      description: 'Data for the API request',
+      description: 'Data for the API request.',
       required: true,
       multiple: true,
     }),
     'with-token': flags.boolean({
-      description: 'add the token to your transactions',
+      description: 'add the token to your transactions.',
       default: false,
     }),
-    help: flags.help({ char: 'h', description: 'Help for transaction:create' })
+    help: flags.help({ char: 'h', description: 'Help for transactions:create.' })
   }
 
   /**

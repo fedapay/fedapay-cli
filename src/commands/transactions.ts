@@ -1,27 +1,33 @@
 /* eslint-disable lines-between-class-members */
-import {flags} from '@oclif/command'
-import Command from '../base'
+import { flags } from '@oclif/command';
+import Command from '../base';
+
+/**
+ * The base class of transactions commands
+ */
 export default class Transactions extends Command {
+  /**
+   * The command descrition
+   * @var string
+   */
+  static description = 'Here you can manage your transaction';
 
-  static description = 'Here you can manage your transaction'
+  /**
+   * The commande usage
+   * @var string
+   */
+  static usage = 'transactions:<operation> [parameters...]';
 
-  static usage = 'transactions <operation> [options]'
+  /**
+   * The command flags
+   * @var Object
+   */
+  static flags = {
+    ...Command.flags,
+    help: flags.help({ char: 'h', description: 'Help for transactions command.' }),
+  }
 
-   static examples =[
-     'transactions:list',
-     'transactions:create',
-     'transactions:update',
-     'transactions:token',
-     'transactions:delete',
-     'transactions:retrieve',
-     'transactions:delete --transaction_id=2520 --api-key=apiKey --environment=environment',
-
-   ]
- static flags = {
-   ...Command.flags,
-   help: flags.help({char: 'h', description: 'Help for transactions command'}),
- }
- async run() {
-   this._help()
- }
+  async run() {
+    this._help();
+  }
 }

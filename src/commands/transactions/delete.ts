@@ -21,7 +21,7 @@ export default class TransactionsDelete extends Transactions {
   static flags = {
     ...Transactions.flags,
     id: flags.integer({
-      description: 'Provide the id of the transaction you want to delete',
+      description: 'Provide the id of the transaction you want to delete.',
       required: true,
     }),
     confirm: flags.boolean({
@@ -29,7 +29,7 @@ export default class TransactionsDelete extends Transactions {
       default: false,
       char: 'c'
     }),
-    help: flags.help({ char: 'h', description: 'Help for transaction:delete' }),
+    help: flags.help({ char: 'h', description: 'Help for transactions:delete.' }),
   }
 
   /**
