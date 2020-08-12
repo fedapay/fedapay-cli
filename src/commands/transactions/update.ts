@@ -1,18 +1,20 @@
-import { flags } from '@oclif/command'
-import { FedaPay, Transaction } from 'fedapay'
-import * as colorize from 'json-colorizer'
-import cli from 'cli-ux'
-import Transactions from '../transactions'
-import DataFlagtransformer from '../../helpers/dataparse'
+import { flags } from '@oclif/command';
+import { FedaPay, Transaction } from 'fedapay';
+import colorize from 'json-colorizer';
+import cli from 'cli-ux';
+import Transactions from '../transactions';
+import DataFlagtransformer from '../../helpers/dataparse';
+
 /**
  * TransactionUpdate extending the superClass Transactions
  */
 export default class TransactionsUpdate extends Transactions {
-  /** 
-  * @params String 
+  /**
+  * @params String
   * Description of the command transactions:update
   */
-  static description = 'Update some transactions'
+  static description = 'Update some transactions';
+
   /**
    * @param object
    * Declaration of the command flags
@@ -21,78 +23,69 @@ export default class TransactionsUpdate extends Transactions {
     ...Transactions.flags,
     id: flags.integer({
       required: true,
-      description: 'Provide the id of the transaction you want to update'
+      description: 'The transaction ID'
     }),
     data: flags.string({
-      description: 'Provide the data you want to update',
+      description: 'Data for the API request.',
       required: true,
       multiple: true,
       char: 'd',
     }),
-    confirm: flags.boolean({
-      description: 'Update your data',
-      default: false,
-    }),
-    help: flags.help({ char: 'h' }),
-  }
+    help: flags.help({ char: 'h', description: 'Help for transactions:update command.' }),
+  };
+
   /**
- * @param Sting[]
- * Some example of use of the transaction:update command
- */
+   * @param Sting[]
+   * Some example of use of the transaction:update command
+   */
   static examples = [
-    'transactions:update --api-key=[api_key] --environment=environment --id=12321 -d amount=2500, -d description=Sending money to mum -d currency[iso]=XOF',
-    'transactions:update --api-key=[api_key] --environment=environment --id=52123 -d amount=1780, -d customer[email]=geronimo@apache.com --confirm'
-  ]
+    'transactions:update --api-key=[API-KEY] --environment=[env] --id=[ID] -d amount=2500, -d description="Sending money to mum" -d currency[iso]=XOF',
+    'transactions:update --api-key=[API-KEY] --environment=[env] --id=[ID] -d amount=1780, -d customer[email]=geronimo@apache.com -c'
+  ];
+
   async run() {
     /**
- * @param object
- * get flags value 
- */
-    const { flags } = this.parse(TransactionsUpdate)
-    /** 
-       * @param String 
-       * your api's key  
-       */
-    const apiKey = flags['api-key']
+     * @param object
+     * get flags value
+     */
+    const { flags } = this.parse(TransactionsUpdate);
+
+    /**
+     * @param String
+     * your api's key
+     */
+    const apiKey = flags['api-key'];
+
     /**
      * @param String
      * environment or live
      */
-    const environment = flags.environment
+    const environment = flags.environment;
+
     /**
- * Set Apikey and environment to connect to fedapay
- */
-    FedaPay.setApiKey(apiKey)
-    FedaPay.setEnvironment(environment)
+     * Set Apikey and environment to connect to fedapay
+     */
+    FedaPay.setApiKey(apiKey);
+    FedaPay.setEnvironment(environment);
+
     try {
       /**
       * @param integer
       * get the id of the transaction
       */
-      const id = flags.id
+      const id = flags.id;
+
       /**
-      * @param Object
-      * The data obtained after transformation
-      */
-      const data = DataFlagtransformer.Transform(flags.data)
-      /**
-       * @param Boolean
-       * true if either the confirm flag or the confirm dialog is setted
+       * @param Object
+       * The data obtained after transformation
        */
-      const confirm = flags.confirm || await cli.confirm("Sure to continue?")
-      if (confirm) {
-        /**
-         * @param Transaction
-         * When we got a match the variable is filled up with a transaction object
-         */
-        const transaction = await Transaction.retrieve(id)
-        const transaction_update = await Transaction.update(id, data)
-        this.log(colorize(JSON.stringify(transaction_update, null, 2)))
-      } else {
-        this.log('Update dropped')
-      }
+      const data = DataFlagtransformer.transform(flags.data);
+
+      cli.action.start('Updating transaction');
+      const transaction = await Transaction.update(id, data);
+      this.log(colorize(JSON.stringify(transaction, null, 2)));
     } catch (error) {
-      this.error(error)
+      this.error(error.message);
     }
   }
 }
