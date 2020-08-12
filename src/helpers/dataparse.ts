@@ -1,17 +1,34 @@
-import * as deparam from 'jquery-deparam'
-
+import deparam from 'jquery-deparam';
 
 export default class DataFlagTransformer {
-    /*Use to parse string to Typescript Object */
+  /**
+   * Use to parse string to Typescript Object
+   * @param {string|string[]} inputs The string array to transform
+   * @returns {Object} a ja
+   */
+  static transform(inputs: string | string[]): any {
+    if (!Array.isArray(inputs)) {
+      inputs = [inputs];
+    }
 
-    /**
-     * @param {string[]} input The string array to transform
-     * @returns {Object}
-     */
-    static Transform(input: string[]): Object{
-        
-        const data = input.join('&')
-        const obj = deparam(data)
-        return obj
-    };
+    const data = inputs.join('&');
+    const obj = deparam(data);
+    return obj;
+  }
+
+  static transformFilters(inputs: string | string[]) {
+    const filters = DataFlagTransformer.transform(inputs);
+    const includes: any = {};
+    const compare: any = {};
+
+    for (const n in filters) {
+      if (typeof filters[n] === 'object') {
+        includes[n] = filters[n];
+      } else {
+        compare[n] = { op: '=', value: filters[n] };
+      }
+    }
+
+    return { includes, compare };
+  }
 }

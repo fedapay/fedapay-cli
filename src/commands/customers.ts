@@ -1,23 +1,33 @@
-import {flags} from '@oclif/command'
-import Command from '../base'
+import {flags} from '@oclif/command';
+import Command from '../base';
 
+/**
+ * CustomersCreate class extending Command Class
+ */
 export default class Customers extends Command {
-  static description = 'Manage FedaPay customers ressource'
+  /**
+   * @param string
+   * Description of the command Customer
+   */
+  static description = 'Manage FedaPay customers ressource';
 
-  static usage = 'customers <operation> [options]'
+  /**
+    * @param string
+    * custom usage string for help
+    * this overrides the default usage
+    */
+   static usage = 'customers:<operation> [parameters...]';
 
-  static examples = [
-    'customers list',
-    'customers create --email=foo@bar.com',
-    'customers retrieve --id=ID',
-  ]
-
+  /**
+   * @param object
+   * Declaration of the command flags
+  */
   static flags = {
     ...Command.flags,
-    help: flags.help({char: 'h', description: 'Help for customers command'}),
+    help: flags.help({char: 'h', description: 'Help for customers command.'}),
   }
 
   async run() {
-    this._help()
+    this._help();
   }
 }
