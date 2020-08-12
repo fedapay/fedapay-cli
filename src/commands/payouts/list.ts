@@ -15,6 +15,10 @@ export default class PayoutsList extends Payouts {
    */
   static description = 'List of the payout records.';
 
+  /**
+   * @param object
+   * Declaration of the command flags
+  */
   static flags = {
     ...Payouts.flags,
     limit: flags.integer({
