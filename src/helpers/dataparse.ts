@@ -1,4 +1,8 @@
+
 import deparam from 'jquery-deparam';
+import param from 'jquery-param';
+import queryString from 'query-string';
+
 
 export default class DataFlagTransformer {
   /**
@@ -30,5 +34,17 @@ export default class DataFlagTransformer {
     }
 
     return { includes, compare };
+  }
+
+  static transformFilterForES(inputs: string| string[]){
+const filtersTransform = DataFlagTransformer.transform(inputs);
+const filters: any ={};
+for (const n in filtersTransform){
+
+  filters[`filters[${n}]`]=filtersTransform[n];
+
+}
+const filtersString =  param(filters);
+return queryString.parse(filtersString);
   }
 }
