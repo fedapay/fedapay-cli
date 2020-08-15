@@ -3,7 +3,6 @@ import deparam from 'jquery-deparam';
 import param from 'jquery-param';
 import queryString from 'query-string';
 
-
 export default class DataFlagTransformer {
   /**
    * Use to parse string to Typescript Object
@@ -33,18 +32,20 @@ export default class DataFlagTransformer {
       }
     }
 
-    return { includes, compare };
+    const filtersString = param({ filters: { includes, compare } });
+    return queryString.parse(filtersString);
   }
 
-  static transformFilterForES(inputs: string| string[]){
-const filtersTransform = DataFlagTransformer.transform(inputs);
-const filters: any ={};
-for (const n in filtersTransform){
+  static transformFilterForES(inputs: string | string[]) {
+    const filtersTransform = DataFlagTransformer.transform(inputs);
+    const filters: any = {};
+    for (const n in filtersTransform) {
+      if (n === 'type' || n === 'object_id' || n === 'object' || n === 'entity') {
+        filters[`filters[${n}]`] = filtersTransform[n];
+      }
+    }
 
-  filters[`filters[${n}]`]=filtersTransform[n];
-
-}
-const filtersString =  param(filters);
-return queryString.parse(filtersString);
+    const filtersString = param(filters);
+    return queryString.parse(filtersString);
   }
 }

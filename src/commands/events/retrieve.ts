@@ -35,8 +35,8 @@ export default class EventsRetrieve extends Events {
    */
   static examples=[
     'events:retrieve --api-key=[API-KEY] --environment=[env] --id=[ID]',
-
   ]
+
   async run() {
     /**
         * @param object
@@ -65,17 +65,16 @@ export default class EventsRetrieve extends Events {
      * @param string
      * Get the id of the event
      */
-    const id=flags.id;
+    const id = flags.id;
 
     try {
       cli.action.start('Retrieving event');
 
-      const event =await Event.retrieve(id);
+      const event = await Event.retrieve(id);
       this.log(colorize(JSON.stringify(event, null, 2)));
-      
       cli.action.stop();
     } catch (error) {
-      this.error(error.message)
+      this.error(error.message);
     }
   }
 }

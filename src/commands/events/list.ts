@@ -2,7 +2,6 @@ import { flags } from '@oclif/command';
 import cli from 'cli-ux';
 import { FedaPay, Event } from 'fedapay';
 import colorize from 'json-colorizer';
-import { boolean } from '@oclif/command/lib/flags';
 import DataFlagTransformer from '../../helpers/dataparse';
 import Events from '../events';
 
@@ -39,25 +38,26 @@ export default class EventsList extends Events {
    * Some example of use of the events:list command
    */
   static examples = [
-    'events:list --api-key=[api_key] --environment=environment --limit=15'
+    'events:list --api-key=[api_key] --environment=environment --limit=15',
+    'events:list --api-key=[api_key] --environment=environment --limit=15 -f type=transaction_deleted -f object_id=ID'
   ];
 
   async run() {
     /**
     * @param object
-    * get flags value
+    * Get flags value
     */
     const { flags } = this.parse(EventsList);
 
     /**
    * @param String
-   * your api's key
+   * Your API's key
    */
     const apiKey = flags['api-key'];
 
     /**
      * @param String
-     * environment or live
+     * Environment or live
      */
     const environment = flags.environment;
 
@@ -69,7 +69,7 @@ export default class EventsList extends Events {
 
     /**
      * @param integer
-     * get the limit value
+     * Get the limit value
      */
     const limit = flags.limit;
 
@@ -80,7 +80,6 @@ export default class EventsList extends Events {
     const filters = DataFlagTransformer.transformFilterForES(flags.filters);
 
     try {
-      
       cli.action.start('Getting the transactions list');
 
       /**

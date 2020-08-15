@@ -1,5 +1,6 @@
 import { flags } from '@oclif/command';
 import Command from '../base';
+
 /**
  * The base class of events commands
  */
