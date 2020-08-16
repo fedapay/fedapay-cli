@@ -1,25 +1,102 @@
-import {Command, flags} from '@oclif/command'
+import { flags } from '@oclif/command';
+import cli from 'cli-ux';
+import { FedaPay, Event } from 'fedapay';
+import colorize from 'json-colorizer';
+import DataFlagTransformer from '../../helpers/dataparse';
+import Events from '../events';
 
-export default class EventsList extends Command {
-  static description = 'describe the command here'
+/**
+ * EventsList class extending super class Events
+ */
+export default class EventsList extends Events {
+  /**
+   * @var String
+   * Description of the command events:list
+   */
+  static description = 'List of the events'
 
+  /**
+   * @param Object
+   * Declaration of the command flags
+   */
   static flags = {
-    help: flags.help({char: 'h'}),
-    // flag with a value (-n, --name=VALUE)
-    name: flags.string({char: 'n', description: 'name to print'}),
-    // flag with no value (-f, --force)
-    force: flags.boolean({char: 'f'}),
+    ...Events.flags,
+    limit: flags.integer({
+      description: 'Limit of the records to display',
+      default: 10,
+    }),
+    filters: flags.string({
+      description: 'Filters you want to apply',
+      multiple: true,
+      char: 'f',
+    }),
+    help: flags.help({ char: 'h', description: 'Help for events:list command' }),
   }
 
-  static args = [{name: 'file'}]
+  /**
+   * @param Sting[]
+   * Some example of use of the events:list command
+   */
+  static examples = [
+    'events:list --api-key=[api_key] --environment=environment --limit=15',
+    'events:list --api-key=[api_key] --environment=environment --limit=15 -f type=transaction_deleted -f object_id=ID'
+  ];
 
   async run() {
-    const {args, flags} = this.parse(EventsList)
+    /**
+    * @param object
+    * Get flags value
+    */
+    const { flags } = this.parse(EventsList);
 
-    const name = flags.name ?? 'world'
-    this.log(`hello ${name} from /home/james/Documents/Programming/cli/src/commands/events/list.ts`)
-    if (args.file && flags.force) {
-      this.log(`you input --force and --file: ${args.file}`)
+    /**
+   * @param String
+   * Your API's key
+   */
+    const apiKey = flags['api-key'];
+
+    /**
+     * @param String
+     * Environment or live
+     */
+    const environment = flags.environment;
+
+    /**
+     *  Set Apikey and environment to connect to fedapay
+     */
+    FedaPay.setApiKey(apiKey);
+    FedaPay.setEnvironment(environment);
+
+    /**
+     * @param integer
+     * Get the limit value
+     */
+    const limit = flags.limit;
+
+    /**
+     * @param Object
+     * The filter flag
+     */
+    const filters = DataFlagTransformer.transformFilterForES(flags.filters);
+
+    try {
+      cli.action.start('Getting the transactions list');
+
+      /**
+       * @var Event,
+       * Result of the filtered listing
+       */
+      const events = await Event.all({
+        per_page: limit,
+        ...filters,
+        match: 'must',
+      });
+
+      this.log(colorize(JSON.stringify(events, null, 2)));
+
+      cli.action.stop();
+    } catch (error) {
+      this.error(error.message);
     }
   }
 }
