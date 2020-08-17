@@ -60,7 +60,7 @@ USAGE
 * [`fedapay login`](#fedapay-login)
 * [`fedapay logs <operation> [options]`](#fedapay-logs-operation-options)
 * [`fedapay logs <operation> [options]`](#fedapay-logs-operation-options-1)
-* [`fedapay logs:retrieve [FILE]`](#fedapay-logsretrieve-file)
+* [`fedapay logs <operation> [options]`](#fedapay-logs-operation-options-2)
 * [`fedapay payouts:<operation> [parameters...]`](#fedapay-payoutsoperation-parameters)
 * [`fedapay payouts:<operation> [parameters...]`](#fedapay-payoutsoperation-parameters-1)
 * [`fedapay payouts:<operation> [parameters...]`](#fedapay-payoutsoperation-parameters-2)
@@ -68,6 +68,7 @@ USAGE
 * [`fedapay payouts:<operation> [parameters...]`](#fedapay-payoutsoperation-parameters-4)
 * [`fedapay payouts:<operation> [parameters...]`](#fedapay-payoutsoperation-parameters-5)
 * [`fedapay payouts:<operation> [parameters...]`](#fedapay-payoutsoperation-parameters-6)
+* [`fedapay sample [FILE]`](#fedapay-sample-file)
 * [`fedapay transactions:<operation> [parameters...]`](#fedapay-transactionsoperation-parameters)
 * [`fedapay transactions:<operation> [parameters...]`](#fedapay-transactionsoperation-parameters-1)
 * [`fedapay transactions:<operation> [parameters...]`](#fedapay-transactionsoperation-parameters-2)
@@ -259,7 +260,7 @@ USAGE
   $ fedapay logs <operation> [options]
 
 OPTIONS
-  -h, --help                 Help for logs command
+  -h, --help                 Help for logs command.
   --api-key=api-key          Your API key to use for the command
   --environment=environment  [default: sandbox] FedaPay Api environment
 
@@ -272,42 +273,43 @@ _See code: [src\commands\logs.ts](https://github.com/brexis/fedapay-cli/blob/v0.
 
 ## `fedapay logs <operation> [options]`
 
-List logs ressource
+List of the logs records.
 
 ```
 USAGE
   $ fedapay logs <operation> [options]
 
 OPTIONS
-  -f, --filter=filter        filter the list
-  -h, --help                 show CLI help
-  -l, --limit=limit          [default: 10] Limit the list of logs to display
+  -f, --filter=filter        Filter the list of logs.
+  -h, --help                 Help for logs:list
+  -l, --limit=limit          [default: 10] Limit of records to display.
   --api-key=api-key          Your API key to use for the command
   --environment=environment  [default: sandbox] FedaPay Api environment
 
 EXAMPLES
-  logs:list
-  logs:list --limit=5
-  logs:list --date=date
-  logs:list --method=GET
-  logs:list --status=200
-  logs:list --path=0
+  logs:list -api-key=[API-KEY] --environment=[ENVIRONMENT] -f method=POST
+  logs:list -api-key=[API-KEY] --environment=[ENVIRONMENT] -f status=400 -f method=GET -f status=200
 ```
 
 _See code: [src\commands\logs\list.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src\commands\logs\list.ts)_
 
-## `fedapay logs:retrieve [FILE]`
+## `fedapay logs <operation> [options]`
 
-describe the command here
+Retrieve a log
 
 ```
 USAGE
-  $ fedapay logs:retrieve [FILE]
+  $ fedapay logs <operation> [options]
 
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -h, --help                 Help for logs:retrieve command.
+  --api-key=api-key          Your API key to use for the command
+  --environment=environment  [default: sandbox] FedaPay Api environment
+  --id=id                    (required) ID of the log.
+
+EXAMPLES
+  logs:retrieve --api-key=[API_KEY] --environment=sandbox --id=ID
+  logs:retrieve --api-key=[API_KEY] --environment=sandbox --id=ID
 ```
 
 _See code: [src\commands\logs\retrieve.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src\commands\logs\retrieve.ts)_
@@ -468,6 +470,22 @@ EXAMPLES
 ```
 
 _See code: [src\commands\payouts\update.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src\commands\payouts\update.ts)_
+
+## `fedapay sample [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ fedapay sample [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src\commands\sample.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src\commands\sample.ts)_
 
 ## `fedapay transactions:<operation> [parameters...]`
 
