@@ -1,7 +1,6 @@
 import deparam from 'jquery-deparam';
 import param from 'jquery-param';
 import queryString from 'query-string';
-
 export default class DataFlagTransformer {
   /**
    * Use to parse string to Typescript Object
@@ -43,6 +42,9 @@ export default class DataFlagTransformer {
       if (typeof filters[n] !== 'object') {
         const key = `filters[${n}]`;
         filtersObject[key] = filters[n];
+      } else {
+        const error = 'Invalid input. Check --help to see an exampple';
+        return error;
       }
     }
 

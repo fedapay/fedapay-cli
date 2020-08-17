@@ -5,23 +5,23 @@ import { cli } from 'cli-ux';
 import chalk from 'chalk';
 import Logs from '../logs';
 /**
- * LogsRetrieve class extending the superClass Logs
+ * LogsRetrieve class extending the superClass Logs.
  */
 export default class LogsRetrieve extends Logs {
   /**
    * @param string
-   * Description of the command logs:retrieve
+   * Description of the command logs:retrieve.
   */
   static description = 'Retrieve a log';
 
   /**
    * @param object
-   * Declaration of the command flags
+   * Declaration of the command flags.
   */
   static flags = {
     ...Logs.flags,
     id: flags.string({
-      description: 'ID of the customer.',
+      description: 'ID of the log.',
       required: true,
     }),
     help: flags.help({
@@ -32,53 +32,51 @@ export default class LogsRetrieve extends Logs {
 
   /**
    * @param string[]
-   * some examples of the logs retrieve use for help
+   * Some examples of the logs retrieve use for help.
    */
   static examples = [
-    'logs:retrieve --api-key=[API_KEY] --environment=sandbox --id=5',
-    'logs:retrieve --api-key=[API_KEY] --environment=sandbox --id=1',
+    'logs:retrieve --api-key=[API_KEY] --environment=sandbox --id=ID',
+    'logs:retrieve --api-key=[API_KEY] --environment=sandbox --id=ID',
   ];
 
   async run() {
     /**
      * @param object
-     * get flags value
+     * Get flags value.
      */
     const {flags} = this.parse(LogsRetrieve);
 
     /**
      * @param string
-     * api key value
+     * Api key value.
      */
     const apiKey = flags['api-key'];
 
     /**
      * @param string
-     * environment type
+     * Environment type.
      */
     const environment = flags.environment;
 
     /**
      * @param number
-     * store the log id
+     * store the log id.
      */
     const id = flags.id;
 
     /**
-     * Set Apikey and environment to connect to fedapay
+     * Set Apikey and environment to connect to fedapay.
      */
     FedaPay.setApiKey(apiKey);
     FedaPay.setEnvironment(environment);
 
     try {
-      cli.action.start('Retrieve log');
-
+      cli.action.start('Retrieve log'); // Start the spiner.
       const log = await Log.retrieve(id);
       this.log(colorize(JSON.stringify(log, null, 2)));
     } catch (error) {
       this.error(chalk.red.italic(`${error.name} : ${error.message}`));
     }
-
-    cli.action.stop();
+    cli.action.stop(); // Stop the spiner.
   }
 }

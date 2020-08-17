@@ -7,77 +7,68 @@ import logs from '../logs';
 import DataFlagTransformer from '../../helpers/dataparse';
 
 /**
- * LogsList class extending the superClass Logs
+ * LogsList command class.
  */
 export default class LogsList extends logs {
   /**
      * @param string
-     * Description of the command Logs:list
+     * Description of logs:list command.
      */
-  static description = 'List logs ressource';
+  static description = 'List of the logs records.';
 
   /**
      * @param object
-     * Declaration of the command flags
+     * Declaration of the command flags.
     */
   static flags = {
     ...logs.flags,
     limit: flags.integer({
       char: 'l',
-      description: 'Limit the list of logs to display',
+      description: 'Limit of records to display.',
       default: 10,
     }),
     filter: flags.string({
       char: 'f',
-      description: 'filter the list',
+      description: 'Filter the list of logs.',
       multiple: true,
     }),
-    help: flags.help({char: 'h'}),
+    help: flags.help({char: 'h', description: 'Help for logs:list' }),
   };
 
   /**
    * @param string[]
-   * some examples of the logs:list use for help
+   * Some examples of the logs:list use for help.
    */
   static examples = [
-    'logs:list',
-    'logs:list --limit=5',
-    'logs:list --date=date',
-    'logs:list --method=GET',
-    'logs:list --status=200',
-    'logs:list --path=0',
+    'logs:list -api-key=[API-KEY] --environment=[ENVIRONMENT] -f method=POST',
+    'logs:list -api-key=[API-KEY] --environment=[ENVIRONMENT] -f status=400 -f method=GET -f status=200',
   ];
 
   async run() {
     /**
-     *  Get flags object from LogsList
-     *  and use them to retrieve and list logs
-     */
-    /**
      * @param object
-     * get flags value
+     * Get flags value.
      */
     const {flags} = this.parse(LogsList);
-
     /**
      * @param string
-     * api key value
+     * Api key value.
      */
     const apiKey = flags['api-key'];
 
     /**
      * @param string
-     * environment type
+     * Environment type.
      */
 
     const environment = flags.environment;
     /**
      * @param number
-     * store the number of logs to display
+     * Store the number of logs to display.
      */
     const limit = flags.limit;
 
-    const filter = DataFlagTransformer.transformFiltersForES(flags.filter);
+    const filter: object|string = DataFlagTransformer.transformFiltersForES(flags.filter);
 
     /**
      * Set Apikey and environment to connect to fedapay
@@ -87,21 +78,20 @@ export default class LogsList extends logs {
 
     try {
       cli.action.start('Getting the customers list');
-
-      const filt = {
-        per_page: limit,
-        ...filter,
-        match: 'must',
-
-      };
-      // eslint-disable-next-line no-console
-      console.log(filt);
-      const Logs = await Log.all(filt);
-      this.log(colorize(JSON.stringify(Logs, null, 2)));
+      if (typeof filter === 'object') {
+        const filterObject = {
+          per_page: limit,
+          ...filter,
+          match: 'must',
+        };
+        const Logs = await Log.all(filterObject);
+        this.log(colorize(JSON.stringify(Logs, null, 2)));
+      } else {
+        this.error(chalk.red(filter));
+      }
     } catch (error) {
-      this.warn(chalk.red(`${error.name} : ${error.message}`));
+      this.error(chalk.red(`${error.name} : ${error.message}`));
     }
-
     cli.action.stop();
   }
 }
