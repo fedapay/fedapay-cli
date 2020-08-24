@@ -1,25 +1,26 @@
-import {Command, flags} from '@oclif/command'
+import { flags } from '@oclif/command';
+import Command from '../base';
 
+/**
+ * The base class of events commands
+ */
 export default class Events extends Command {
-  static description = 'describe the command here'
+  /**
+   * The command description
+   * @var string
+   */
+  static description = 'Here you can manage events';
 
+  /**
+   * The command flags
+   * @var Object
+   */
   static flags = {
-    help: flags.help({char: 'h'}),
-    // flag with a value (-n, --name=VALUE)
-    name: flags.string({char: 'n', description: 'name to print'}),
-    // flag with no value (-f, --force)
-    force: flags.boolean({char: 'f'}),
+    ...Command.flags,
+    help: flags.help({char: 'h', description:'Help for events command'}),
   }
 
-  static args = [{name: 'file'}]
-
   async run() {
-    const {args, flags} = this.parse(Events)
-
-    const name = flags.name ?? 'world'
-    this.log(`hello ${name} from /home/james/Documents/Programming/cli/src/commands/events.ts`)
-    if (args.file && flags.force) {
-      this.log(`you input --force and --file: ${args.file}`)
-    }
+    this._help();
   }
 }
