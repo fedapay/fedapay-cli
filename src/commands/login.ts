@@ -1,12 +1,8 @@
 import { flags, Command } from '@oclif/command'
 import cli from 'cli-ux';
-import { FedaPay } from 'fedapay'
 import axios from 'axios';
 import os from 'os';
 
-/**
- * import open module
- */
 /**
  * Login class to obtain credentials
  */
@@ -38,6 +34,7 @@ export default class Login extends Command {
    */
   private async sendLinksRequest(device_name: string, environment: string) {
     try {
+      // TODO Replace http://brexis-cli.dev.io/links by https://cli.fedapay.com/links
       const { data } = await axios.post('http://brexis-cli.dev.io/links', {
         device_name, environment
       });
