@@ -2,7 +2,7 @@ import { flags, Command } from '@oclif/command'
 import cli from 'cli-ux';
 import axios from 'axios';
 import os from 'os';
-import { FedaPay } from 'fedapay';
+import * as fs from 'fs-extra';
 
 /**
  * Login Class extending superClass Command
@@ -95,58 +95,48 @@ export default class Login extends Command {
   }
 
   /**
-   * Verify the encoded keys
-   */
-  private verify(code: string) {
-    if (code === null || code === undefined) {
-      console.log(`error provide ${code}`);
-    }
-    else
-    {
-      code ? FedaPay.getApiKey() : console.log('not correct');
-
-    }
-  }
-
-  /**
    * The command flags
    * @var Object
    *
    */
   async run() {
-    const { flags } = this.parse(Login)
-
-    const environment = flags.environment;
-
-    // TODO: CHeck interactive mode
-    const inter = flags.interactive;
-    if (inter)
+    const { flags } = this.parse(Login);
+    if (flags.interactive)
     {
-      const environment = await cli.prompt('Enter your environment');
-      const api_key = await cli.prompt('Enter your api_key');
-
+      const env = await cli.prompt('Enter your environment');
+      const secret_key = await cli.prompt('Enter your secret_key');
+      const public_key = await cli.prompt('Enter your public_key');
+      fs.writeFile('config.json', JSON.stringify([`environment:${env},
+      secret_key:${ secret_key},public_key:${public_key}`]), function (err) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("JSON saved");
+        }
+      });
     }
+    else {
+      const environment = flags.environment;
+      try {
+        const links = await this.sendLinksRequest(os.hostname(), environment);
 
-    // Else, do browser login
-    try {
-      const links = await this.sendLinksRequest(os.hostname(), environment);
+        if (links === null) {
+          return;
+        }
 
-      if (links === null) {
-        return;
+        this.log(`Authenticate URL : ${links.login_url}`);
+        cli.open(links.login_url);
+
+        cli.action.start('Waiting');
+        const login = await this.checkSecretKey(links.poll_url);
+        const secret_key = await cli.prompt('Enter your secret_key');
+        const public_key = await cli.prompt('Enter your public_key');
+        await fs.writeFile((this.config.configDir, 'config.json'), JSON.stringify([secret_key, public_key]));
+        console.log(login);
+      } catch (error) {
+        this.error(error.message);
       }
-
-      this.log(`Authenticate URL : ${links.login_url}`);
-      cli.open(links.login_url);
-
-      cli.action.start('Waiting');
-      const login = await this.checkSecretKey(links.poll_url);
-
-      // TODO: Configure account with secret key and public key using oclif config
-      console.log(login);
-    } catch (error) {
-      this.error(error.message)
     }
-
     cli.action.stop();
   }
 }
