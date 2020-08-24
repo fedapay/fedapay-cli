@@ -1,17 +1,9 @@
-<<<<<<< HEAD
-import { Command, flags } from '@oclif/command';
-import axios from 'axios';
-import os from 'os';
-import open from 'open';
-
-import fs from 'fs';
-=======
 import { flags, Command } from '@oclif/command'
 import cli from 'cli-ux';
 import axios from 'axios';
 import os from 'os';
+import { FedaPay } from 'fedapay';
 
->>>>>>> 7ea58c1d7185fc57bb7c4e05dc166f87e6c4bddb
 /**
  * Login Class extending superClass Command
  */
@@ -27,9 +19,6 @@ export default class Login extends Command {
    * login usage
    */
 
-<<<<<<< HEAD
-  static usage = 'login:<operation> [parameters...]';
-=======
   static flags = {
     environment: flags.string({
       description: 'FedaPay Api environment',
@@ -52,7 +41,7 @@ export default class Login extends Command {
   private async sendLinksRequest(device_name: string, environment: string) {
     try {
       // TODO Replace http://brexis-cli.dev.io/links by https://cli.fedapay.com/links
-      const { data } = await axios.post('http://brexis-cli.dev.io/links', {
+      const { data } = await axios.post('https://cli.fedapay.com/links', {
         device_name, environment
       });
       return data;
@@ -105,68 +94,38 @@ export default class Login extends Command {
     });
   }
 
->>>>>>> 7ea58c1d7185fc57bb7c4e05dc166f87e6c4bddb
+  /**
+   * Verify the encoded keys
+   */
+  private verify(code: string) {
+    if (code === null || code === undefined) {
+      console.log(`error provide ${code}`);
+    }
+    else
+    {
+      code ? FedaPay.getApiKey() : console.log('not correct');
+
+    }
+  }
+
   /**
    * The command flags
    * @var Object
    *
    */
-<<<<<<< HEAD
-
-  static flags = {
-    ...Command.flags,
-    help: flags.help({ char: 'h', description: 'Help for payouts command.' }),
-  };
-
-  async run() {
-
-    const { flags } = this.parse(Login);
-
-    /**
-     * required parameters
-     * @params String
-     */
-
-    const environment = 'sandbox';
-    const device_name = os.hostname();
-    try {
-      const response = await axios.post('http://localhost:8000/links', {
-        'environment': environment,
-        'device_name': device_name
-      });
-      const data = response.data;
-      const url_browser = data.login_url;
-      open(url_browser);
-      const url = data.poll_url;
-      async function getData() {
-        await axios.get(url).then((res) => {
-          const datas = res.data;
-          datas.forEach(dat => {
-            if ((typeof dat['secret_key'] === 'undefined' || 'null') && (typeof dat['public_key'] === 'undefined' || 'null')) {
-              setTimeout(getData, 5000);
-            }
-            else {
-              fs.writeFile("infos.json", JSON.stringify(data), function (err) {
-                if (err) throw err;
-                console.log('complete');
-              });
-            }
-          });
-        });
-      }
-    getData();
-  }
-    catch (error) {
-      console.log(error);
-    }
-=======
   async run() {
     const { flags } = this.parse(Login)
 
     const environment = flags.environment;
 
     // TODO: CHeck interactive mode
+    const inter = flags.interactive;
+    if (inter)
+    {
+      const environment = await cli.prompt('Enter your environment');
+      const api_key = await cli.prompt('Enter your api_key');
 
+    }
 
     // Else, do browser login
     try {
@@ -189,6 +148,5 @@ export default class Login extends Command {
     }
 
     cli.action.stop();
->>>>>>> 7ea58c1d7185fc57bb7c4e05dc166f87e6c4bddb
   }
 }
