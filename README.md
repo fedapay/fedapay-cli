@@ -68,7 +68,8 @@ USAGE
 * [`fedapay payouts:<operation> [parameters...]`](#fedapay-payoutsoperation-parameters-4)
 * [`fedapay payouts:<operation> [parameters...]`](#fedapay-payoutsoperation-parameters-5)
 * [`fedapay payouts:<operation> [parameters...]`](#fedapay-payoutsoperation-parameters-6)
-* [`fedapay sample [FILE]`](#fedapay-sample-file)
+* [`fedapay sample:<operation> [parameters...]`](#fedapay-sampleoperation-parameters)
+* [`fedapay sample:list [FILE]`](#fedapay-samplelist-file)
 * [`fedapay transactions:<operation> [parameters...]`](#fedapay-transactionsoperation-parameters)
 * [`fedapay transactions:<operation> [parameters...]`](#fedapay-transactionsoperation-parameters-1)
 * [`fedapay transactions:<operation> [parameters...]`](#fedapay-transactionsoperation-parameters-2)
@@ -471,13 +472,27 @@ EXAMPLES
 
 _See code: [src\commands\payouts\update.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src\commands\payouts\update.ts)_
 
-## `fedapay sample [FILE]`
+## `fedapay sample:<operation> [parameters...]`
+
+Sample integration built by FedaPay
+
+```
+USAGE
+  $ fedapay sample:<operation> [parameters...]
+
+OPTIONS
+  -h, --help  Help for sample command.
+```
+
+_See code: [src\commands\sample.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src\commands\sample.ts)_
+
+## `fedapay sample:list [FILE]`
 
 describe the command here
 
 ```
 USAGE
-  $ fedapay sample [FILE]
+  $ fedapay sample:list [FILE]
 
 OPTIONS
   -f, --force
@@ -485,7 +500,7 @@ OPTIONS
   -n, --name=name  name to print
 ```
 
-_See code: [src\commands\sample.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src\commands\sample.ts)_
+_See code: [src\commands\sample\list.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src\commands\sample\list.ts)_
 
 ## `fedapay transactions:<operation> [parameters...]`
 
