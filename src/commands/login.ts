@@ -4,6 +4,7 @@ import axios from 'axios';
 import os from 'os';
 import * as fs from 'fs';
 import * as path from 'path';
+import Config from '../helpers/config';
 
 /**
  * Login Class extending superClass Command
@@ -100,19 +101,15 @@ export default class Login extends Command {
   /**
    * Save in config
    * @param {string} environment Environment
-   * @param {string} secret_key g
-   * @param {string} public_key g
+   * @param {string} secret_key Secret_key
+   * @param {string} public_key Public_key
    */
   private saveInConfig(environment: string, secret_key: string, public_key: string) {
     const dir = this.config.configDir;
     !fs.existsSync(dir) && fs.mkdirSync(dir);
     const file = path.join(dir, 'config.json');
-
-    fs.writeFile(
-      file,
-      JSON.stringify({ environment, secret_key, public_key }, null, 4),
-      () => { /* */ }
-    );
+    const config = new Config(file);
+    config.writeAll({ environment, secret_key, public_key });
   }
 
   /**
