@@ -1,7 +1,5 @@
 import { flags } from '@oclif/command';
 import cli from 'cli-ux';
-import colorize from 'json-colorizer';
-import chalk from 'chalk';
 import Samples from '../samples';
 import * as data from './sample-list.json';
 
@@ -88,7 +86,7 @@ export default class SamplesCreate extends Samples {
      * execute the bash command leading to clone sample project
      */
       const { execSync } = require('child_process');
-      const clone = await execSync(command);
+      await execSync(command);
       /**
        * @var string
        * path to manifest.json file
@@ -97,7 +95,7 @@ export default class SamplesCreate extends Samples {
       /**
        * Read file contents
        */
-      fs.readFile(path, 'utf8', function (err, file) {
+      fs.readFile(path, 'utf8',  (err, file) => {
         if (err) throw err;
         const object = JSON.parse(file);
 
@@ -126,7 +124,7 @@ export default class SamplesCreate extends Samples {
              * @var string
              * Copy the original file and rename it with project name
              */
-            const forking = execSync(copy);
+            execSync(copy);
             /**
              * @param Object
              * Prepare the replacement of default value in customs values
@@ -141,9 +139,9 @@ export default class SamplesCreate extends Samples {
              * Replace  the customised data
              */
             try {
-              const results = replace.sync(options);
+              replace.sync(options);
             } catch (error) {
-              console.error('Error occurred:', error);
+              this.log('Error occurred:', error);
             }
           }
         }
