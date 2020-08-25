@@ -101,20 +101,27 @@ export default class Login extends Command {
    */
   async run() {
     const { flags } = this.parse(Login);
-    if (flags.interactive)
-    {
-      const env = await cli.prompt('Enter your environment');
+    if (flags.interactive) {
+      const environment = await cli.prompt('Enter your environment');
       const secret_key = await cli.prompt('Enter your secret_key');
       const public_key = await cli.prompt('Enter your public_key');
-      fs.writeFile('config.json', JSON.stringify([`environment:${env},
-      secret_key:${ secret_key},public_key:${public_key}`]), function (err) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log("JSON saved");
-        }
-      });
+      /**
+       * Parse the key and values into object
+       */
+
+      fs.writeFile('config.json',
+        JSON.stringify({
+          environment,
+          secret_key,
+          public_key
+        }),
+        function (err) {
+          if (err) {
+            console.log(err);
+          }
+        });
     }
+
     else {
       const environment = flags.environment;
       try {
@@ -131,7 +138,11 @@ export default class Login extends Command {
         const login = await this.checkSecretKey(links.poll_url);
         const secret_key = await cli.prompt('Enter your secret_key');
         const public_key = await cli.prompt('Enter your public_key');
-        await fs.writeFile((this.config.configDir, 'config.json'), JSON.stringify([secret_key, public_key]));
+        await fs.writeFile('config.json',JSON.stringify(
+          {
+            secret_key,
+            public_key
+          });
         console.log(login);
       } catch (error) {
         this.error(error.message);
@@ -140,3 +151,4 @@ export default class Login extends Command {
     cli.action.stop();
   }
 }
+
