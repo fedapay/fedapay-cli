@@ -4,6 +4,7 @@ import colorize from 'json-colorizer';
 import { cli } from 'cli-ux';
 import chalk from 'chalk';
 import Transactions from '../transactions';
+import Config from '../../helpers/user-config';
 
 /**
  * TransactionToken class extending super class Transactions
@@ -47,13 +48,14 @@ export default class TransactionsToken extends Transactions {
     * @param String
     * your api's key
     */
-    const apiKey = flags['api-key'];
+
+    const apiKey = this.userConfig.read('secret_key', flags['api-key']);
 
     /**
-     * @param String
-     * sandbox or live
+     * @param string
+     * environment type
      */
-    const environment = flags.environment;
+    const environment = this.userConfig.read('environment', flags.environment);
 
     /**
       * Set Apikey and environment to connect to fedapay

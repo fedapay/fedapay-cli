@@ -34,12 +34,13 @@ USAGE
 * [`fedapay customers:<operation> [parameters...]`](#fedapay-customersoperation-parameters-2)
 * [`fedapay customers:<operation> [parameters...]`](#fedapay-customersoperation-parameters-3)
 * [`fedapay customers:<operation> [parameters...]`](#fedapay-customersoperation-parameters-4)
-* [`fedapay events [FILE]`](#fedapay-events-file)
-* [`fedapay events:list [FILE]`](#fedapay-eventslist-file)
-* [`fedapay events:retrieve [FILE]`](#fedapay-eventsretrieve-file)
+* [`fedapay events`](#fedapay-events)
+* [`fedapay events:list`](#fedapay-eventslist)
+* [`fedapay events:retrieve`](#fedapay-eventsretrieve)
 * [`fedapay events:tail [FILE]`](#fedapay-eventstail-file)
 * [`fedapay help [COMMAND]`](#fedapay-help-command)
-* [`fedapay login [FILE]`](#fedapay-login-file)
+* [`fedapay login`](#fedapay-login)
+* [`fedapay logout [FILE]`](#fedapay-logout-file)
 * [`fedapay payouts:<operation> [parameters...]`](#fedapay-payoutsoperation-parameters)
 * [`fedapay payouts:<operation> [parameters...]`](#fedapay-payoutsoperation-parameters-1)
 * [`fedapay payouts:<operation> [parameters...]`](#fedapay-payoutsoperation-parameters-2)
@@ -180,50 +181,60 @@ EXAMPLES
 
 _See code: [src/commands/customers/update.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/customers/update.ts)_
 
-## `fedapay events [FILE]`
+## `fedapay events`
 
-describe the command here
+Here you can manage events
 
 ```
 USAGE
-  $ fedapay events [FILE]
+  $ fedapay events
 
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -h, --help                 Help for events command
+  --api-key=api-key          Your API key to use for the command
+  --environment=environment  [default: sandbox] FedaPay Api environment
 ```
 
 _See code: [src/commands/events.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/events.ts)_
 
-## `fedapay events:list [FILE]`
+## `fedapay events:list`
 
-describe the command here
+List of the events
 
 ```
 USAGE
-  $ fedapay events:list [FILE]
+  $ fedapay events:list
 
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -f, --filters=filters      Filters you want to apply
+  -h, --help                 Help for events:list command
+  --api-key=api-key          Your API key to use for the command
+  --environment=environment  [default: sandbox] FedaPay Api environment
+  --limit=limit              [default: 10] Limit of the records to display
+
+EXAMPLES
+  events:list --api-key=[api_key] --environment=environment --limit=15
+  events:list --api-key=[api_key] --environment=environment --limit=15 -f type=transaction_deleted -f object_id=ID
 ```
 
 _See code: [src/commands/events/list.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/events/list.ts)_
 
-## `fedapay events:retrieve [FILE]`
+## `fedapay events:retrieve`
 
-describe the command here
+Retrieve an event thanks to its ID
 
 ```
 USAGE
-  $ fedapay events:retrieve [FILE]
+  $ fedapay events:retrieve
 
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -h, --help                 Help for events:retrieve command
+  --api-key=api-key          Your API key to use for the command
+  --environment=environment  [default: sandbox] FedaPay Api environment
+  --id=id                    The Id of the event to retrieve
+
+EXAMPLE
+  events:retrieve --api-key=[API-KEY] --environment=[env] --id=[ID]
 ```
 
 _See code: [src/commands/events/retrieve.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/events/retrieve.ts)_
@@ -261,13 +272,29 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.0/src/commands/help.ts)_
 
-## `fedapay login [FILE]`
+## `fedapay login`
+
+Connect to Fedapay account
+
+```
+USAGE
+  $ fedapay login
+
+OPTIONS
+  -h, --help                 Help for the login command
+  -i, --interactive          Login in interactive mode
+  --environment=environment  [default: sandbox] FedaPay Api environment
+```
+
+_See code: [src/commands/login.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/login.ts)_
+
+## `fedapay logout [FILE]`
 
 describe the command here
 
 ```
 USAGE
-  $ fedapay login [FILE]
+  $ fedapay logout [FILE]
 
 OPTIONS
   -f, --force
@@ -275,7 +302,7 @@ OPTIONS
   -n, --name=name  name to print
 ```
 
-_See code: [src/commands/login.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/login.ts)_
+_See code: [src/commands/logout.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/logout.ts)_
 
 ## `fedapay payouts:<operation> [parameters...]`
 

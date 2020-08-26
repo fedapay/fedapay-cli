@@ -4,6 +4,7 @@ import colorize from 'json-colorizer';
 import cli from 'cli-ux';
 import Payouts from '../payouts';
 import DataFlagTransformer from '../../helpers/dataparse';
+import Config from '../../helpers/user-config';
 
 /**
  * PayoutsList commnd class
@@ -59,13 +60,13 @@ export default class PayoutsList extends Payouts {
      * @param string
      * api key value
      */
-    const apiKey = flags['api-key'];
+    const apiKey = new Config(this.config.configDir).read('secret_key', flags['api-key']);
 
     /**
-     * @param string
-     * environment type
+     * @param String
+     * sandbox or live
      */
-    const environment = flags.environment;
+    const environment = new Config(this.config.configDir).read('environment', flags.environment);
 
     /**
      * @param number

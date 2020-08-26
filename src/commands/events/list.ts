@@ -53,13 +53,14 @@ export default class EventsList extends Events {
    * @param String
    * Your API's key
    */
-    const apiKey = flags['api-key'];
+    const apiKey = this.userConfig.read('secret_key', flags['api-key']);
 
     /**
-     * @param String
-     * Environment or live
-     */
-    const environment = flags.environment;
+   * @param string
+   * environment type
+   */
+
+    const environment = this.userConfig.read('environment', flags.environment);
 
     /**
      *  Set Apikey and environment to connect to fedapay

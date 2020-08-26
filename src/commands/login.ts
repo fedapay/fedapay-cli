@@ -1,10 +1,8 @@
-import { flags, Command } from '@oclif/command'
+import  { flags, Command} from '@oclif/command';
 import cli from 'cli-ux';
 import axios from 'axios';
 import os from 'os';
-import * as fs from 'fs';
-import * as path from 'path';
-import Config from '../helpers/config';
+import Config from '../helpers/user-config';
 
 /**
  * Login Class extending superClass Command
@@ -36,15 +34,14 @@ export default class Login extends Command {
 
   /**
    * Send Link request
-   * @param device_name
-   * @param environment
-   *
+   * @param {string} device_name The device name
+   * @param {string} environment The environment
    * @return {login_url: string; poll_url: string}
    */
+
   private async sendLinksRequest(device_name: string, environment: string) {
     try {
-      // TODO Replace http://brexis-cli.dev.io/links by https://cli.fedapay.com/links
-      const { data } = await axios.post('http://localhost:8000/links', {
+      const { data } = await axios.post('https://cli.fedapay.com/links', {
         device_name, environment
       });
       return data;
@@ -55,10 +52,11 @@ export default class Login extends Command {
 
   /**
    * Send Poll request
-   * @param url
+   * @param {string} url
    *
-   * @return any
+   * @return {any}
    */
+
   private async sendPollRequest(url: string) {
     try {
       const response = await axios.get(url);
@@ -69,12 +67,13 @@ export default class Login extends Command {
   }
 
   /**
-   * Wrap the poll request with a promise. Resolve it when secret key is defined.
+   * Wrap the poll request with a promise.
+   * Resolve it when secret key is defined.
    * Reject it when max try is reached
-   * @param poll_url string
-   *
+   * @param {string} poll_url  The poll url
    * @return Promise<any>
    */
+
   private async checkSecretKey(poll_url: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const maxTries = 10;
@@ -99,18 +98,10 @@ export default class Login extends Command {
   }
 
   /**
-   * Save in config
    * @param {string} environment Environment
    * @param {string} secret_key Secret_key
    * @param {string} public_key Public_key
    */
-  private saveInConfig(environment: string, secret_key: string, public_key: string) {
-    const dir = this.config.configDir;
-    !fs.existsSync(dir) && fs.mkdirSync(dir);
-    const file = path.join(dir, 'config.json');
-    const config = new Config(file);
-    config.writeAll({ environment, secret_key, public_key });
-  }
 
   /**
    * The command flags
@@ -119,17 +110,21 @@ export default class Login extends Command {
    */
   async run() {
     const { flags } = this.parse(Login);
+    let environment;
+    let secret_key;
+    let public_key;
+
     if (flags.interactive) {
-      const environment = await cli.prompt('Enter your environment');
-      const secret_key = await cli.prompt('Enter your secret_key');
-      const public_key = await cli.prompt('Enter your public_key');
-      this.saveInConfig(environment, secret_key, public_key);
+      environment = await cli.prompt('Enter your environment');
+      secret_key = await cli.prompt('Enter your secret_key');
+      public_key = await cli.prompt('Enter your public_key');
     } else {
-      const environment = flags.environment;
+      environment = flags.environment;
 
       try {
         const links = await this.sendLinksRequest(os.hostname(), environment);
         if (links === null) {
+          console.error('Hostname and environnement are required');
           return;
         }
 
@@ -137,11 +132,19 @@ export default class Login extends Command {
         cli.open(links.login_url);
         cli.action.start('Waiting');
         const login = await this.checkSecretKey(links.poll_url);
-        this.saveInConfig(environment, login.secret_key, login.public_key);
+
+        secret_key = login.secret_key;
+        public_key = login.public_key;
       } catch (error) {
         this.error(error.message);
+        return;
       }
-      cli.action.stop();
     }
+
+    new Config(this.config.configDir).write({ environment, secret_key, public_key });
+
+    console.log('Variables sent succesfully');
+
+    cli.action.stop();
   }
 }

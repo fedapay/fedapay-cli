@@ -55,13 +55,13 @@ export default class CustomersCreate extends Customers {
      * @param string
      * api key value
      */
-    const apiKey = flags['api-key'];
+    const apiKey = this.userConfig.read('secret_key', flags['api-key']);
 
     /**
      * @param string
      * environment type
      */
-    const environment = flags.environment;
+    const environment = this.userConfig.read('environment', flags.environment);
 
     /**
      * @param object

@@ -5,6 +5,7 @@ import cli from 'cli-ux';
 import chalk from 'chalk';
 import Payouts from '../payouts';
 import DataFlagtransformer from '../../helpers/dataparse';
+import Config from '../../helpers/user-config';
 
 /**
  * PayoutsCreate Class extending the superClass Payouts
@@ -56,13 +57,13 @@ export default class PayoutsCreate extends Payouts {
      * @param string
      * api-key value
      */
-    const apiKey = flags['api-key'];
+    const apiKey = new Config(this.config.configDir).read('secret_key', flags['api-key']);
 
     /**
-     * @param string
-     * environnement sandbox or live
+     * @param String
+     * sandbox or live
      */
-    const environment = flags.environment;
+    const environment = new Config(this.config.configDir).read('environment', flags.environment);
 
     /**
      * @param object
