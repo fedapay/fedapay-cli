@@ -95,7 +95,7 @@ export default class SamplesCreate extends Samples {
       /**
        * Read file contents
        */
-      fs.readFile(path, 'utf8',  (err, file) => {
+      fs.readFile(path, 'utf8',  (err: any, file: string) => {
         if (err) throw err;
         const object = JSON.parse(file);
 
