@@ -2,10 +2,6 @@
 import deparam from 'jquery-deparam';
 import param from 'jquery-param';
 import queryString from 'query-string';
-import * as fs from 'fs';
-import * as path from 'path';
-import Config from './user-config';
-
 export default class DataFlagTransformer {
   /**
    * Use to parse string to Typescript Object

@@ -4,7 +4,6 @@ import colorize from 'json-colorizer';
 import { cli } from 'cli-ux';
 import chalk from 'chalk';
 import Transactions from '../transactions';
-import Config from '../../helpers/user-config';
 
 /**
  * TransactionToken class extending super class Transactions

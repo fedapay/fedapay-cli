@@ -3,7 +3,6 @@ import { FedaPay, Payout } from 'fedapay';
 import cli from 'cli-ux';
 import chalk from 'chalk';
 import Payouts from '../payouts';
-import Config from '../../helpers/user-config';
 
 /**
  * PayoutsDelete Class
@@ -53,13 +52,13 @@ export default class PayoutsDelete extends Payouts {
      * @param string
      * the api-key
      */
-    const apiKey = new Config(this.config.configDir).read('secret_key', flags['api-key']);
+    const apiKey = this.userConfig.read('secret_key', flags['api-key']);
 
     /**
      * @param String
      * sandbox or live
      */
-    const environment = new Config(this.config.configDir).read('environment', flags.environment);
+    const environment = this.userConfig.read('environment', flags.environment);
 
     /**
      * @param integer

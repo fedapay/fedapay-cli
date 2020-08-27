@@ -2,7 +2,7 @@ import { flags } from '@oclif/command';
 import { FedaPay, Payout } from 'fedapay';
 import Payouts from '../payouts';
 import cli from 'cli-ux';
-import Config from '../../helpers/user-config';
+
 /**
  *  PayoutsSendNow class
  */
@@ -51,13 +51,13 @@ export default class PayoutsSendNow extends Payouts {
      * @param string
      * api key value
      */
-    const apiKey = new Config(this.config.configDir).read('secret_key', flags['api-key']);
+    const apiKey = this.userConfig.read('secret_key', flags['api-key']);
 
     /**
      * @param String
      * sandbox or live
      */
-    const environment = new Config(this.config.configDir).read('environment', flags.environment);
+    const environment = this.userConfig.read('environment', flags.environment);
 
     /**
      * @param number

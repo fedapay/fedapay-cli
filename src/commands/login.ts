@@ -1,13 +1,12 @@
-import  { flags, Command} from '@oclif/command';
+import  {flags} from '@oclif/command';
 import cli from 'cli-ux';
 import axios from 'axios';
 import os from 'os';
-import Config from '../helpers/user-config';
+import Command from '../base';
 
 /**
  * Login Class extending superClass Command
  */
-
 export default class Login extends Command {
   /**
    * @param string
@@ -20,6 +19,7 @@ export default class Login extends Command {
    */
 
   static flags = {
+    ...Command.flags,
     environment: flags.string({
       description: 'FedaPay Api environment',
       default: 'sandbox',
@@ -141,7 +141,7 @@ export default class Login extends Command {
       }
     }
 
-    new Config(this.config.configDir).write({ environment, secret_key, public_key });
+    this.userConfig.write({ environment, secret_key, public_key });
 
     this.log('Saved');
 

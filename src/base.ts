@@ -5,7 +5,6 @@ import UserConfig from './helpers/user-config';
  * Base command class
  */
 export default abstract class extends Command {
-
   userConfig!: UserConfig;
 
   /**
