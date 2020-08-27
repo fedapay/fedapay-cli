@@ -124,7 +124,7 @@ export default class Login extends Command {
       try {
         const links = await this.sendLinksRequest(os.hostname(), environment);
         if (links === null) {
-          console.error('Hostname and environnement are required');
+          this.error('Hostname and environnement are required');
           return;
         }
 
@@ -143,7 +143,7 @@ export default class Login extends Command {
 
     new Config(this.config.configDir).write({ environment, secret_key, public_key });
 
-    console.log('Variables sent succesfully');
+    this.log('Saved');
 
     cli.action.stop();
   }

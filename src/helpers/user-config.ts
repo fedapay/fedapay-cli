@@ -36,8 +36,11 @@ export default class UserConfig {
     fs.writeFileSync(this.configPath, JSON.stringify(config, null, 4));
   }
 
+  /**
+   * clear method to overwrite the file
+   */
   public clear() {
-    fs.openSync(this.configPath, 'w');
+    fs.writeFileSync(this.configPath, (''));
   }
 
   /**
