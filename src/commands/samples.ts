@@ -1,17 +1,17 @@
 import {Command, flags} from '@oclif/command';
 
-export default class Sample extends Command {
+export default class Samples extends Command {
   /**
- * Sample class extending Command Class
+ * Samples class extending Command Class
  */
-  static description = 'Sample integration built by FedaPay';
+  static description = 'Samples integration built by FedaPay';
 
   /**
     * @param string
     * custom usage string for help
     * this overrides the default usage
     */
-  static usage = 'sample:<operation> [parameters...]';
+  static usage = 'samples:<operation> [parameters...]';
 
   /**
    * @param object
@@ -19,7 +19,7 @@ export default class Sample extends Command {
   */
   static flags = {
     ...Command.flags,
-    help: flags.help({char: 'h', description: 'Help for sample command.'}),
+    help: flags.help({char: 'h', description: 'Help for samples command.'}),
   };
 
   async run() {

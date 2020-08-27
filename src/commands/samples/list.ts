@@ -1,16 +1,16 @@
 import {Command, flags} from '@oclif/command';
 import chalk from 'chalk';
-import data from '../sample/sample-list.json';
+import data from '../samples/samples-list.json';
 
 /**
- * SampleList class extending the superClass Sample
+ * SamplesList class extending the superClass Samples
  */
-export default class SampleList extends Command {
+export default class SamplesList extends Command {
   /**
    * @param string
-   * Description of the command Sample:list description
+   * Description of the command Samples:list description
    */
-  static description = 'A list of available Fedapay Sample integrations that can be setup and bootstrap by the CLI.'
+  static description = 'A list of available Fedapay Samples integrations that can be setup and bootstrap by the CLI.'
 
   /**
    * @param object
@@ -28,15 +28,15 @@ export default class SampleList extends Command {
    * some examples of the custommers list use for help
    */
   static examples = [
-    'sample:list'
+    'samples:list'
   ];
 
   async run() {
     /**
-     * Display every fedapay sample available.
+     * Display every fedapay samples available.
      */
     this.log();
-    this.log(chalk.bold.italic('A list of available Fedapay sample.'));
+    this.log(chalk.bold.italic('A list of available Fedapay samples.'));
     this.log();
 
     for (const key in data) {
