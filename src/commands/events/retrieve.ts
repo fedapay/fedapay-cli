@@ -45,13 +45,13 @@ export default class EventsRetrieve extends Events {
    * @param String
    * your api's key
    */
-    const apiKey = flags['api-key'];
+    const apiKey = this.userConfig.read('secret_key', flags['api-key']);
 
     /**
-     * @param String
-     * sandbox or live
+     * @param string
+     * environment type
      */
-    const environment = flags.environment;
+    const environment = this.userConfig.read('environment', flags.environment);
 
     /**
      * Set Apikey and environment to connect to fedapay
