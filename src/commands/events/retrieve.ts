@@ -8,7 +8,6 @@ import Events from '../events';
  * EventsRetrieve class extending super class Events
  */
 export default class EventsRetrieve extends Events {
-
   /**
    * @var string
    * Description of the command event:retrieve
