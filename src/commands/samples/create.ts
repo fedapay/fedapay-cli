@@ -95,57 +95,56 @@ export default class SamplesCreate extends Samples {
       /**
        * Read file contents
        */
-      fs.readFileSync(path, 'utf8',  (err: any, file: string) => {
-        if (err) throw err;
-        const object = JSON.parse(file);
+      const file = fs.readFileSync(path, 'utf8');
 
-        for (const key in object.replacements) {
-          if (object.replacements[key]) {
-            /**
-             * @var string[]
-             * Array of string
-             */
-            const replacement = object.replacements[key].split(':');
-            /**
-             * Path of file to copy
-             */
-            const origin = './' + name + '/' + replacement[0];
-            /**
-             * Path to destination file
-             */
-            const destination = './' + name + '/' + replacement[1];
+      const object = JSON.parse(file);
 
-            /**
-             * @var string
-             * Prepare the bash command to be executed
-             */
-            const copy = 'cp ' + origin + ' ' + destination;
-            /**
-             * @var string
-             * Copy the original file and rename it with project name
-             */
-            execSync(copy);
-            /**
-             * @param Object
-             * Prepare the replacement of default value in customs values
-             */
-            const options = {
-              files: destination,
-              from: [/<%ENVIRONMENT%>/g, /<%PROJECT_NAME%>/g, /<%SECRET_KEY%>/g],
-              to: replaces,
-            };
-            /**
-             * @param string
-             * Replace  the customised data
-             */
-            try {
-              replace.sync(options);
-            } catch (error) {
-              this.log('Error occurred:', error);
-            }
+      for (const key in object.replacements) {
+        if (object.replacements[key]) {
+          /**
+           * @var string[]
+           * Array of string
+           */
+          const replacement = object.replacements[key].split(':');
+          /**
+           * Path of file to copy
+           */
+          const origin = './' + name + '/' + replacement[0];
+          /**
+           * Path to destination file
+           */
+          const destination = './' + name + '/' + replacement[1];
+
+          /**
+           * @var string
+           * Prepare the bash command to be executed
+           */
+          const copy = 'cp ' + origin + ' ' + destination;
+          /**
+           * @var string
+           * Copy the original file and rename it with project name
+           */
+          execSync(copy);
+          /**
+           * @param Object
+           * Prepare the replacement of default value in customs values
+           */
+          const options = {
+            files: destination,
+            from: [/<%ENVIRONMENT%>/g, /<%PROJECT_NAME%>/g, /<%SECRET_KEY%>/g],
+            to: replaces,
+          };
+          /**
+           * @param string
+           * Replace  the customised data
+           */
+          try {
+            replace.sync(options);
+          } catch (error) {
+            this.log('Error occurred:', error);
           }
         }
-      });
+      }
     } catch (error) {
       this.error(error.message);
     }
