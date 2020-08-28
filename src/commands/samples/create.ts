@@ -1,7 +1,8 @@
 import { flags } from '@oclif/command';
 import cli from 'cli-ux';
 import Samples from '../samples';
-import * as data from './sample-list.json';
+import * as data from './samples-list.json';
+const { execSync } = require('child_process');
 
 /**
  * samplesCreate class extending the superClass Samples
@@ -85,8 +86,7 @@ export default class SamplesCreate extends Samples {
      * @var = String
      * execute the bash command leading to clone sample project
      */
-      const { execSync } = require('child_process');
-      await execSync(command);
+      execSync(command);
       /**
        * @var string
        * path to manifest.json file
@@ -95,7 +95,7 @@ export default class SamplesCreate extends Samples {
       /**
        * Read file contents
        */
-      fs.readFile(path, 'utf8',  (err: any, file: string) => {
+      fs.readFileSync(path, 'utf8',  (err: any, file: string) => {
         if (err) throw err;
         const object = JSON.parse(file);
 
