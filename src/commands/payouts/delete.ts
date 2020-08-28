@@ -52,13 +52,13 @@ export default class PayoutsDelete extends Payouts {
      * @param string
      * the api-key
      */
-    const apiKey = flags['api-key'];
+    const apiKey = this.userConfig.read('secret_key', flags['api-key']);
 
     /**
-     * @param string
-     * the environment
+     * @param String
+     * sandbox or live
      */
-    const environment = flags.environment;
+    const environment = this.userConfig.read('environment', flags.environment);
 
     /**
      * @param integer

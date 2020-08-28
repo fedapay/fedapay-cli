@@ -2,7 +2,6 @@
 import deparam from 'jquery-deparam';
 import param from 'jquery-param';
 import queryString from 'query-string';
-
 export default class DataFlagTransformer {
   /**
    * Use to parse string to Typescript Object
@@ -46,6 +45,24 @@ export default class DataFlagTransformer {
     }
 
     const filtersString = param(filters);
+    return queryString.parse(filtersString);
+  }
+
+  static transformFiltersForES(inputs: string | string[]) {
+    const filters = DataFlagTransformer.transform(inputs);
+    const filtersObject: any = {};
+
+    for (const n in filters) {
+      if (typeof filters[n] !== 'object') {
+        const key = `filters[${n}]`;
+        filtersObject[key] = filters[n];
+      } else {
+        const error = 'Invalid input. Check --help to see an exampple';
+        return error;
+      }
+    }
+
+    const filtersString =  param(filtersObject);
     return queryString.parse(filtersString);
   }
 }

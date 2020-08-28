@@ -2,15 +2,12 @@ import { flags } from '@oclif/command';
 import cli from 'cli-ux';
 import { FedaPay, Event } from 'fedapay';
 import colorize from 'json-colorizer';
-import { boolean } from '@oclif/command/lib/flags';
-import DataFlagTransformer from '../../helpers/dataparse';
 import Events from '../events';
 
 /**
  * EventsRetrieve class extending super class Events
  */
 export default class EventsRetrieve extends Events {
-
   /**
    * @var string
    * Description of the command event:retrieve
@@ -48,13 +45,13 @@ export default class EventsRetrieve extends Events {
    * @param String
    * your api's key
    */
-    const apiKey = flags['api-key'];
+    const apiKey = this.userConfig.read('secret_key', flags['api-key']);
 
     /**
-     * @param String
-     * sandbox or live
+     * @param string
+     * environment type
      */
-    const environment = flags.environment;
+    const environment = this.userConfig.read('environment', flags.environment);
 
     /**
      * Set Apikey and environment to connect to fedapay

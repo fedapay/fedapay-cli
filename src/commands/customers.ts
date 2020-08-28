@@ -2,7 +2,7 @@ import {flags} from '@oclif/command';
 import Command from '../base';
 
 /**
- * CustomersCreate class extending Command Class
+ * Customers class extending Command Class
  */
 export default class Customers extends Command {
   /**

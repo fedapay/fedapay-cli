@@ -58,13 +58,13 @@ export default class TransactionsList extends Transactions {
     * @param String
     * your api's key
     */
-    const apiKey = flags['api-key'];
+    const apiKey = this.userConfig.read('secret_key', flags['api-key']);
 
     /**
      * @param String
      * environment or live
      */
-    const environment = flags.environment;
+    const environment = this.userConfig.read('environment', flags.environment);
 
     /**
      * @param integer
