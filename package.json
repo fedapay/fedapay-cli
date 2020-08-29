@@ -24,6 +24,8 @@
     "os": "^0.1.1",
     "path": "^0.12.7",
     "query-string": "^6.13.1",
+    "replace-in-file": "^6.1.0",
+    "replace-in-files": "^2.0.3",
     "tslib": "^1.13.0"
   },
   "devDependencies": {
