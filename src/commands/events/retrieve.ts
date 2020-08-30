@@ -62,7 +62,7 @@ export default class EventsRetrieve extends Events {
      * @param string
      * Get the id of the event
      */
-    const id = flags.id;
+    const id = flags.id || '';
 
     try {
       cli.action.start('Retrieving event');

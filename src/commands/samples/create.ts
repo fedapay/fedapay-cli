@@ -75,12 +75,14 @@ export default class SamplesCreate extends Samples {
      * @param string
      * get the Url of the sample to clone
      */
-    const url = data[type]['repository'];
+    const url = (<any>data)[type]['repository'];
+
     /**
      * @param string
      * prepare to be executed
      */
     const command = ('git clone -b develop ' + url + ' ' + name);
+
     try {
       /**
      * @var = String
