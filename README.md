@@ -12,8 +12,6 @@ fedapay-cli
 * [Usage](#usage)
 * [Commands](#commands)
 <!-- tocstop -->
-<<<<<<< HEAD
-=======
 * [Usage](#usage)
 * [Commands](#commands)
 <!-- tocstop -->
@@ -23,7 +21,6 @@ fedapay-cli
 * [Usage](#usage)
 * [Commands](#commands)
 <!-- tocstop -->
->>>>>>> master
 # Usage
 <!-- usage -->
 ```sh-session
@@ -61,18 +58,12 @@ USAGE
 * [`fedapay events`](#fedapay-events)
 * [`fedapay events:list`](#fedapay-eventslist)
 * [`fedapay events:retrieve`](#fedapay-eventsretrieve)
-<<<<<<< HEAD
-* [`fedapay events:tail [FILE]`](#fedapay-eventstail-file)
-* [`fedapay help [COMMAND]`](#fedapay-help-command)
-* [`fedapay login`](#fedapay-login)
-=======
 * [`fedapay events [FILE]`](#fedapay-events-file)
 * [`fedapay help [COMMAND]`](#fedapay-help-command)
 * [`fedapay login`](#fedapay-login)
 * [`fedapay logs <operation> [options]`](#fedapay-logs-operation-options)
 * [`fedapay logs <operation> [options]`](#fedapay-logs-operation-options-1)
 * [`fedapay logs <operation> [options]`](#fedapay-logs-operation-options-2)
->>>>>>> master
 * [`fedapay payouts:<operation> [parameters...]`](#fedapay-payoutsoperation-parameters)
 * [`fedapay payouts:<operation> [parameters...]`](#fedapay-payoutsoperation-parameters-1)
 * [`fedapay payouts:<operation> [parameters...]`](#fedapay-payoutsoperation-parameters-2)
@@ -80,14 +71,8 @@ USAGE
 * [`fedapay payouts:<operation> [parameters...]`](#fedapay-payoutsoperation-parameters-4)
 * [`fedapay payouts:<operation> [parameters...]`](#fedapay-payoutsoperation-parameters-5)
 * [`fedapay payouts:<operation> [parameters...]`](#fedapay-payoutsoperation-parameters-6)
-<<<<<<< HEAD
-* [`fedapay samples:<operation> [parameters...]`](#fedapay-samplesoperation-parameters)
-* [`fedapay samples:create [FILE]`](#fedapay-samplescreate-file)
-* [`fedapay samples:<operation> [parameters...]`](#fedapay-samplesoperation-parameters-1)
-=======
 * [`fedapay sample:<operation> [parameters...]`](#fedapay-sampleoperation-parameters)
 * [`fedapay sample:list [FILE]`](#fedapay-samplelist-file)
->>>>>>> master
 * [`fedapay transactions:<operation> [parameters...]`](#fedapay-transactionsoperation-parameters)
 * [`fedapay transactions:<operation> [parameters...]`](#fedapay-transactionsoperation-parameters-1)
 * [`fedapay transactions:<operation> [parameters...]`](#fedapay-transactionsoperation-parameters-2)
@@ -110,11 +95,7 @@ OPTIONS
   --environment=environment  [default: sandbox] FedaPay Api environment
 ```
 
-<<<<<<< HEAD
-_See code: [src/commands/customers.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/customers.ts)_
-=======
 _See code: [src\commands\customers.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src\commands\customers.ts)_
->>>>>>> master
 
 ## `fedapay $ fedapay customers:create [options]`
 
@@ -131,15 +112,11 @@ OPTIONS
   --environment=environment  [default: sandbox] FedaPay Api environment
 
 EXAMPLE
-  customers:create --api-key=[API-KEY] --environment=[env] -d firstname=John -d lastname=Doe -d 
+  customers:create --api-key=[API-KEY] --environment=[env] -d firstname=John -d lastname=Doe -d
   email=customertest1@tom.com -d phone_number[number]=68452896 -d phone_number[country]=BJ
 ```
 
-<<<<<<< HEAD
-_See code: [src/commands/customers/create.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/customers/create.ts)_
-=======
 _See code: [src\commands\customers\create.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src\commands\customers\create.ts)_
->>>>>>> master
 
 ## `fedapay customers:<operation> [parameters...]`
 
@@ -295,9 +272,6 @@ display help for fedapay
 USAGE
   $ fedapay help [COMMAND]
 
-<<<<<<< HEAD
-## `fedapay events:list`
-=======
 ARGUMENTS
   COMMAND  command to show help for
 
@@ -419,14 +393,14 @@ OPTIONS
   --send-now                 Send automatically the payout.
 
 EXAMPLES
-  payouts:create --api-key=[API-KEY] --environment=[env] -d amount=5000 -d currency[iso]=XOF -d mode=mtn -d 
-  customer[firstname]=Qan customer[lastname]=Sally customer[email]=nal@exemple.com 
+  payouts:create --api-key=[API-KEY] --environment=[env] -d amount=5000 -d currency[iso]=XOF -d mode=mtn -d
+  customer[firstname]=Qan customer[lastname]=Sally customer[email]=nal@exemple.com
   customer[phone_number][number]=65423158 customer[phone_number][country]=bj
-  payouts:create --api-key=[API-KEY] --environment=[env] -d amount=5000 -d currency[iso]=XOF -d mode=mtn -d 
+  payouts:create --api-key=[API-KEY] --environment=[env] -d amount=5000 -d currency[iso]=XOF -d mode=mtn -d
   customer[id]=[ID]
-  payouts:create --api-key=[API-KEY] --environment=[env] -d amount=5000 -d currency[iso]=XOF -d mode=mtn -d 
+  payouts:create --api-key=[API-KEY] --environment=[env] -d amount=5000 -d currency[iso]=XOF -d mode=mtn -d
   customer[id]=[ID] --schedule="2020-8-12 11:41:51"
-  payouts:create --api-key=[API-KEY] --environment=[env] -d amount=5000 -d currency[iso]=XOF -d mode=mtn -d 
+  payouts:create --api-key=[API-KEY] --environment=[env] -d amount=5000 -d currency[iso]=XOF -d mode=mtn -d
   customer[id]=[ID] --send-now
 ```
 
@@ -535,8 +509,8 @@ OPTIONS
   --id=id                    (required) The pauyout ID.
 
 EXAMPLES
-  payouts:update --api-key=[API-KEY] --environment=[env] --id=90 -d amount=550 -d currency[iso]=XOF -d mode=moov -d 
-  customer[firstname]=Yu customer[lastname]=Ma customer[email]=vul@exemple.com customer[phone_number][number]=65423158 
+  payouts:update --api-key=[API-KEY] --environment=[env] --id=90 -d amount=550 -d currency[iso]=XOF -d mode=moov -d
+  customer[firstname]=Yu customer[lastname]=Ma customer[email]=vul@exemple.com customer[phone_number][number]=65423158
   customer[phone_number][country]=bj
   payouts:update --api-key=[API-KEY] --environment=[env] --id=109 -d customer[id]=2055
 ```
@@ -558,17 +532,12 @@ OPTIONS
 _See code: [src\commands\sample.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src\commands\sample.ts)_
 
 ## `fedapay sample:list [FILE]`
->>>>>>> master
 
 List of the events
 
 ```
 USAGE
-<<<<<<< HEAD
-  $ fedapay events:list
-=======
   $ fedapay sample:list [FILE]
->>>>>>> master
 
 OPTIONS
   -f, --filters=filters      Filters you want to apply
@@ -616,9 +585,9 @@ OPTIONS
   --with-token               add the token to your transactions.
 
 EXAMPLES
-  transactions:create --api-key=[API-KEY] --environment=[env] -d amount=2500 -d description="Sending money to mum" -d 
+  transactions:create --api-key=[API-KEY] --environment=[env] -d amount=2500 -d description="Sending money to mum" -d
   currency[iso]=XOF -d customer[email]=john.doe@example.com
-  transactions:create --api-key=[API-KEY] --environment=[env] --with-token -d amount=2500 -d description="Sending money 
+  transactions:create --api-key=[API-KEY] --environment=[env] --with-token -d amount=2500 -d description="Sending money
   to mum" -d currency[iso]=XOF -d customer[email]=john.doe@example.com
 ```
 
@@ -725,7 +694,7 @@ OPTIONS
 
 EXAMPLES
   transactions:update --api-key=[API-KEY] --environment=[env] --id=[ID] -d amount=2500
-  transactions:update --api-key=[API-KEY] --environment=[env] --id=[ID] -d amount=1780 -d 
+  transactions:update --api-key=[API-KEY] --environment=[env] --id=[ID] -d amount=1780 -d
   customer[email]=geronimo@apache.com
 ```
 
@@ -786,7 +755,7 @@ OPTIONS
   --environment=environment  [default: sandbox] FedaPay Api environment
 
 EXAMPLE
-  customers:create --api-key=[API-KEY] --environment=[env] -d firstname=John -d lastname=Doe -d 
+  customers:create --api-key=[API-KEY] --environment=[env] -d firstname=John -d lastname=Doe -d
   email=customertest1@tom.com -d phone_number[number]=68452896 -d phone_number[country]=BJ
 ```
 
@@ -972,115 +941,6 @@ OPTIONS
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.0/src/commands/help.ts)_
 
 ## `fedapay login`
-<<<<<<< HEAD
-
-Login to Fedapay account
-
-```
-USAGE
-  $ fedapay login
-
-OPTIONS
-  -h, --help                 Help for the login command
-  --api-key=api-key          Your API key to use for the command
-  --environment=environment  [default: sandbox] FedaPay Api environment
-```
-
-_See code: [src/commands/login.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/login.ts)_
-
-## `fedapay payouts:<operation> [parameters...]`
-
-Manage FedaPay payout ressources
-
-```
-USAGE
-  $ fedapay payouts:<operation> [parameters...]
-
-OPTIONS
-  -h, --help                 Help for payouts command.
-  --api-key=api-key          Your API key to use for the command
-  --environment=environment  [default: sandbox] FedaPay Api environment
-```
-
-_See code: [src/commands/payouts.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/payouts.ts)_
-
-## `fedapay payouts:<operation> [parameters...]`
-
-Create a new payout.
-
-```
-USAGE
-  $ fedapay payouts:<operation> [parameters...]
-
-OPTIONS
-  -d, --data=data            Data for the API request.
-  -h, --help                 Help for payouts:create.
-  --api-key=api-key          Your API key to use for the command
-  --environment=environment  [default: sandbox] FedaPay Api environment
-  --schedule=schedule        The DateTime of the schedule in the format YYYY-MM-DD HH:mm:ss GMT
-  --send-now                 Send automatically the payout.
-
-EXAMPLES
-  payouts:create --api-key=[API-KEY] --environment=[env] -d amount=5000 -d currency[iso]=XOF -d mode=mtn -d 
-  customer[firstname]=Qan customer[lastname]=Sally customer[email]=nal@exemple.com 
-  customer[phone_number][number]=65423158 customer[phone_number][country]=bj
-  payouts:create --api-key=[API-KEY] --environment=[env] -d amount=5000 -d currency[iso]=XOF -d mode=mtn -d 
-  customer[id]=[ID]
-  payouts:create --api-key=[API-KEY] --environment=[env] -d amount=5000 -d currency[iso]=XOF -d mode=mtn -d 
-  customer[id]=[ID] --schedule="2020-8-12 11:41:51"
-  payouts:create --api-key=[API-KEY] --environment=[env] -d amount=5000 -d currency[iso]=XOF -d mode=mtn -d 
-  customer[id]=[ID] --send-now
-```
-
-_See code: [src/commands/payouts/create.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/payouts/create.ts)_
-
-## `fedapay payouts:<operation> [parameters...]`
-
-Delete payout ressource
-
-```
-USAGE
-  $ fedapay payouts:<operation> [parameters...]
-
-OPTIONS
-  -c, --confirm              Skip the warning prompt and automatically confirm the command being entered.
-  -h, --help                 Help for payouts:delete.
-  --api-key=api-key          Your API key to use for the command
-  --environment=environment  [default: sandbox] FedaPay Api environment
-  --id=id                    (required) The payout ID.
-
-EXAMPLES
-  payouts:delete --api-key=[API-KEY] --environment=[env] --id=[ID]
-  payouts:delete --api-key=[API-KEY] --environment=[env] --id=[ID] -c
-```
-
-_See code: [src/commands/payouts/delete.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/payouts/delete.ts)_
-
-## `fedapay payouts:<operation> [parameters...]`
-
-List of the payout records.
-
-```
-USAGE
-  $ fedapay payouts:<operation> [parameters...]
-
-OPTIONS
-  -f, --filters=filters      Filter the list of payouts.
-  -h, --help                 Help for payouts:list
-  -l, --limit=limit          [default: 10] Limit of records to display.
-  -p, --page=page            [default: 1] The page of the records to display.
-  --api-key=api-key          Your API key to use for the command
-  --environment=environment  [default: sandbox] FedaPay Api environment
-
-EXAMPLES
-  payouts:list --api-key=[API-KEY] --environment=[env] --limit=20
-  payouts:list --api-key=[API-KEY] --environment=[env] --page=2
-```
-
-_See code: [src/commands/payouts/list.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/payouts/list.ts)_
-
-## `fedapay payouts:<operation> [parameters...]`
-=======
 
 Connect to Fedapay account
 
@@ -1097,17 +957,12 @@ OPTIONS
 _See code: [src/commands/login.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/login.ts)_
 
 ## `fedapay logout [FILE]`
->>>>>>> master
 
 Schedule a payout to be sent later.
 
 ```
 USAGE
-<<<<<<< HEAD
-  $ fedapay payouts:<operation> [parameters...]
-=======
   $ fedapay logout [FILE]
->>>>>>> master
 
 OPTIONS
   -h, --help                 Help for payouts:schedule
@@ -1155,14 +1010,14 @@ OPTIONS
   --send-now                 Send automatically the payout.
 
 EXAMPLES
-  payouts:create --api-key=[API-KEY] --environment=[env] -d amount=5000 -d currency[iso]=XOF -d mode=mtn -d 
-  customer[firstname]=Qan customer[lastname]=Sally customer[email]=nal@exemple.com 
+  payouts:create --api-key=[API-KEY] --environment=[env] -d amount=5000 -d currency[iso]=XOF -d mode=mtn -d
+  customer[firstname]=Qan customer[lastname]=Sally customer[email]=nal@exemple.com
   customer[phone_number][number]=65423158 customer[phone_number][country]=bj
-  payouts:create --api-key=[API-KEY] --environment=[env] -d amount=5000 -d currency[iso]=XOF -d mode=mtn -d 
+  payouts:create --api-key=[API-KEY] --environment=[env] -d amount=5000 -d currency[iso]=XOF -d mode=mtn -d
   customer[id]=[ID]
-  payouts:create --api-key=[API-KEY] --environment=[env] -d amount=5000 -d currency[iso]=XOF -d mode=mtn -d 
+  payouts:create --api-key=[API-KEY] --environment=[env] -d amount=5000 -d currency[iso]=XOF -d mode=mtn -d
   customer[id]=[ID] --schedule="2020-8-12 11:41:51"
-  payouts:create --api-key=[API-KEY] --environment=[env] -d amount=5000 -d currency[iso]=XOF -d mode=mtn -d 
+  payouts:create --api-key=[API-KEY] --environment=[env] -d amount=5000 -d currency[iso]=XOF -d mode=mtn -d
   customer[id]=[ID] --send-now
 ```
 
@@ -1235,7 +1090,6 @@ EXAMPLE
 _See code: [src/commands/payouts/schedule.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/payouts/schedule.ts)_
 
 ## `fedapay payouts:<operation> [parameters...]`
-<<<<<<< HEAD
 
 Send payouts.
 
@@ -1272,102 +1126,13 @@ OPTIONS
   --id=id                    (required) The pauyout ID.
 
 EXAMPLES
-  payouts:update --api-key=[API-KEY] --environment=[env] --id=90 -d amount=550 -d currency[iso]=XOF -d mode=moov -d 
-  customer[firstname]=Yu customer[lastname]=Ma customer[email]=vul@exemple.com customer[phone_number][number]=65423158 
+  payouts:update --api-key=[API-KEY] --environment=[env] --id=90 -d amount=550 -d currency[iso]=XOF -d mode=moov -d
+  customer[firstname]=Yu customer[lastname]=Ma customer[email]=vul@exemple.com customer[phone_number][number]=65423158
   customer[phone_number][country]=bj
   payouts:update --api-key=[API-KEY] --environment=[env] --id=109 -d customer[id]=2055
 ```
 
 _See code: [src/commands/payouts/update.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/payouts/update.ts)_
-
-## `fedapay samples:<operation> [parameters...]`
-
-Get some samples projects including FedaPay payment methods
-
-```
-USAGE
-  $ fedapay samples:<operation> [parameters...]
-
-OPTIONS
-  -h, --help                 show CLI help
-  --api-key=api-key          Your API key to use for the command
-  --environment=environment  [default: sandbox] FedaPay Api environment
-```
-
-_See code: [src/commands/samples.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/samples.ts)_
-
-## `fedapay samples:create [FILE]`
-=======
->>>>>>> master
-
-Send payouts.
-
-```
-USAGE
-<<<<<<< HEAD
-  $ fedapay samples:create [FILE]
-=======
-  $ fedapay payouts:<operation> [parameters...]
->>>>>>> master
-
-OPTIONS
-  -h, --help                 Help for payouts:send-now.
-  --api-key=api-key          Your API key to use for the command
-  --environment=environment  [default: sandbox] FedaPay Api environment
-  --id=id                    (required) The payouts id.
-
-EXAMPLES
-  payouts:send-now --id=105
-  payouts:send-now --id=105 --id=108"
-```
-
-<<<<<<< HEAD
-_See code: [src/commands/samples/create.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/samples/create.ts)_
-
-## `fedapay samples:<operation> [parameters...]`
-
-describe the command here
-
-```
-USAGE
-  $ fedapay samples:<operation> [parameters...]
-
-OPTIONS
-  -h, --help                 show CLI help
-  --api-key=api-key          Your API key to use for the command
-  --environment=environment  [default: sandbox] FedaPay Api environment
-  --name=name                [default: My project] The name of your project
-  --type=type                (required) Type of project you want to create
-```
-
-_See code: [src/commands/samples/create2.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/samples/create2.ts)_
-=======
-_See code: [src/commands/payouts/send-now.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/payouts/send-now.ts)_
-
-## `fedapay payouts:<operation> [parameters...]`
-
-Update a payout.
-
-```
-USAGE
-  $ fedapay payouts:<operation> [parameters...]
-
-OPTIONS
-  -d, --data=data            (required) Data for the API request.
-  -h, --help                 Help for payouts:update command.
-  --api-key=api-key          Your API key to use for the command
-  --environment=environment  [default: sandbox] FedaPay Api environment
-  --id=id                    (required) The pauyout ID.
-
-EXAMPLES
-  payouts:update --api-key=[API-KEY] --environment=[env] --id=90 -d amount=550 -d currency[iso]=XOF -d mode=moov -d 
-  customer[firstname]=Yu customer[lastname]=Ma customer[email]=vul@exemple.com customer[phone_number][number]=65423158 
-  customer[phone_number][country]=bj
-  payouts:update --api-key=[API-KEY] --environment=[env] --id=109 -d customer[id]=2055
-```
-
-_See code: [src/commands/payouts/update.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/payouts/update.ts)_
->>>>>>> master
 
 ## `fedapay transactions:<operation> [parameters...]`
 
@@ -1401,19 +1166,15 @@ OPTIONS
   --with-token               add the token to your transactions.
 
 EXAMPLES
-  transactions:create --api-key=[API-KEY] --environment=[env] -d amount=2500 -d description="Sending money to mum" -d 
+  transactions:create --api-key=[API-KEY] --environment=[env] -d amount=2500 -d description="Sending money to mum" -d
   currency[iso]=XOF -d customer[email]=john.doe@example.com
-  transactions:create --api-key=[API-KEY] --environment=[env] --with-token -d amount=2500 -d description="Sending money 
+  transactions:create --api-key=[API-KEY] --environment=[env] --with-token -d amount=2500 -d description="Sending money
   to mum" -d currency[iso]=XOF -d customer[email]=john.doe@example.com
 ```
 
 _See code: [src/commands/transactions/create.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/transactions/create.ts)_
 
 ## `fedapay transactions:<operation> [parameters...]`
-<<<<<<< HEAD
-
-Delete a transaction.
-=======
 
 Delete a transaction.
 
@@ -1422,30 +1183,6 @@ USAGE
   $ fedapay transactions:<operation> [parameters...]
 
 OPTIONS
-  -c, --confirm              Skip the warning prompt and automatically confirm the command being entered.
-  -h, --help                 Help for transactions:delete.
-  --api-key=api-key          Your API key to use for the command
-  --environment=environment  [default: sandbox] FedaPay Api environment
-  --id=id                    (required) The transaction ID.
-
-EXAMPLES
-  transactions:delete --api-key=[api_key] --environment=[env] --id=[ID]
-  transactions:delete --api-key=[api_key] --environment=[env] --id=[ID] -c
-```
-
-_See code: [src/commands/transactions/delete.ts](https://github.com/brexis/fedapay-cli/blob/v0.0.0/src/commands/transactions/delete.ts)_
-
-## `fedapay transactions:<operation> [parameters...]`
-
-List of the transaction records.
->>>>>>> master
-
-```
-USAGE
-  $ fedapay transactions:<operation> [parameters...]
-
-OPTIONS
-<<<<<<< HEAD
   -c, --confirm              Skip the warning prompt and automatically confirm the command being entered.
   -h, --help                 Help for transactions:delete.
   --api-key=api-key          Your API key to use for the command
@@ -1474,14 +1211,6 @@ OPTIONS
   -p, --page=page            [default: 1] The page of the records to display.
   --api-key=api-key          Your API key to use for the command
   --environment=environment  [default: sandbox] FedaPay Api environment
-=======
-  -f, --filters=filters      Filter the list of transactions.
-  -h, --help                 Help for transactions:list
-  -l, --limit=limit          [default: 10] Limit of records to display.
-  -p, --page=page            [default: 1] The page of the records to display.
-  --api-key=api-key          Your API key to use for the command
-  --environment=environment  [default: sandbox] FedaPay Api environment
->>>>>>> master
 
 EXAMPLE
   transactions:list --api-key=[api_key] --environment=environment --limit=15
@@ -1546,7 +1275,7 @@ OPTIONS
 
 EXAMPLES
   transactions:update --api-key=[API-KEY] --environment=[env] --id=[ID] -d amount=2500
-  transactions:update --api-key=[API-KEY] --environment=[env] --id=[ID] -d amount=1780 -d 
+  transactions:update --api-key=[API-KEY] --environment=[env] --id=[ID] -d amount=1780 -d
   customer[email]=geronimo@apache.com
 ```
 

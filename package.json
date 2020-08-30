@@ -1,11 +1,11 @@
 {
     "name": "fedapay-cli",
-    "version": "0.0.0",
-    "author": "Boris KOUMONDJI @brexis",
+    "version": "0.1.0",
+    "author": "FedaPay @fedapay",
     "bin": {
         "fedapay": "./bin/run"
     },
-    "bugs": "https://github.com/brexis/fedapay-cli/issues",
+    "bugs": "https://github.com/fedapay/cli/issues",
     "dependencies": {
         "@oclif/command": "^1.8.0",
         "@oclif/config": "^1.17.0",
@@ -56,9 +56,9 @@
         "/npm-shrinkwrap.json",
         "/oclif.manifest.json"
     ],
-    "homepage": "https://github.com/brexis/fedapay-cli",
+    "homepage": "https://github.com/fedapay/cli",
     "keywords": [
-        "oclif"
+        "fedapay", "cli", "webhooks", "logs", "events"
     ],
     "license": "MIT",
     "main": "lib/index.js",
