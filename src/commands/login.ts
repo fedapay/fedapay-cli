@@ -104,13 +104,21 @@ export default class Login extends Command {
    */
   async run() {
     const { flags } = this.parse(Login);
+    const inquirerPrompts = [{
+      name: 'environment',
+      message: 'Select your environment',
+      type: 'list',
+      choices: [{name: 'development'}, {name: 'sandbox'}, {name: 'live'}],
+    }];
     let account_name = 'default';
     let environment;
     let secret_key;
     let public_key;
 
     if (flags.interactive) {
-      environment = await cli.prompt('Enter your environment');
+      let responses: any = await inquirer.prompt(inquirerPrompts);
+
+      environment = responses.environment;
       secret_key = await cli.prompt('Enter your secret_key');
       public_key = await cli.prompt('Enter your public_key');
     } else {
@@ -118,15 +126,9 @@ export default class Login extends Command {
 
       if (environment.trim() === '') {
         // Ask the user to select the environment
+        let responses: any = await inquirer.prompt(inquirerPrompts);
 
-        let responses: any = await inquirer.prompt([{
-          name: 'environment',
-          message: 'Select your environment',
-          type: 'list',
-          choices: [{name: 'development'}, {name: 'sandbox'}, {name: 'live'}],
-        }]);
-
-        environment = responses.environment
+        environment = responses.environment;
       }
 
       try {
