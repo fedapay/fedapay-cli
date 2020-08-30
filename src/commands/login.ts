@@ -30,7 +30,6 @@ export default class Login extends Command {
       default: true,
     }),
     help: flags.help({ char: 'h', description: 'Help for the login command' }),
-  }
 
   /**
    * Send Link request
@@ -146,6 +145,6 @@ export default class Login extends Command {
 
     this.log('Saved');
 
-    cli.action.stop();
   }
 }
+
