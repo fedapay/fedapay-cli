@@ -22,7 +22,7 @@ $ npm install -g fedapay-cli
 # Usage
 
 ```sh-session
-command-line tool for FedaPay
+$ command-line tool for FedaPay
 
 VERSION
   fedapay-cli/0.1.0 linux-x64 node-v14.3.0
