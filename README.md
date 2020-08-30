@@ -21,7 +21,7 @@ $ npm install -g fedapay-cli
 
 # Usage
 
-```sh-session
+```
 $ command-line tool for FedaPay
 
 VERSION
