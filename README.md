@@ -15,14 +15,14 @@ fedapay-cli
 <!-- tocstop -->
 
 # Install
-```sh-session
+```
 $ npm install -g fedapay-cli
 ```
 
 # Usage
-
+<!-- usage -->
 ```
-$ command-line tool for FedaPay
+ command-line tool for FedaPay
 
 VERSION
   fedapay-cli/0.1.0 linux-x64 node-v14.3.0
