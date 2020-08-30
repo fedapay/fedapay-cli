@@ -2,6 +2,7 @@
     "name": "fedapay-cli",
     "version": "0.1.0",
     "author": "FedaPay @fedapay",
+    "description": "A command-line tool for Stripe",
     "bin": {
         "fedapay": "./bin/run"
     },
