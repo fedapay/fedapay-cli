@@ -59,7 +59,11 @@
     ],
     "homepage": "https://github.com/fedapay/fedapay-cli",
     "keywords": [
-        "fedapay", "cli", "webhooks", "logs", "events"
+        "fedapay",
+        "cli",
+        "webhooks",
+        "logs",
+        "events"
     ],
     "license": "MIT",
     "main": "lib/index.js",
@@ -69,7 +73,11 @@
         "plugins": [
             "@oclif/plugin-help",
             "@oclif/plugin-not-found"
-        ]
+        ],
+        "s3": {
+          "bucket": "fedapay-live-store",
+          "xz": true
+        }
     },
     "repository": "fedapay/fedapay-cli",
     "scripts": {

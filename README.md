@@ -23,7 +23,7 @@ $ npm install -g fedapay-cli
 $ fedapay COMMAND
 running command...
 $ fedapay (-v|--version|version)
-fedapay-cli/0.1.0 linux-x64 node-v14.3.0
+fedapay-cli/0.1.0 linux-x64 node-v12.18.3
 $ fedapay --help [COMMAND]
 USAGE
   $ fedapay COMMAND
