@@ -42,8 +42,8 @@ export default class SamplesList extends Command {
     for (const key in data) {
       if (Object.prototype.hasOwnProperty.call(data, key)) {
         this.log(chalk.bold(key));
-        this.log(data[key].description);
-        this.log(`Repo: ${data[key].repository}`);
+        this.log((<any>data)[key].description);
+        this.log(`Repo: ${(<any>data)[key].repository}`);
         this.log();
       }
     }
