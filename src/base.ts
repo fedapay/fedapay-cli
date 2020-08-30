@@ -18,6 +18,8 @@ export default abstract class extends Command {
     environment: flags.string({
       description: 'FedaPay Api environment',
       default: 'sandbox',
+      char: 'e',
+      options: ['development', 'sandbox', 'live']
     }),
   }
 

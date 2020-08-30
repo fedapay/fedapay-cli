@@ -1,5 +1,6 @@
 import  {flags, Command} from '@oclif/command';
 import cli from 'cli-ux';
+import * as inquirer from 'inquirer';
 import axios from 'axios';
 import os from 'os';
 import UserConfig from '../helpers/user-config';
@@ -14,22 +15,25 @@ export default class Login extends Command {
    * Description of the login command
    */
   static description = 'Connect to Fedapay account';
+
   /**
    * @param string
    * login usage
    */
-
   static flags = {
     environment: flags.string({
       description: 'FedaPay Api environment',
-      default: 'sandbox',
+      char: 'e',
+      default: '',
+      options: ['development', 'sandbox', 'live']
     }),
     interactive: flags.boolean({
       description: 'Login in interactive mode',
       char: 'i',
-      default: true,
+      default: false,
     }),
     help: flags.help({ char: 'h', description: 'Help for the login command' }),
+  }
 
   /**
    * Send Link request
@@ -37,10 +41,9 @@ export default class Login extends Command {
    * @param {string} environment The environment
    * @return {login_url: string; poll_url: string}
    */
-
   private async sendLinksRequest(device_name: string, environment: string) {
     try {
-      const { data } = await axios.post('https://cli.fedapay.com/links', {
+      const { data } = await axios.post('http://bragon-cli.dev.io/links', {
         device_name, environment
       });
       return data;
@@ -55,7 +58,6 @@ export default class Login extends Command {
    *
    * @return {any}
    */
-
   private async sendPollRequest(url: string) {
     try {
       const response = await axios.get(url);
@@ -72,7 +74,6 @@ export default class Login extends Command {
    * @param {string} poll_url  The poll url
    * @return Promise<any>
    */
-
   private async checkSecretKey(poll_url: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const maxTries = 10;
@@ -97,18 +98,13 @@ export default class Login extends Command {
   }
 
   /**
-   * @param {string} environment Environment
-   * @param {string} secret_key Secret_key
-   * @param {string} public_key Public_key
-   */
-
-  /**
    * The command flags
    * @var Object
    *
    */
   async run() {
     const { flags } = this.parse(Login);
+    let account_name = 'default';
     let environment;
     let secret_key;
     let public_key;
@@ -119,6 +115,19 @@ export default class Login extends Command {
       public_key = await cli.prompt('Enter your public_key');
     } else {
       environment = flags.environment;
+
+      if (environment.trim() === '') {
+        // Ask the user to select the environment
+
+        let responses: any = await inquirer.prompt([{
+          name: 'environment',
+          message: 'Select your environment',
+          type: 'list',
+          choices: [{name: 'development'}, {name: 'sandbox'}, {name: 'live'}],
+        }]);
+
+        environment = responses.environment
+      }
 
       try {
         const links = await this.sendLinksRequest(os.hostname(), environment);
@@ -132,6 +141,7 @@ export default class Login extends Command {
         cli.action.start('Waiting');
         const login = await this.checkSecretKey(links.poll_url);
 
+        account_name = login.account_name;
         secret_key = login.secret_key;
         public_key = login.public_key;
       } catch (error) {
@@ -141,10 +151,8 @@ export default class Login extends Command {
     }
 
     const userConfig = new UserConfig(this.config.configDir);
-    userConfig.write({ environment, secret_key, public_key });
+    userConfig.write({ account_name, environment, secret_key, public_key });
 
-    this.log('Saved');
-
+    this.log('Login successfull');
   }
 }
-
