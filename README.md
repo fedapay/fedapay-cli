@@ -26,29 +26,6 @@ $ npm install -g fedapay-cli
 
 VERSION
   fedapay-cli/0.1.0 linux-x64 node-v14.3.0
-
-USAGE
-  $ fedapay [COMMAND]
-
-TOPICS
-  customers     Manage FedaPay customer ressources
-  events        Here you can manage events
-  logs          Manage FedaPay logs
-  payouts       Manage FedaPay payout ressources
-  samples       Samples integration built by FedaPay
-  transactions  Manage FedaPay transaction ressources
-
-COMMANDS
-  customers     Manage FedaPay customer ressources
-  events        Here you can manage events
-  help          display help for fedapay
-  login         Connect to Fedapay account
-  logout        Logout of Fedapay account
-  logs          Manage FedaPay logs
-  payouts       Manage FedaPay payout ressources
-  profile       Display current login information
-  samples       Samples integration built by FedaPay
-  transactions  Manage FedaPay transaction ressources
 ```
 
 # Commands
