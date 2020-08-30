@@ -33,6 +33,12 @@ export default class CustomersDelete extends Customers {
   };
 
   /**
+   * @param string
+   * Set the command usage for help
+   */
+  static usage = 'customers:delete [options]';
+
+  /**
    * @param string[]
    * some examples of the custommers delete use for help
    */

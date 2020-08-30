@@ -34,7 +34,7 @@ export default class CustomersCreate extends Customers {
    * @param string
    * Set the command usage for help
    */
-  static usage = '$ fedapay customers:create [options]';
+  static usage = 'customers:create [options]';
 
   /**
    * @param string[]

@@ -28,6 +28,12 @@ export default class CustomersRetrieve extends Customers {
   };
 
   /**
+   * @param string
+   * Set the command usage for help
+   */
+  static usage = 'customers:retrieve [options]';
+
+  /**
    * @param string[]
    * some examples of the custommers retrieve use for help
    */

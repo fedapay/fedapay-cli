@@ -40,6 +40,12 @@ export default class CustomersList extends Customers {
   };
 
   /**
+   * @param string
+   * Set the command usage for help
+   */
+  static usage = 'customers:list [options]';
+
+  /**
    * @param string[]
    * some examples of the custommers list use for help
    */

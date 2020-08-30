@@ -35,6 +35,12 @@ export default class CustomersUpdate extends Customers {
   };
 
   /**
+   * @param string
+   * Set the command usage for help
+   */
+  static usage = 'customers:update [options]';
+
+  /**
    * @param string[]
    * some examples of the custommers update use for help
    */
