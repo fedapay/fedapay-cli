@@ -43,7 +43,7 @@ export default class Login extends Command {
    */
   private async sendLinksRequest(device_name: string, environment: string) {
     try {
-      const { data } = await axios.post('http://bragon-cli.dev.io/links', {
+      const { data } = await axios.post('https://cli.fedapay.com/links', {
         device_name, environment
       });
       return data;
