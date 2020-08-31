@@ -15,6 +15,12 @@ export default class EventsRetrieve extends Events {
   static description = 'Retrieve an event thanks to its ID'
 
   /**
+ * The command usage
+ * @var string
+ */
+  static usage = 'events:retrieve [options]';
+
+  /**
    * @var Object
    * Declaration of the command flag
    */
@@ -30,7 +36,7 @@ export default class EventsRetrieve extends Events {
    * @param String
    * Some example with the events:retrieve command
    */
-  static examples=[
+  static examples = [
     'events:retrieve --api-key=[API-KEY] --environment=[env] --id=[ID]',
   ]
 

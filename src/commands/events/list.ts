@@ -16,6 +16,12 @@ export default class EventsList extends Events {
   static description = 'List of the events'
 
   /**
+ * The command usage
+ * @var string
+ */
+  static usage = 'events:list [options]';
+
+  /**
    * @param Object
    * Declaration of the command flags
    */

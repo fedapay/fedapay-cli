@@ -16,6 +16,12 @@ export default class TransactionsToken extends Transactions {
   static description = 'Generate a payment token for a transaction.';
 
   /**
+  * The command usage
+  * @var string
+  */
+  static usage = 'transactions:token [options]';
+
+  /**
   * @param object
   * Declaration of the command flags
  */

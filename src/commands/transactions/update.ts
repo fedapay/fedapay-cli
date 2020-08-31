@@ -16,6 +16,12 @@ export default class TransactionsUpdate extends Transactions {
   static description = 'Update a transaction.';
 
   /**
+  * The command usage
+  * @var string
+  */
+  static usage = 'transactions:update [options]';
+
+  /**
    * @param object
    * Declaration of the command flags
   */

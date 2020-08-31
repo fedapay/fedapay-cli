@@ -16,6 +16,12 @@ export default class TransactionsList extends Transactions {
   static description = 'List of the transaction records.';
 
   /**
+    * The command usage
+    * @var string
+    */
+  static usage = 'transactions:list [options]';
+
+  /**
    * @param object
    * Declaration of the command flags
    */

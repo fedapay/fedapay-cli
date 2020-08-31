@@ -17,6 +17,11 @@ export default class TransactionsCreate extends Transactions {
   static description = 'Create a new transaction.'
 
   /**
+   * The command usage
+   * @var string
+   */
+  static usage = 'transactions:create [options]';
+  /**
    * @params Object
    * Insertion of the different commands flags
    */
