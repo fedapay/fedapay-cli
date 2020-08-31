@@ -20,6 +20,8 @@ export default class Login extends Command {
    * @param string
    * login usage
    */
+  static usage = 'login [parameters...]';
+
   static flags = {
     environment: flags.string({
       description: 'FedaPay Api environment',
@@ -41,6 +43,7 @@ export default class Login extends Command {
    * @param {string} environment The environment
    * @return {login_url: string; poll_url: string}
    */
+
   private async sendLinksRequest(device_name: string, environment: string) {
     try {
       const { data } = await axios.post('https://cli.fedapay.com/links', {
@@ -58,6 +61,7 @@ export default class Login extends Command {
    *
    * @return {any}
    */
+
   private async sendPollRequest(url: string) {
     try {
       const response = await axios.get(url);
@@ -74,6 +78,7 @@ export default class Login extends Command {
    * @param {string} poll_url  The poll url
    * @return Promise<any>
    */
+
   private async checkSecretKey(poll_url: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const maxTries = 10;

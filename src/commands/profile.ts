@@ -3,10 +3,21 @@ import chalk from 'chalk';
 import UserConfig from '../helpers/user-config';
 
 /**
- * Logout Class extending superClass Command
+ * Profile Class extending superClass Command
  */
 export default class Profile extends Command {
+  /**
+   * @param string
+   * Description of the profile command
+   */
   static description = 'Display current login information'
+
+  /**
+   * @param string
+   * profile usage
+   */
+
+  static usage = 'profile [parameters...]';
 
   async run() {
     const {
@@ -15,15 +26,15 @@ export default class Profile extends Command {
 
     this.log(
       chalk.bold.blue('Accnount name: ') + chalk.bold(account_name)
-    )
+    );
     this.log(
       chalk.bold.blue('Environment: ') + chalk.bold(environment)
-    )
+    );
     this.log(
       chalk.bold.blue('Secret key: ') + chalk.bold(secret_key)
-    )
+    );
     this.log(
       chalk.bold.blue('Public Key: ') + chalk.bold(public_key)
-    )
+    );
   }
 }

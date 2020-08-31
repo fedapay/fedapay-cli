@@ -39,6 +39,12 @@ export default class PayoutsList extends Payouts {
     help: flags.help({ char: 'h', description: 'Help for payouts:list' })
   };
 
+  /**
+   * @param string
+   * Set the command usage for help
+   */
+  static usage = 'payouts:list [options]';
+
   static examples = [
     'payouts:list --api-key=[API-KEY] --environment=[env] --limit=20',
     'payouts:list --api-key=[API-KEY] --environment=[env] --page=2',

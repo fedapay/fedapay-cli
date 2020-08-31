@@ -33,6 +33,12 @@ export default class PayoutsDelete extends Payouts {
   };
 
   /**
+   * @param string
+   * Set the command usage for help
+   */
+  static usage = 'payouts:delete [options]';
+
+  /**
    * @param string[]
    * examples for the delete commands
    */
