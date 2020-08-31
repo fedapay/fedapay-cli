@@ -18,6 +18,7 @@ $ npm install -g fedapay-cli
 ```
 ## Windows installer
 [fedapay-x64.exe](https://fedapay-live-store.nyc3.digitaloceanspaces.com/fedapay-cli/fedapay-x64.exe)
+
 [fedapay-x86.exe](https://fedapay-live-store.nyc3.digitaloceanspaces.com/fedapay-cli/fedapay-x86.exe)
 
 ## Ubuntu/Debian packages
@@ -35,7 +36,7 @@ $ npm install -g fedapay-cli
 $ fedapay COMMAND
 running command...
 $ fedapay (-v|--version|version)
-fedapay-cli/0.1.0 linux-x64 node-v12.18.3
+fedapay-cli/0.1.1 linux-x64 node-v12.18.3
 $ fedapay --help [COMMAND]
 USAGE
   $ fedapay COMMAND
