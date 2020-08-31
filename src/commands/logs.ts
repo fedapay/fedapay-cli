@@ -15,7 +15,7 @@ export default class Logs extends Command {
    * Custom usage string for help
    * This overrides the default usage
    */
-  static usage = 'logs <operation> [options]'
+  static usage = 'logs:<operation> [parameters...]';
 
   /**
    * @param string[]

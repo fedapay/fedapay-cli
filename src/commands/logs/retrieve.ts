@@ -15,6 +15,13 @@ export default class LogsRetrieve extends Logs {
   static description = 'Retrieve a log';
 
   /**
+   * @param string
+   * Custom usage string for help
+   * This overrides the default usage
+   */
+  static usage = 'logs:retrieve [parameters...]';
+
+  /**
    * @param object
    * Declaration of the command flags.
   */
