@@ -1,5 +1,6 @@
 import {Command, flags} from '@oclif/command';
 import chalk from 'chalk';
+import Samples from '../samples';
 import data from '../samples/samples-list.json';
 
 /**
@@ -13,10 +14,18 @@ export default class SamplesList extends Command {
   static description = 'A list of available Fedapay Samples integrations that can be setup and bootstrap by the CLI.'
 
   /**
+    * @param string
+    * custom usage string for help
+    * this overrides the default usage
+    */
+   static usage = 'samples:list [parameters...]';
+
+  /**
    * @param object
    * Declaration of the command flags
   */
   static flags = {
+    ...Samples.flags,
     help: flags.help({
       char: 'h',
       description: 'List Fedapay Samples supported by the CLI'

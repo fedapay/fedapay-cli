@@ -15,6 +15,13 @@ export default class SamplesCreate extends Samples {
   static description = 'create a sample project integrating Fedapay';
 
   /**
+    * @param string
+    * custom usage string for help
+    * this overrides the default usage
+    */
+   static usage = 'samples:create [parameters...]';
+
+  /**
    * @param object
    * Declaration of the command flag
    */
