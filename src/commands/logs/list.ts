@@ -17,6 +17,13 @@ export default class LogsList extends logs {
   static description = 'List of the logs records.';
 
   /**
+   * @param string
+   * Custom usage string for help
+   * This overrides the default usage
+   */
+  static usage = 'logs:list [parameters...]';
+
+  /**
      * @param object
      * Declaration of the command flags.
     */
@@ -40,8 +47,8 @@ export default class LogsList extends logs {
    * Some examples of the logs:list use for help.
    */
   static examples = [
-    'logs:list -api-key=[API-KEY] --environment=[ENVIRONMENT] -f method=POST',
-    'logs:list -api-key=[API-KEY] --environment=[ENVIRONMENT] -f status=400 -f method=GET -f status=200',
+    'logs:list --api-key=[API-KEY] --environment=[ENVIRONMENT] -f method=POST',
+    'logs:list --api-key=[API-KEY] --environment=[ENVIRONMENT] -f status=400 -f method=GET -f status=200',
   ];
 
   async run() {
