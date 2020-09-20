@@ -113,7 +113,7 @@ export default class Login extends Command {
       name: 'environment',
       message: 'Select your environment',
       type: 'list',
-      choices: [{name: 'development'}, {name: 'sandbox'}, {name: 'live'}],
+      choices: [{ name: 'development' }, { name: 'sandbox' }, { name: 'live' }],
     }];
     let account_name = 'default';
     let environment;
@@ -144,7 +144,7 @@ export default class Login extends Command {
         }
 
         this.log(`Authenticate URL : ${links.login_url}`);
-        cli.open(links.login_url);
+        await cli.open(links.login_url);
         cli.action.start('Waiting');
         const login = await this.checkSecretKey(links.poll_url);
 

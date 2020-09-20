@@ -5,8 +5,12 @@ export default class UserConfig {
    * Use config Class to handle the config file
    * @param {Object|string|any}
    */
-
   public configPath: string;
+
+  private defaultConfig = {
+    mq_url: 'amqp://cli:cli@es.fedapay.com:5672'
+  }
+
   /**
    *
    * @param {string} dir  The config directory
@@ -60,10 +64,10 @@ export default class UserConfig {
    * ReadAll method
    * @return {any}
    */
-
   public readAll(): any {
     try {
-      return JSON.parse(fs.readFileSync(this.configPath, 'utf-8'));
+      const config = JSON.parse(fs.readFileSync(this.configPath, 'utf-8'));
+      return { ...this.defaultConfig, ...config };
     } catch (error) {
       return {};
     }
