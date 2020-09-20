@@ -12,12 +12,18 @@ export default class Events extends Command {
   static description = 'Here you can manage events';
 
   /**
+ * The command usage
+ * @var string
+ */
+  static usage = 'events:<operation> [parameters...]';
+
+  /**
    * The command flags
    * @var Object
    */
   static flags = {
     ...Command.flags,
-    help: flags.help({char: 'h', description:'Help for events command'}),
+    help: flags.help({ char: 'h', description: 'Help for events command' }),
   }
 
   async run() {

@@ -15,6 +15,12 @@ export default class TransactionsDelete extends Transactions {
   static description = 'Delete a transaction.'
 
   /**
+   * The command usage
+   * @var string
+   */
+  static usage = 'transactions:delete [options]';
+
+  /**
   * @param object
   * Declaration of the command flags
  */

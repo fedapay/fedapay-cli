@@ -15,6 +15,12 @@ export default class TransactionsRetrieve extends Transactions {
   static description = 'Retrieve a transaction.'
 
   /**
+  * The command usage
+  * @var string
+  */
+  static usage = 'transactions:retrieve [options]';
+
+  /**
    * @param object
    * Declaration of the command flags
    */
@@ -47,11 +53,11 @@ export default class TransactionsRetrieve extends Transactions {
     * your api's key
     */
     const apiKey = this.userConfig.read('secret_key', flags['api-key']);
-    
-   /**
-    * @param string
-    * environment type
-    */
+
+    /**
+     * @param string
+     * environment type
+     */
     const environment = this.userConfig.read('environment', flags.environment);
 
     /**
