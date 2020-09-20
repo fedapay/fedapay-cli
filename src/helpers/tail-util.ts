@@ -1,6 +1,5 @@
 var amqp = require('amqplib/callback_api');
 import chalk from 'chalk';
-import colorize from 'json-colorizer';
 
 /**
  * Class TailUtil
