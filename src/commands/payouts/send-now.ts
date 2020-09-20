@@ -28,6 +28,12 @@ export default class PayoutsSendNow extends Payouts {
   };
 
   /**
+   * @param string
+   * Set the command usage for help
+   */
+  static usage = 'payouts:send-now [options]';
+
+  /**
    * @param string[]
    * examples of send-now command for the help
    */

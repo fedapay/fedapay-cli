@@ -33,6 +33,12 @@ export default class PayoutsSchedule extends Payouts {
   };
 
   /**
+   * @param string
+   * Set the command usage for help
+   */
+  static usage = 'payouts:schedule [options]';
+
+  /**
    * @param string[]
    * schedule payouts command
    */

@@ -35,6 +35,12 @@ export default class PayoutsUpdate extends Payouts {
   };
 
   /**
+   * @param string
+   * Set the command usage for help
+   */
+  static usage = 'payouts:update [options]';
+
+  /**
    * @param string[]
    * examples command for the help
    */

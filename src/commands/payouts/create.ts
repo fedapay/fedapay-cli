@@ -39,6 +39,12 @@ export default class PayoutsCreate extends Payouts {
   };
 
   /**
+   * @param string
+   * Set the command usage for help
+   */
+  static usage = 'payouts:create [options]';
+
+  /**
    * @param string[]
    * examples of payouts:create command
    */
