@@ -16,6 +16,11 @@ fedapay-cli
 $ npm install -g fedapay-cli
 ```
 
+# Update
+```
+$ fedapay update
+```
+
 # Usage
 <!-- usage -->
 ```sh-session
