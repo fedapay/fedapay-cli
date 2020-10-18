@@ -66,4 +66,12 @@ COMMANDS
 ```
 
 # Commands
+* [`fedapay login [parameters...]`](https://github.com/fedapay/fedapay-cli/blob/master/docs/login.md)
+* [`fedapay logout`](https://github.com/fedapay/fedapay-cli/blob/master/docs/logout.md)
+* [`fedapay profile`](https://github.com/fedapay/fedapay-cli/blob/master/docs/profile.md)
 * [`fedapay customers:<operation> [parameters...]`](https://github.com/fedapay/fedapay-cli/blob/master/docs/customers.md)
+* [`fedapay transactions:<operation> [parameters...]`](https://github.com/fedapay/fedapay-cli/blob/master/docs/transactions.md)
+* [`fedapay payouts:<operation> [parameters...]`](https://github.com/fedapay/fedapay-cli/blob/master/docs/payouts.md)
+* [`fedapay events:<operation> [parameters...]`](https://github.com/fedapay/fedapay-cli/blob/master/docs/events.md)
+* [`fedapay logs:<operation> [parameters...]`](https://github.com/fedapay/fedapay-cli/blob/master/docs/logs.md)
+* [`fedapay samples:<operation> [parameters...]`](https://github.com/fedapay/fedapay-cli/blob/master/docs/samples.md)
