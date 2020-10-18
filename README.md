@@ -7,6 +7,7 @@ fedapay-cli
 
 <!-- toc -->
 * [Install](#install)
+* [Update](#update)
 * [Usage](#usage)
 * [Commands](#commands)
 <!-- tocstop -->
