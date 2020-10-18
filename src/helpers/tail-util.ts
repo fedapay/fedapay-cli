@@ -78,7 +78,11 @@ export default class TailUtil {
         let log = '-- : ';
 
         for (const key in json) {
-            log += chalk.bold.blue(`${key}: `) + `${json[key]} `;
+            let value = json[key]
+            if (typeof value !== 'string') {
+                value = JSON.stringify(value);
+            }
+            log += chalk.bold.blue(`${key}: `) + `${value} `;
         }
 
         return log;

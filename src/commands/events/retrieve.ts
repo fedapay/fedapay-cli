@@ -15,9 +15,9 @@ export default class EventsRetrieve extends Events {
   static description = 'Retrieve an event thanks to its ID'
 
   /**
- * The command usage
- * @var string
- */
+   * The command usage
+   * @var string
+   */
   static usage = 'events:retrieve [options]';
 
   /**
@@ -42,15 +42,15 @@ export default class EventsRetrieve extends Events {
 
   async run() {
     /**
-        * @param object
-        * get flags value
-        */
+     * @param object
+     * get flags value
+     */
     const { flags } = this.parse(EventsRetrieve);
 
     /**
-   * @param String
-   * your api's key
-   */
+     * @param String
+     * your api's key
+     */
     const apiKey = this.userConfig.read('secret_key', flags['api-key']);
 
     /**
