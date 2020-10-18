@@ -1,6 +1,6 @@
 {
     "name": "fedapay-cli",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "author": "FedaPay @fedapay",
     "description": "A command-line tool for FedaPay",
     "bin": {
