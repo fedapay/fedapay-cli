@@ -12,21 +12,8 @@ fedapay-cli
 <!-- tocstop -->
 
 # Install
-## With node
 ```
 $ npm install -g fedapay-cli
-```
-## Windows installer
-[fedapay-x64.exe](https://fedapay-live-store.nyc3.digitaloceanspaces.com/fedapay-cli/fedapay-x64.exe)
-
-[fedapay-x86.exe](https://fedapay-live-store.nyc3.digitaloceanspaces.com/fedapay-cli/fedapay-x86.exe)
-
-## Ubuntu/Debian packages
-```
-$ wget -qO- https://fedapay-live-store.nyc3.digitaloceanspaces.com/fedapay-cli/apt/Release | apt-key add - # you will need to upload this file manually
-$ sudo echo "deb https://fedapay-live-store.nyc3.digitaloceanspaces.com/fedapay-cli/apt ./" > /etc/apt/sources.list.d/fedapay-cli.list
-$ sudo apt update
-$ sudo apt install -y fedapay-cli
 ```
 
 # Usage
