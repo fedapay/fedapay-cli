@@ -68,6 +68,37 @@ COMMANDS
 
 # Get started
 
+### Login 
+
+```
+$ fedapay login
+```
+
+The output will look like this:
+
+![`Select your environment`] (https://github.com/fedapay/fedapay-cli/blob/master/docs/images/output-login.png)
+After selecting environment you have to 
+![`Authenticate`] (https://github.com/fedapay/fedapay-cli/blob/master/docs/images/output-login-dev.png)
+![`Select your account`] (https://github.com/fedapay/fedapay-cli/blob/master/docs/images/select-account.png)
+and get well
+![`Succes message`] (https://github.com/fedapay/fedapay-cli/blob/master/docs/images/succes.png)
+
+
+
+### Generate a token
+```
+$ fedapay transactions:token --id=16851
+```
+
+The output will look like this:
+
+```json
+{
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjE2ODUxLCJleHAiOjE2MDMxOTc3ODh9.961u7Gf5lr2LouyEGCnRN_uPP7Y4DUuRKL50M_WwVV4",
+  "url": "https://fpay.li/uxAga"
+}
+```
+
 ### Create a new transaction
 
 ```
