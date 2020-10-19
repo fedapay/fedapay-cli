@@ -17,6 +17,72 @@ fedapay-cli
 $ npm install -g fedapay-cli
 ```
 
+# Get started
+```
+$ fedapay transactions:create -d amount=2500 -d description="Sending money to mum" -d currency[iso]=XOF -d customer[email]=customer@email.com 
+Output
+{
+  "klass": "v1/transaction",
+  "id": 16851,
+  "reference": "trx__hQ_1603111067446",
+  "amount": 2500,
+  "description": "Sending money to mum",
+  "callback_url": null,
+  "status": "pending",
+  "customer_id": 2568,
+  "currency_id": 1,
+  "mode": null,
+  "operation": "payment",
+  "metadata": {},
+  "commission": null,
+  "fees": null,
+  "fixed_commission": 0,
+  "amount_transferred": null,
+  "created_at": "2020-10-19T12:37:47.446Z",
+  "updated_at": "2020-10-19T12:37:47.446Z",
+  "approved_at": null,
+  "canceled_at": null,
+  "declined_at": null,
+  "refunded_at": null,
+  "transferred_at": null,
+  "deleted_at": null,
+  "last_error_code": null,
+  "custom_metadata": null,
+  "amount_debited": null
+}
+$ fedapay transactions:retrieve --id=16851
+Output
+{
+  "klass": "v1/transaction",
+  "id": 16851,
+  "reference": "trx__hQ_1603111067446",
+  "amount": 2500,
+  "description": "Sending money to mum",
+  "callback_url": null,
+  "status": "pending",
+  "customer_id": 2568,
+  "currency_id": 1,
+  "mode": null,
+  "operation": "payment",
+  "metadata": {},
+  "commission": null,
+  "fees": null,
+  "fixed_commission": 0,
+  "amount_transferred": null,
+  "created_at": "2020-10-19T12:37:47.446Z",
+  "updated_at": "2020-10-19T12:37:47.446Z",
+  "approved_at": null,
+  "canceled_at": null,
+  "declined_at": null,
+  "refunded_at": null,
+  "transferred_at": null,
+  "deleted_at": null,
+  "last_error_code": null,
+  "custom_metadata": null,
+  "amount_debited": null
+}
+```
+
 # Update
 ```
 $ fedapay update
