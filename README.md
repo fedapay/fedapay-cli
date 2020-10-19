@@ -19,7 +19,7 @@ $ npm install -g fedapay-cli
 
 # Get started
 
-## Create a new transaction
+### Create a new transaction
 
 ```
 $ fedapay transactions:create -d amount=2500 -d description="Sending money to mum" -d currency[iso]=XOF -d customer[email]=customer@email.com
@@ -59,7 +59,7 @@ The output will look like this:
 }
 ```
 
-## Retrieve a transaction
+### Retrieve a transaction
 
 ```
 $ fedapay transactions:retrieve --id=16851
@@ -99,7 +99,7 @@ The output will look like this:
 }
 ```
 
-Retrive the last events
+### Retrive the last events
 
 ```
 $ fedapay events:list
