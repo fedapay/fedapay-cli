@@ -50,6 +50,7 @@ Output
   "custom_metadata": null,
   "amount_debited": null
 }
+
 $ fedapay transactions:retrieve --id=16851
 Output
 {
@@ -80,6 +81,35 @@ Output
   "last_error_code": null,
   "custom_metadata": null,
   "amount_debited": null
+}
+
+$ fedapay events:list 
+Output
+{
+  "events": [
+    {
+      "klass": "v1/event",
+      "id": "AXVA3Z99XcBqjxRq9dZr",
+      "type": "transaction.created",
+      "entity": "{\"id\":16851,\"transaction_key\":null,\"reference\":\"trx__hQ_1603111067446\",\"description\":\"Sending money to mum\",\"callback_url\":null,\"amount\":2500,\"items\":1,\"status\":\"pending\",\"currency_id\":1,\"customer_id\":2568,\"deleted_at\":null,\"created_at\":\"2020-10-19T12:37:47.446Z\",\"updated_at\":\"2020-10-19T12:37:47.446Z\",\"mode\":null,\"approved_at\":null,\"metadata\":{},\"canceled_at\":null,\"declined_at\":null,\"refunded_at\":null,\"transferred_at\":null,\"commission\":null,\"fees\":null,\"amount_transferred\":null,\"operation\":\"payment\",\"fixed_commission\":0,\"last_error_code\":null,\"last_error_message\":null,\"custom_metadata\":null,\"page_id\":null,\"amount_debited\":null,\"approved_partially_refunded_at\":null,\"transferred_partially_refunded_at\":null,\"lock_transfer\":false,\"receipt_url\":null}",
+      "object_id": 16851,
+      "account_id": 1370,
+      "created_at": "2020-10-19T12:37:47.480Z",
+      "updated_at": "2020-10-19T12:37:47.481Z",
+      "object": "transaction"
+    },
+    {
+      "klass": "v1/event",
+      "id": "AXVA1-NXXcBqjxRq9dXC",
+      "type": "customer.created",
+      "entity": "{\"id\":2568,\"firstname\":\"Jane\",\"lastname\":\"Doe\",\"email\":\"customer@email.com\",\"account_id\":1370,\"deleted_at\":null,\"created_at\":\"2020-10-19T12:31:31.628Z\",\"updated_at\":\"2020-10-19T12:31:31.628Z\",\"phone_number_id\":11272}",
+      "object_id": 2568,
+      "account_id": 1370,
+      "created_at": "2020-10-19T12:31:31.634Z",
+      "updated_at": "2020-10-19T12:31:31.634Z",
+      "object": "customer"
+    }
+  ]
 }
 ```
 
