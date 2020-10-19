@@ -76,12 +76,12 @@ $ fedapay login
 
 The output will look like this:
 
-* [`Select your environment`] (https://github.com/fedapay/fedapay-cli/blob/master/docs/images/sandbox.png)
+![`Select your environment`](https://github.com/fedapay/fedapay-cli/blob/readme-docs/docs/images/sandbox.png)
 After selecting environment you have to 
-* [`Authenticate`] (https://github.com/fedapay/fedapay-cli/blob/master/docs/images/output-login-sandbox.png)
-* [`Select your account`] (https://github.com/fedapay/fedapay-cli/blob/master/docs/images/select-account.png)
+![`Authenticate`](https://github.com/fedapay/fedapay-cli/readme-docs/docs/images/output-login-sandbox.png)
+![`Select your account`](https://github.com/fedapay/fedapay-cli/readme-docs/master/docs/images/select-account.png)
 and get well
-* [`Succes message`] (https://github.com/fedapay/fedapay-cli/blob/master/docs/images/succes.png)
+![`Succes message`](https://github.com/fedapay/fedapay-cli/readme-docs/docs/images/succes.png)
 
 
 
