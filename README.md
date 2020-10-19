@@ -18,9 +18,16 @@ $ npm install -g fedapay-cli
 ```
 
 # Get started
+
+## Create a new transaction
+
 ```
-$ fedapay transactions:create -d amount=2500 -d description="Sending money to mum" -d currency[iso]=XOF -d customer[email]=customer@email.com 
-Output
+$ fedapay transactions:create -d amount=2500 -d description="Sending money to mum" -d currency[iso]=XOF -d customer[email]=customer@email.com
+```
+
+The output will look like this:
+
+```json
 {
   "klass": "v1/transaction",
   "id": 16851,
@@ -50,9 +57,17 @@ Output
   "custom_metadata": null,
   "amount_debited": null
 }
+```
 
+## Retrieve a transaction
+
+```
 $ fedapay transactions:retrieve --id=16851
-Output
+```
+
+The output will look like this:
+
+```json
 {
   "klass": "v1/transaction",
   "id": 16851,
@@ -82,9 +97,17 @@ Output
   "custom_metadata": null,
   "amount_debited": null
 }
+```
 
-$ fedapay events:list 
-Output
+Retrive the last events
+
+```
+$ fedapay events:list
+```
+
+The output will look like this:
+
+```json
 {
   "events": [
     {
