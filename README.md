@@ -220,7 +220,7 @@ The output will look like this:
 }
 ```
 
-# Commands
+# Available commands
 * [`fedapay login [parameters...]`](https://github.com/fedapay/fedapay-cli/blob/master/docs/login.md)
 * [`fedapay logout`](https://github.com/fedapay/fedapay-cli/blob/master/docs/logout.md)
 * [`fedapay profile`](https://github.com/fedapay/fedapay-cli/blob/master/docs/profile.md)
