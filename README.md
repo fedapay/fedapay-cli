@@ -169,7 +169,7 @@ The output will look like this:
 }
 ```
 
-### Generate a token
+### Generate a token and a payment URL
 ```
 $ fedapay transactions:token --id=16851
 ```
