@@ -226,6 +226,17 @@ The output will look like this:
 $ fedapay events --tail
 ```
 
+![Events tail output](./docs/images/events-tail.png)
+
+
+### Listen to FedaPay logs
+
+```
+$ fedapay logs --tail
+```
+
+![Logs tail output](./docs/images/logs-tail.png)
+
 # Available commands
 * [`fedapay login [parameters...]`](https://github.com/fedapay/fedapay-cli/blob/master/docs/login.md)
 * [`fedapay logout`](https://github.com/fedapay/fedapay-cli/blob/master/docs/logout.md)
