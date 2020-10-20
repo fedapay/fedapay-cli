@@ -68,7 +68,9 @@ COMMANDS
 
 # Get started
 
-### Login 
+### Login
+
+To start, you need to connect your FedaPay account.
 
 ```
 $ fedapay login
@@ -78,29 +80,14 @@ The output will look like this:
 
 ![Select your environment](./docs/images/sandbox.png)
 
-After selecting environment you have to authenticate
+One you select your environment, you will be redirecting to the cli server page to login and select your account.
+
 ![Authenticate](./docs/images/output-login-sandbox.png)
 ![Select your account](./docs/images/select-account.png)
 
-and get well
+Now you are set.
 
 ![Succes message](./docs/images/succes.png)
-
-
-
-### Generate a token
-```
-$ fedapay transactions:token --id=16851
-```
-
-The output will look like this:
-
-```json
-{
-  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjE2ODUxLCJleHAiOjE2MDMxOTc3ODh9.961u7Gf5lr2LouyEGCnRN_uPP7Y4DUuRKL50M_WwVV4",
-  "url": "https://fpay.li/uxAga"
-}
-```
 
 ### Create a new transaction
 
@@ -179,6 +166,20 @@ The output will look like this:
   "last_error_code": null,
   "custom_metadata": null,
   "amount_debited": null
+}
+```
+
+### Generate a token
+```
+$ fedapay transactions:token --id=16851
+```
+
+The output will look like this:
+
+```json
+{
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjE2ODUxLCJleHAiOjE2MDMxOTc3ODh9.961u7Gf5lr2LouyEGCnRN_uPP7Y4DUuRKL50M_WwVV4",
+  "url": "https://fpay.li/uxAga"
 }
 ```
 
