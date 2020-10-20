@@ -4,5 +4,4 @@ Display current login information
 ```
 USAGE
   $ fedapay profile
-  
 ```

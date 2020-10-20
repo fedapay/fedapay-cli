@@ -7,7 +7,8 @@ USAGE
   $ fedapay events:<operation> [parameters...]
 
 OPTIONS
-  -e, --environment=development|sandbox|live  [default: sandbox] FedaPay Api environment
+  -d, --dump                                  Dump event details
+  -e, --environment=development|sandbox|live  FedaPay Api environment
   -f, --filters=filters                       Filter the list of event to tail.
   -h, --help                                  Help for events command
   -t, --tail                                  Tail events

@@ -7,7 +7,7 @@ USAGE
   $ fedapay payouts:<operation> [parameters...]
 
 OPTIONS
-  -e, --environment=development|sandbox|live  [default: sandbox] FedaPay Api environment
+  -e, --environment=development|sandbox|live  FedaPay Api environment
   -h, --help                                  Help for payouts command.
   --api-key=api-key                           Your API key to use for the command
 
@@ -161,9 +161,9 @@ OPTIONS
   --id=id
 
 EXAMPLES
-  payouts:update --api-key=[API-KEY] --environment=[env] --id=90 -d amount=550 -d currency[iso]=XOF -d 
-  mode=moov -d customer[firstname]=Yu customer[lastname]=Ma customer[email]=vul@exemple.com 
+  payouts:update --api-key=[API-KEY] --environment=[env] --id=90 -d amount=550 -d currency[iso]=XOF -d
+  mode=moov -d customer[firstname]=Yu customer[lastname]=Ma customer[email]=vul@exemple.com
   customer[phone_number][number]=65423158 customer[phone_number][country]=bj
   payouts:update --api-key=[API-KEY] --environment=[env] --id=109 -d customer[id]=2055
-  
+
 ```

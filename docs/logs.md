@@ -7,8 +7,11 @@ USAGE
   $ fedapay logs:<operation> [parameters...]
 
 OPTIONS
-  -e, --environment=development|sandbox|live  [default: sandbox] FedaPay Api environment
+  -d, --dump                                  Dump log details
+  -e, --environment=development|sandbox|live  FedaPay Api environment
+  -f, --filters=filters                       Filter the list of logs to tail.
   -h, --help                                  Help for logs command.
+  -t, --tail                                  Tail logs
   --api-key=api-key                           Your API key to use for the command
 
 EXAMPLES

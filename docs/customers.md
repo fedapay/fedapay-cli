@@ -7,7 +7,7 @@ USAGE
   $ fedapay customers:<operation> [parameters...]
 
 OPTIONS
-  -e, --environment=development|sandbox|live  [default: sandbox] FedaPay Api environment
+  -e, --environment=development|sandbox|live  FedaPay Api environment
   -h, --help                                  Help for customers command.
   --api-key=api-key                           Your API key to use for the command
 
