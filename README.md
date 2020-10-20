@@ -220,6 +220,12 @@ The output will look like this:
 }
 ```
 
+### Listen to FedaPay events
+
+```
+$ fedapay events --tail
+```
+
 # Available commands
 * [`fedapay login [parameters...]`](https://github.com/fedapay/fedapay-cli/blob/master/docs/login.md)
 * [`fedapay logout`](https://github.com/fedapay/fedapay-cli/blob/master/docs/logout.md)

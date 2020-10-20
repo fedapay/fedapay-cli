@@ -7,7 +7,7 @@ import chalk from 'chalk';
 export default class TailUtil {
     constructor(private url: string, private options: any) { }
 
-    connect(filters = {}, cb: (x: string) => void) {
+    connect(filters: any = {}, keys: string[] = [], cb: (x: string) => void) {
         amqp.connect(this.url, (error0: any, connection: any) => {
             if (error0) {
                 throw error0;
@@ -34,7 +34,7 @@ export default class TailUtil {
 
                     channel.consume(this.options.queue, (msg: any) => {
                         if (msg.content) {
-                            const output = this.filterOutput(msg.content.toString(), filters);
+                            const output = this.filterOutput(msg.content.toString(), filters, keys);
 
                             if (output) {
                                 cb(output);
@@ -54,7 +54,7 @@ export default class TailUtil {
      * @param {any} filters
      * @return {string|null}
      */
-    filterOutput(json: string, filters: any): string|null {
+    filterOutput(json: string, filters: any, keys: string[] = []): string|null {
         try {
             const data = JSON.parse(json);
             for (const filter in filters) {
@@ -63,7 +63,7 @@ export default class TailUtil {
                 }
             }
 
-            return this.formatJsonOutput(data);
+            return this.formatJsonOutput(data, keys);
         } catch (e) {
             return null;
         }
@@ -74,14 +74,20 @@ export default class TailUtil {
      * @param {string} json
      * @return {string}
      */
-    formatJsonOutput(json: any): string {
-        let log = '-- : ';
+    formatJsonOutput(json: any, keys: string[] = []): string {
+        const date = (new Date()).toLocaleString();
+        let log = chalk.bold.gray(date) + ' ----> : ';
 
         for (const key in json) {
+            if (keys.length > 0 && !keys.includes(key)) {
+                continue;
+            }
+
             let value = json[key]
             if (typeof value !== 'string') {
                 value = JSON.stringify(value);
             }
+
             log += chalk.bold.blue(`${key}: `) + `${value} `;
         }
 

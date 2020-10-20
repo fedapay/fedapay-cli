@@ -38,6 +38,7 @@ export default class Logs extends Command {
   static flags = {
     ...Command.flags,
     tail: flags.boolean({ char: 't', description: 'Tail logs', default: false }),
+    dump: flags.boolean({ char: 'd', description: 'Dump log details', default: false }),
     filters: flags.string({
       char: 'f',
       description: 'Filter the list of logs to tail.',
@@ -74,7 +75,9 @@ export default class Logs extends Command {
       const mqUrl = this.userConfig.read('mq_url');
 
       const tail = new TailUtil(mqUrl, queueOptions);
-      tail.connect(filters, (output) => {
+      const keys = flags.dump ? [] : ['method', 'url', 'status'];
+
+      tail.connect(filters, keys, (output) => {
         this.log(output);
       });
 

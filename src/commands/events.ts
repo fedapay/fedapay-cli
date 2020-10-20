@@ -27,6 +27,7 @@ export default class Events extends Command {
   static flags = {
     ...Command.flags,
     tail: flags.boolean({ char: 't', description: 'Tail events', default: false }),
+    dump: flags.boolean({ char: 'd', description: 'Dump event details', default: false }),
     filters: flags.string({
       char: 'f',
       description: 'Filter the list of event to tail.',
@@ -63,7 +64,8 @@ export default class Events extends Command {
       const mqUrl = this.userConfig.read('mq_url');
 
       const tail = new TailUtil(mqUrl, queueOptions);
-      tail.connect(filters, (output) => {
+      const keys = flags.dump ? [] : ['name', 'object'];
+      tail.connect(filters, keys, (output) => {
         this.log(output);
       });
 
