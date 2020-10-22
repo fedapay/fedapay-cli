@@ -33,7 +33,7 @@ export default class EventsTrigger extends Command {
       required: true,
       description: 'The event name to trigger'
     }),
-    help: flags.help({ char: 'h', description: 'Help for events:sub command.' }),
+    help: flags.help({ char: 'h', description: 'Help for events:trigger command.' }),
   };
 
   /**
@@ -41,7 +41,7 @@ export default class EventsTrigger extends Command {
    * Some example with the token command
    */
   static examples = [
-    'events:token --api-key=[API-KEY] --environment=[env] --event=[ressource.name]',
+    'events:token --api-key=[API-KEY] --environment=[env] --webhook=3 --event=transaction.approved',
   ];
 
   async run() {

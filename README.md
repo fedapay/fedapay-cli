@@ -247,4 +247,5 @@ $ fedapay logs --tail
 * [`fedapay payouts:<operation> [parameters...]`](https://github.com/fedapay/fedapay-cli/blob/master/docs/payouts.md)
 * [`fedapay events:<operation> [parameters...]`](https://github.com/fedapay/fedapay-cli/blob/master/docs/events.md)
 * [`fedapay logs:<operation> [parameters...]`](https://github.com/fedapay/fedapay-cli/blob/master/docs/logs.md)
+* [`fedapay webhooks:<operation> [parameters...]`](https://github.com/fedapay/fedapay-cli/blob/master/docs/webhooks.md)
 * [`fedapay samples:<operation> [parameters...]`](https://github.com/fedapay/fedapay-cli/blob/master/docs/samples.md)

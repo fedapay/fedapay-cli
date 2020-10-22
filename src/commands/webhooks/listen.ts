@@ -22,7 +22,7 @@ export default class WebhooksListen extends Webhooks {
    * The command usage
    * @var string
    */
-  static usage = 'webhooks:create [options]';
+  static usage = 'webhooks:listen [options]';
   /**
    * @params Object
    * Insertion of the different commands flags
@@ -43,7 +43,7 @@ export default class WebhooksListen extends Webhooks {
    * Some example of use of the webhook:create command
    */
   static examples = [
-    'webhooks:create --api-key=[API-KEY] --environment=[env] -d url=https://example.com/webhooks',
+    'webhooks:listen --api-key=[API-KEY] --environment=[env] --url=https://example.com/webhooks',
   ];
 
   private webhook: Webhook | null = null;

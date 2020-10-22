@@ -10,9 +10,9 @@ import Command from '../../base';
 export default class EventsStub extends Command {
   /**
   * @params String
-  * Description of the command webhooks:token
+  * Description of the command events:stub
   */
-  static description = 'Generate a payment token for a webhook.';
+  static description = 'Generate a fake event';
 
   /**
   * The command usage
@@ -30,7 +30,7 @@ export default class EventsStub extends Command {
       required: true,
       description: 'The event name to stub'
     }),
-    help: flags.help({ char: 'h', description: 'Help for events:sub command.' }),
+    help: flags.help({ char: 'h', description: 'Help for events:stub command.' }),
   };
 
   /**
