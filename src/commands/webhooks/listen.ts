@@ -43,7 +43,7 @@ export default class WebhooksListen extends Webhooks {
    * Some example of use of the webhook:create command
    */
   static examples = [
-    'webhooks:listen --api-key=[API-KEY] --environment=[env] --url=https://example.com/webhooks',
+    'webhooks:listen --api-key=[API-KEY] --environment=[env] --url=http://localhost:8080/webhooks',
   ];
 
   private webhook: Webhook | null = null;

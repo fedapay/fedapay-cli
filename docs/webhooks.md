@@ -131,5 +131,5 @@ OPTIONS
   --log                                       Log request output
 
 EXAMPLE
-  webhooks:listen --api-key=[API-KEY] --environment=[env] --url=https://example.com/webhooks
+  webhooks:listen --api-key=[API-KEY] --environment=[env] --url=http://localhost:8080/webhooks
 ```

@@ -238,6 +238,14 @@ $ fedapay logs --tail
 
 ![Logs tail output](./docs/images/logs-tail.png)
 
+### Create a webhook and forward remote URL to a local URL
+
+```
+$ fedapay webhooks:listen --url=http://localhost:8080/webhooks
+```
+
+![Webhooks listen output](./docs/images/webhooks-listen.png)
+
 # Available commands
 * [`fedapay login [parameters...]`](https://github.com/fedapay/fedapay-cli/blob/master/docs/login.md)
 * [`fedapay logout`](https://github.com/fedapay/fedapay-cli/blob/master/docs/logout.md)
