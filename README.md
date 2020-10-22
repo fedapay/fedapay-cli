@@ -5,6 +5,8 @@ fedapay-cli
 [![Downloads/week](https://img.shields.io/npm/dw/fedapay-cli.svg)](https://npmjs.org/package/fedapay-cli)
 [![License](https://img.shields.io/npm/l/fedapay-cli.svg)](https://github.com/fedapay/fedapay-cli/blob/master/package.json)
 
+A command-line tool for FedaPay
+
 <!-- toc -->
 * [Install](#install)
 * [Update](#update)
