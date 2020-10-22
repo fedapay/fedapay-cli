@@ -2,12 +2,12 @@ import { flags } from '@oclif/command';
 import cli from 'cli-ux';
 import { FedaPay, Event } from 'fedapay';
 import colorize from 'json-colorizer';
-import Events from '../events';
+import Command from '../../base';
 
 /**
  * EventsRetrieve class extending super class Events
  */
-export default class EventsRetrieve extends Events {
+export default class EventsRetrieve extends Command {
   /**
    * @var string
    * Description of the command event:retrieve
@@ -25,7 +25,7 @@ export default class EventsRetrieve extends Events {
    * Declaration of the command flag
    */
   static flags = {
-    ...Events.flags,
+    ...Command.flags,
     id: flags.string({
       description: 'The Id of the event to retrieve',
     }),

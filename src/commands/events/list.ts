@@ -3,12 +3,12 @@ import cli from 'cli-ux';
 import { FedaPay, Event } from 'fedapay';
 import colorize from 'json-colorizer';
 import DataFlagTransformer from '../../helpers/dataparse';
-import Events from '../events';
+import Command from '../../base';
 
 /**
  * EventsList class extending super class Events
  */
-export default class EventsList extends Events {
+export default class EventsList extends Command {
   /**
    * @var String
    * Description of the command events:list
@@ -26,7 +26,7 @@ export default class EventsList extends Events {
    * Declaration of the command flags
    */
   static flags = {
-    ...Events.flags,
+    ...Command.flags,
     limit: flags.integer({
       description: 'Limit of the records to display',
       default: 10,

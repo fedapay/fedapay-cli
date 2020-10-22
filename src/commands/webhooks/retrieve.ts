@@ -1,36 +1,36 @@
 import { flags } from '@oclif/command';
-import { FedaPay, Transaction } from 'fedapay';
+import { FedaPay, Webhook } from 'fedapay';
 import colorize from 'json-colorizer';
 import { cli } from 'cli-ux';
-import Transactions from '../transactions';
+import Webhooks from '../webhooks';
 
 /**
- * TransactionRetrieve class extending super Class Transactions
+ * WebhookRetrieve class extending super Class Webhooks
  */
-export default class TransactionsRetrieve extends Transactions {
+export default class WebhooksRetrieve extends Webhooks {
   /**
   * @params String
-  * Description of the command transactions:retrieve
+  * Description of the command webhooks:retrieve
   */
-  static description = 'Retrieve a transaction.'
+  static description = 'Retrieve a webhook.'
 
   /**
   * The command usage
   * @var string
   */
-  static usage = 'transactions:retrieve [options]';
+  static usage = 'webhooks:retrieve [options]';
 
   /**
    * @param object
    * Declaration of the command flags
    */
   static flags = {
-    ...Transactions.flags,
+    ...Webhooks.flags,
     id: flags.integer({
       required: true,
-      description: 'ID of the transaction.'
+      description: 'ID of the webhook.'
     }),
-    help: flags.help({ char: 'h', description: 'Help for transactions:retrieve command.' }),
+    help: flags.help({ char: 'h', description: 'Help for webhooks:retrieve command.' }),
   };
 
   /**
@@ -38,7 +38,7 @@ export default class TransactionsRetrieve extends Transactions {
    * Some example with the retrieve command
    */
   static examples = [
-    'transactions:retrieve --api-key=[API-KEY] --environment=[env] --id=[ID]'
+    'webhooks:retrieve --api-key=[API-KEY] --environment=[env] --id=[ID]'
   ];
 
   async run() {
@@ -46,7 +46,7 @@ export default class TransactionsRetrieve extends Transactions {
       * @param object
       * get flags value
       */
-    const { flags } = this.parse(TransactionsRetrieve);
+    const { flags } = this.parse(WebhooksRetrieve);
 
     /**
     * @param String
@@ -67,15 +67,15 @@ export default class TransactionsRetrieve extends Transactions {
     FedaPay.setEnvironment(environment);
     /**
      * @param integer
-     * get the id of the transaction
+     * get the id of the webhook
      */
     const id = flags.id;
 
     try {
-      cli.action.start('Retrieve transaction');
+      cli.action.start('Retrieve webhook');
 
-      const transaction = await Transaction.retrieve(id);
-      this.log(colorize(JSON.stringify(transaction, null, 2)));
+      const webhook = await Webhook.retrieve(id);
+      this.log(colorize(JSON.stringify(webhook, null, 2)));
     } catch (error) {
       this.error(error.message);
     }

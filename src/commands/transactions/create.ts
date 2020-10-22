@@ -81,7 +81,7 @@ export default class TransactionsCreate extends Transactions {
        * @param Transaction
        * Created transaction
        */
-      cli.action.start('Retrive transaction');
+      cli.action.start('Retrieve transaction');
       const transaction = await Transaction.create(data);
       this.log(chalk.green('Transaction created successfully!'));
       this.log(colorize(JSON.stringify(transaction, null, 2)));
